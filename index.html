@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dollar Academy - הדרך המוכחת לייצר משכורת הייטק בדולרים</title>
+    
+    <!-- Meta Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1829053241169158');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1829053241169158&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#080f20',
+                        highlight: '#5298fa',
+                        cta: '#1f73f7'
+                    },
+                    fontFamily: {
+                        sans: ['Heebo', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    },
+                    screens: {
+                        'xs': '375px',
+                        'sm': '640px',
+                        'md': '768px',
+                        'lg': '1024px',
+                        'xl': '1280px'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+        Babel.registerPreset('react-classic', {
+            presets: [[Babel.availablePresets['react'], { runtime: 'classic' }]]
+        });
+    </script>
+
+    <style>
+        body {
+            background-color: #080f20;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: 'Heebo', sans-serif;
+        }
+        * {
+            unicode-bidi: plaintext;
+            text-align: right;
+        }
+        .center-all {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 400ms, transform 400ms;
+        }
+        .progress-fill {
+            transition: width 0.4s ease-out;
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+            background: #000;
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            width: 100%;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        /* Dollar Rain Animation */
+        @keyframes dollarFall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .dollar-bill {
+            position: fixed;
+            top: -50px;
+            color: #5298fa;
+            font-size: 2rem;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 5;
+            animation: dollarFall linear infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(82,152,250,0.5); opacity: 1; }
+            50% { text-shadow: 0 0 30px rgba(82,152,250,0.8); opacity: 0.8; }
+        }
+        .pulse-text {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes scrollRight {
+            0% { transform: translateX(-25%); }
+            100% { transform: translateX(0%); }
+        }
+        .marquee-wrapper {
+            overflow: hidden;
+            width: 100%;
+            display: flex;
+            margin: 0 auto;
+            direction: ltr;
+        }
+        .marquee-content {
+            display: flex;
+            gap: 1.5rem;
+            width: max-content;
+            animation: scrollRight 12s linear infinite;
+            will-change: transform;
+            transform: translateZ(0);
+        }
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+        /* Mobile Font Size Fix */
+        @media screen and (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-presets="react-classic">
+        const { useState, useEffect, useRef } = React;
+
+        const quizQuestions = [
+            {
+                id: 'firstName',
+                type: 'input',
+                inputType: 'text',
+                question: 'איך קוראים לך?',
+                placeholder: 'הכנס/י את שמך המלא'
+            },
+            {
+                id: 'workspacePreference',
+                type: 'choice',
+                question: 'מה היית מעדיף/ה?',
+                options: [
+                    { label: 'נוודות דיגיטלית - לעבוד מכל מקום בעולם', value: 'נוודות דיגיטלית' },
+                    { label: 'פינה קבועה - עבודה ממשרד או מהבית', value: 'פינה קבועה' }
+                ]
+            },
+            {
+                id: 'characterTrait',
+                type: 'choice',
+                question: 'מה מאפיין אותך יותר?',
+                options: [
+                    { label: 'אני שונא/ת מסגרות ורוצה עצמאות וחופש פעולה', subtext: 'נפש יצירתית חופשית ויזמית', value: 'שונא מסגרות' },
+                    { label: 'אני אוהב/ת יציבות ומסגרות', subtext: 'נוח לי לעבוד עם בהירות וכללים ברורים', value: 'אוהב יציבות' }
+                ]
+            },
+            {
+                id: 'incomeGoal',
+                type: 'choice',
+                question: 'מה מושך אותך יותר?',
+                options: [
+                    { label: '$1,000 - $3,000 (הכנסה צדדית נחמדה מהבית)', value: '$1k-$3k' },
+                    { label: '$5,000 - $10,000 (החלפת המשכורת הנוכחית שלי)', value: '$5k-$10k' },
+                    { label: '$10,000+ (בניית אימפריה דולרית וחופש כלכלי מלא)', value: '$10k+' }
+                ]
+            },
+            {
+                id: 'experienceTag',
+                type: 'choice',
+                question: 'לפני שנתחיל, מה רמת הניסיון שלך בעולם השיווק והפרסום הדיגיטלי?',
+                options: [
+                    { label: 'אין לי ניסיון בכלל, אני מתחיל מאפס מוחלט.', value: 'Beginner' },
+                    { label: 'יש לי רקע בסיסי/ניסיתי בעבר אבל לא הגעתי לתוצאות.', value: 'Beginner' },
+                    { label: 'אני כבר עוסק בתחום/מנהל קמפיינים ומחפש לשדרג לדולרים.', value: 'Experienced' }
+                ]
+            },
+            {
+                id: 'thinkerType',
+                type: 'choice',
+                question: 'מה אתה/את יותר?',
+                options: [
+                    { label: 'אומן/ית ואוהב/ת את היצירה', subtext: 'יצירתי וחזותי', value: 'אומן' },
+                    { label: 'טכני/ת ומתחבר/ת למספרים', subtext: 'שיטתי ואנליטי', value: 'טכני' }
+                ]
+            },
+            {
+                id: 'weeklyTime',
+                type: 'choice',
+                question: 'כמה זמן יש לך בשבוע ללמוד תחום חדש?',
+                options: [
+                    { label: 'שעה 1 בשבוע', value: '1 שעה' },
+                    { label: '2-3 שעות בשבוע', value: '2-3 שעות' },
+                    { label: '3-6 שעות בשבוע', value: '3-6 שעות' },
+                    { label: 'מעל 6 שעות בשבוע', value: '6+ שעות' }
+                ]
+            },
+            {
+                id: 'age',
+                type: 'input',
+                inputType: 'number',
+                question: 'מה הגיל שלך?',
+                placeholder: 'הכנס/י את גילך (מספר בלבד)'
+            },
+            {
+                id: 'email',
+                type: 'input',
+                inputType: 'email',
+                question: 'מה המייל שלך?',
+                placeholder: 'example@email.com',
+                subtext: 'אנחנו לא מבלבלים את המוח - רק פרקטיקה ומקצועיות, לא מספימים'
+            },
+            {
+                id: 'phone',
+                type: 'input',
+                inputType: 'tel',
+                question: 'מה מספר הטלפון שלך?',
+                placeholder: '05X-XXXXXXX'
+            }
+        ];
+
+        function getHashRoute() {
+            const h = window.location.hash;
+            if (!h || h === '#/' || h === '#') return 'landing';
+            if (h.startsWith('#/quiz')) {
+                const step = parseInt(h.replace('#/quiz', ''), 10);
+                return isNaN(step) ? 'landing' : { type: 'quiz', step: step - 1 };
+            }
+            if (h === '#/training-1') return 'training-1';
+            if (h === '#/training-pro') return 'training-pro';
+            if (h === '#/training-beginner') return 'training-beginner';
+            if (h === '#/confirm') return 'confirm';
+            if (h === '#/loading') return 'loading';
+            if (h === '#/loading-2') return 'loading-2';
+            if (h === '#/advanced-training') return 'advanced-training';
+            return 'landing';
+        }
+
+        const formatPhone = (val) => {
+            let digits = val.replace(/\D/g, '');
+            if (digits.length > 10) digits = digits.slice(0, 10);
+            if (digits.length > 3) {
+                return digits.slice(0, 3) + '-' + digits.slice(3);
+            }
+            return digits;
+        };
+
+        const TrainingPage = ({ leadData, setLeadData, classification, overrideVideoId }) => {
+            const [stage, setStage] = useState(() => {
+                const h = window.location.hash;
+                if (h === '#/confirm') return 'bridge';
+                if (h === '#/loading-2') return 'loading-2';
+                if (h === '#/advanced-training') return 2;
+                return 1;
+            });
+            const [showBtn, setShowBtn] = useState(false);
+            const [isSubmitting, setIsSubmitting] = useState(false);
+            const [emailError, setEmailError] = useState(false);
+            const [phoneError, setPhoneError] = useState(false);
+            const [nameError, setNameError] = useState(false);
+            const [loadingProgress, setLoadingProgress] = useState(0);
+            const modalNameRef = useRef(null);
+            
+            // CRITICAL FIX: Forced Facebook Pixel AddToCart Event
+            // This fires on mount for all training variations regardless of state
+            useEffect(() => {
+                const h = window.location.hash;
+                if ((h === '#/training-1' || h === '#/training-pro' || h === '#/training-beginner') && window.fbq) {
+                    fbq('track', 'AddToCart');
+                }
+            }, []); // Empty dependency array ensures it fires only once per "visit" (mount)
+            
+            const isBeginner = leadData.experienceTag === 'Beginner' || classification === 'Beginner';
+            const video1Id = overrideVideoId || (isBeginner ? 'DkRAtTA39qY' : 'lNCtT3jhh2s');
+            const video2Id = 'Gds2uwF0eGg';
+            
+            useEffect(() => {
+                if (stage === 1) {
+                    setShowBtn(false);
+                    const timer = setTimeout(() => setShowBtn(true), 15000);
+                    return () => clearTimeout(timer);
+                } else if (stage === 2) {
+                    setShowBtn(false);
+                    const timer = setTimeout(() => setShowBtn(true), 20000);
+                    return () => clearTimeout(timer);
+                }
+            }, [stage]);
+
+            useEffect(() => {
+                if (stage === 'loading-2') {
+                    setLoadingProgress(0);
+                    const startTime = Date.now();
+                    const duration = 6000;
+                    
+                    const interval = setInterval(() => {
+                        const elapsed = Date.now() - startTime;
+                        const p = Math.min(Math.round((elapsed / duration) * 100), 100);
+                        setLoadingProgress(p);
+                        
+                        if (elapsed >= duration) {
+                            clearInterval(interval);
+                            window.location.hash = '#/advanced-training';
+                            setStage(2);
+                        }
+                    }, 50);
+                    return () => clearInterval(interval);
+                }
+            }, [stage]);
+
+            useEffect(() => {
+                if (stage === 'bridge' && modalNameRef.current) {
+                    setTimeout(() => modalNameRef.current.focus(), 100);
+                }
+            }, [stage]);
+
+            const handleBridgeTransition = () => {
+                window.location.hash = '#/confirm';
+                setStage('bridge');
+            };
+
+            const submitHotConversion = () => {
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                const nameRegex = /^[a-zA-Zא-ת\s]+$/;
+                const phoneDigits = (leadData.phone || '').replace(/\D/g, '');
+                let hasError = false;
+                
+                if (!leadData.firstName || !nameRegex.test(leadData.firstName)) { setNameError(true); hasError = true; }
+                else { setNameError(false); }
+
+                if (!emailRegex.test(leadData.email)) { setEmailError(true); hasError = true; }
+                else { setEmailError(false); }
+                
+                if (phoneDigits.length !== 10 || !phoneDigits.startsWith('05')) { setPhoneError(true); hasError = true; }
+                else { setPhoneError(false); }
+
+                if (hasError) return;
+
+                setIsSubmitting(true);
+                const webhook = (classification === 'Experience' || leadData.experienceTag === 'Experienced')
+                    ? 'https://hooks.zapier.com/hooks/catch/16015214/ujsvier/' : 'https://hooks.zapier.com/hooks/catch/16015214/ujsvqws/';
+                
+                fetch(webhook, { 
+                    method: 'POST', 
+                    mode: 'no-cors', 
+                    body: JSON.stringify({ ...leadData, leadStatus: 'Hot', conversionType: 'Training Click', classification: classification || leadData.experienceTag }) 
+                }).finally(() => {
+                    window.location.hash = '#/loading-2';
+                    setStage('loading-2');
+                    setIsSubmitting(false);
+                });
+            };
+
+            const DollarRain = () => {
+                const dollars = Array.from({ length: 40 });
+                return (
+                    <div className="fixed inset-0 z-[50] bg-background pointer-events-none overflow-hidden">
+                        {dollars.map((_, i) => (
+                            <div key={i} className="dollar-bill" style={{ left: `${Math.random() * 100}vw`, animationDuration: `${Math.random() * 2 + 1.5}s`, animationDelay: `${Math.random() * 2}s`, fontSize: `${Math.random() * 2 + 1}rem`, opacity: Math.random() * 0.4 + 0.2 }}>$</div>
+                        ))}
+                    </div>
+                );
+            };
+
+            if (stage === 'loading-2') {
+                return (
+                    <div className="fixed inset-0 z-[200] bg-background flex flex-col items-center justify-center p-6 overflow-hidden" style={{ textAlign: 'center' }}>
+                        <DollarRain />
+                        <div className="absolute inset-0 bg-[#080f20]/60 z-[60]" />
+                        
+                        <div className="max-w-3xl w-full z-[100] relative bg-black/40 backdrop-blur-xl border-2 border-[#fbbf24]/30 rounded-[2.5rem] shadow-[0_0_100px_rgba(0,0,0,0.5)] scale-in-center mx-4 overflow-hidden flex flex-col items-center" style={{ textAlign: 'center' }}>
+                            <div className="p-8 md:p-14 flex flex-col items-center w-full space-y-8" style={{ textAlign: 'center' }}>
+                                <div className="w-16 h-16 bg-[#fbbf24] rounded-full flex items-center justify-center mb-4 animate-pulse shadow-[0_0_40px_rgba(251,191,36,0.4)]">
+                                    <span className="text-black text-3xl font-black">!</span>
+                                </div>
+                                
+                                <h2 className="text-[#fbbf24] text-xs font-black tracking-[0.2em] uppercase mb-2 w-full" style={{ textAlign: 'center' }}>System Notification</h2>
+
+                                <div className="space-y-6 w-full flex flex-col items-center" style={{ textAlign: 'center' }}>
+                                    <p style={{ fontSize: '1.25rem', lineHeight: '1.7', color: 'white', fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
+                                        יש לנו עומס בפניות, אנחנו עושים את המיטב ליצור איתך קשר ולתת את הערך המקצועי, אחד מאנשי הצוות שלנו יצור איתך קשר לשיחת היכרות קצרה - וואלה לא באים למכור לכם, באים להקשיב ולראות האם זה בכלל כיוון מתאים.
+                                    </p>
+                                    
+                                    <div className="pt-4 border-t border-white/10 flex flex-col items-center gap-4 w-full" style={{ textAlign: 'center' }}>
+                                        <img src="public/alex hormozi.png" alt="Alex Hormozi" className="w-16 h-16 rounded-full border-2 border-[#fbbf24] shadow-lg object-cover mx-auto" />
+                                        <p style={{ fontSize: '1.15rem', lineHeight: '1.6', color: '#5298fa', fontStyle: 'italic', fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
+                                            "אם אתה רוצה להרוויח הרבה כסף ואתה לא גר בארה״ב... תלמד אנגלית, תקנה מחשב ותתחיל למכור שירותים ללקוחות אמריקאים."
+                                        </p>
+                                        <span className="text-[10px] text-white/40 font-bold uppercase tracking-widest w-full" style={{ textAlign: 'center' }}>- Alex Hormozi</span>
+                                    </div>
+                                </div>
+
+                                <div className="pt-4 flex flex-col items-center gap-3 w-full" style={{ textAlign: 'center' }}>
+                                    <div className="flex gap-2 justify-center">
+                                        <div className="w-2 h-2 bg-[#fbbf24] rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                                        <div className="w-2 h-2 bg-[#fbbf24] rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                                        <div className="w-2 h-2 bg-[#fbbf24] rounded-full animate-bounce"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {/* Progress Bar & Percentage */}
+                            <div className="w-full space-y-2 mt-4">
+                                <div className="flex justify-between items-center px-8">
+                                    <span className="text-[10px] text-[#fbbf24]/60 font-bold tracking-widest uppercase">System Processing</span>
+                                    <span className="text-[14px] text-[#fbbf24] font-black">{loadingProgress}%</span>
+                                </div>
+                                <div className="w-full h-3 bg-white/5 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 h-full bg-[#1f73f7] shadow-[0_0_20px_#1f73f7] transition-all duration-75 ease-linear" style={{ 
+                                        width: `${loadingProgress}%`
+                                    }}></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (stage === 'transition') {
+                return (
+                    <div className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center p-8 text-center overflow-hidden fade-enter fade-enter-active">
+                        <DollarRain />
+                        <div className="max-w-md w-full z-10 relative space-y-6 glass-panel p-8 md:p-14 rounded-[2rem] border-2 border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.6)] backdrop-blur-3xl scale-in-center mx-4">
+                            <div className="w-14 h-14 bg-cta rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce shadow-[0_0_30px_rgba(31,115,247,0.5)]"><span className="text-white text-2xl font-bold">!</span></div>
+                            <h2 className="text-lg md:text-2xl font-bold text-white leading-relaxed text-center pulse-text">טוען עבורך הדרכה מתקדמת יותר...</h2>
+                            <div className="pt-6 flex items-center justify-center gap-3 text-slate-400"><div className="w-2 h-2 bg-cta rounded-full animate-ping"></div><span className="text-[10px] font-semibold tracking-widest uppercase">System Alert</span></div>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <>
+                    <div className="flex flex-col items-center justify-start min-h-[80vh] p-6 pt-12 md:pt-20 fade-enter fade-enter-active w-full">
+                        <div className="max-w-4xl w-full text-center space-y-8 center-all">
+                            {stage === 1 ? (
+                                <>
+                                    {classification === 'Experience' ? (
+                                        <div className="max-w-4xl w-full mx-auto fade-enter fade-enter-active flex flex-col items-center" style={{ textAlign: 'center', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                            <h1 style={{ fontSize: '2.8rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center', width: '100%' }}>ההדרכה האישית שלך מוכנה!</h1>
+                                            <div style={{ width: '80%', height: '1px', backgroundColor: 'rgba(255, 255, 255, 0.1)', margin: '20px auto' }}></div>
+
+                                            <div className="space-y-6">
+                                                <p style={{ fontSize: '1.25rem', marginBottom: '25px', textAlign: 'center', width: '100%', fontWeight: 'bold' }} className="text-slate-200">
+                                                    כנראה שכבר נמאס לך מלקוחות ישראלים. האמת? אי אפשר להאשים אותך.
+                                                </p>
+                                                <p style={{ fontSize: '1.25rem', marginBottom: '25px', textAlign: 'center', width: '100%', fontWeight: 'bold' }} className="text-slate-200">
+                                                    הלקוח הישראלי הוא הלקוח היחיד בעולם שמשלם <span style={{ color: '#ff4d4d' }}>לואו קוסט</span> ומצפה ל<span style={{ color: '#4ade80' }}>פרימיום</span>.
+                                                </p>
+                                                <p style={{ fontSize: '1.25rem', marginBottom: '25px', textAlign: 'center', width: '100%', fontWeight: 'bold' }} className="text-slate-200">
+                                                    לא הגיע הזמן לעבוד עם לקוחות שמשלמים יותר ומתלוננים פחות?
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ) : classification === 'Beginner' ? (
+                                        <div className="max-w-4xl w-full mx-auto fade-enter fade-enter-active flex flex-col items-center" style={{ textAlign: 'center', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                            <h1 style={{ fontSize: '2.8rem', fontWeight: 'bold', marginBottom: '15px', textAlign: 'center', width: '100%' }}>ההדרכה האישית שלך מוכנה!</h1>
+                                            <div style={{ width: '80%', height: '1px', backgroundColor: 'rgba(255, 255, 255, 0.1)', margin: '20px auto' }}></div>
+
+                                            <p style={{ fontSize: '1.25rem', marginBottom: '25px', textAlign: 'center', width: '100%' }}>בוא נהיה כנים - ניסית כבר הכל.</p>
+
+                                            <div style={{ fontSize: '1.25rem', lineHeight: '1.8', marginBottom: '25px', textAlign: 'center', width: '100%' }}>
+                                                חשבת על דרופשיפינג וגילית שאתה שירות לקוחות של סינים ב-2 בלילה.<br />
+                                                פזלת לאמזון והבנת שהכסף שלך הולך להיקבר במלאי במחסנים.<br />
+                                                או אולי שיווק שותפים, שזה בכלל לבנות עסק של מישהו אחר.
+                                            </div>
+
+                                            <p style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '25px', color: 'white', textAlign: 'center', width: '100%' }}>האמת? אי אפשר להאשים אותך.</p>
+
+                                            <div style={{ fontSize: '1.25rem', lineHeight: '1.8', marginBottom: '25px', textAlign: 'center', width: '100%' }}>
+                                                המודלים האלה <span style={{ color: '#ff4d4d', fontWeight: 'bold' }}>מתו</span> מזמן.<br />
+                                                המודלים האלה דורשים הון עצמי גבוה, סיכון מטורף וכאב ראש לוגיסטי בלתי נגמר.
+                                            </div>
+
+                                            <p style={{ fontSize: '1.6rem', fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
+                                                לא הגיע הזמן לעבור למודל <span style={{ color: '#4ade80', fontWeight: 'bold' }}>נקי</span>?
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <div className="max-w-4xl w-full mx-auto flex flex-col items-center" style={{ textAlign: 'center !important' }}>
+                                            {/* Dynamic Content Mapping */}
+                                            {(() => {
+                                                const hasData = leadData.firstName && leadData.experienceTag;
+                                                
+                                                // Fallback to Beginner content if no quiz data is present
+                                                if (!hasData) {
+                                                    return (
+                                                        <div className="max-w-4xl w-full mx-auto fade-enter fade-enter-active flex flex-col items-center" style={{ textAlign: 'center', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                                            <h1 className="text-center w-full" style={{ fontSize: '2.8rem', fontWeight: 'bold', marginBottom: '15px' }}>ההדרכה האישית שלך מוכנה!</h1>
+                                                            <div style={{ width: '80%', height: '1px', backgroundColor: 'rgba(255, 255, 255, 0.1)', margin: '20px auto' }}></div>
+
+                                                            <p style={{ fontSize: '1.25rem', marginBottom: '25px', textAlign: 'center', width: '100%' }}>בוא נהיה כנים - ניסית כבר הכל.</p>
+
+                                                            <div style={{ fontSize: '1.25rem', lineHeight: '1.8', marginBottom: '25px', textAlign: 'center', width: '100%' }}>
+                                                                חשבת על דרופשיפינג וגילית שאתה שירות לקוחות של סינים ב-2 בלילה.<br />
+                                                                פזלת לאמזון והבנת שהכסף שלך הולך להיקבר במלאי במחסנים.<br />
+                                                                או אולי שיווק שותפים, שזה בכלל לבנות עסק של מישהו אחר.
+                                                            </div>
+
+                                                            <p style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '25px', color: 'white', textAlign: 'center', width: '100%' }}>האמת? אי אפשר להאשים אותך.</p>
+
+                                                            <div style={{ fontSize: '1.25rem', lineHeight: '1.8', marginBottom: '25px', textAlign: 'center', width: '100%' }}>
+                                                                המודלים האלה <span style={{ color: '#ff4d4d', fontWeight: 'bold' }}>מתו</span> מזמן.<br />
+                                                                המודלים האלה דורשים הון עצמי גבוה, סיכון מטורף וכאב ראש לוגיסטי בלתי נגמר.
+                                                            </div>
+
+                                                            <p style={{ fontSize: '1.6rem', fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
+                                                                לא הגיע הזמן לעבור למודל <span style={{ color: '#4ade80', fontWeight: 'bold' }}>נקי</span>?
+                                                            </p>
+                                                        </div>
+                                                    );
+                                                }
+
+                                                const name = leadData.firstName;
+                                                const isExperienced = leadData.experienceTag === 'Experienced';
+                                                const mappedLocation = leadData.workspacePreference === 'נוודות דיגיטלית' ? 'מכל מקום בעולם' : 'בנוחות ובסטנדרט שלך';
+                                                const mappedIncome = leadData.incomeGoal === '$1k-$3k' ? '3,000$' : leadData.incomeGoal === '$5k-$10k' ? '5,000$' : '10,000$+';
+                                                const personalityText = leadData.thinkerType === 'טכני' 
+                                                    ? "בתור אדם עם חשיבה אנליטית, שמעריך סדר, נתונים ושיטה מוכחת שעובדת."
+                                                    : "בתור אדם עם נפש של אמן, שמעריך חופש ויצירה ומחפש את הדרך הייחודית שלו.";
+
+                                                const tightTextStyle = { 
+                                                    textAlign: 'center', 
+                                                    lineHeight: '1.4', 
+                                                    marginBottom: '0', 
+                                                    marginTop: '0',
+                                                    width: '100%'
+                                                };
+
+                                                if (!isExperienced) {
+                                                    return (
+                                                        <div className="flex flex-col items-center w-full" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                                            <h1 className="text-center w-full" style={{ fontSize: '2.8rem', fontWeight: 'bold', marginBottom: '15px' }}>{name}, ההדרכה האישית שלך מוכנה!</h1>
+                                                            <p className="text-center w-full" style={{ color: '#ffffff', fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '15px' }}>{personalityText}</p>
+                                                            <div className="w-[80%] border-b border-white/10 mb-6 mx-auto"></div>
+                                                            <div style={{ ...tightTextStyle, color: 'white', fontSize: '1.25rem', marginBottom: '20px' }}>
+                                                                בוא נהיה כנים - ניסית כבר הכל. חשבת על דרופשיפינג וגילית שאתה שירות לקוחות של סינים ב-2 בלילה. פזלת ל-אמזון והבנת שהכסף שלך הולך להיקבר במלאי במחסנים. או אולי שיווק שותפים, שזה בכלל לבנות עסק של מישהו אחר. האמת? אי אפשר להאשים אותך.
+                                                            </div>
+                                                            <p style={{ color: '#3b82f6', fontSize: '1.25rem', fontWeight: 'bold', ...tightTextStyle, marginBottom: '20px' }}>
+                                                                בתור אדם ששואף לעבוד {mappedLocation} ובשביל להגיע למצב שבו יש הכנסה של {mappedIncome} בחודש.
+                                                            </p>
+                                                            <div style={{ ...tightTextStyle, color: 'white', fontSize: '1.2rem' }}>
+                                                                המודלים האלה <span style={{ color: '#ff4d4d', fontWeight: 'bold' }}>מתו</span> מזמן. הם דורשים הון עצמי גבוה, סיכון מטורף וכאב ראש לוגיסטי בלתי נגמר. אז מה אתה אומר {name}, הגיע הזמן לעבור למודל <span style={{ color: '#4ade80', fontWeight: 'bold' }}>נקי</span>? בלי מלאי, בלי סיכונים ובלי הבוס על הראש - פשוט לייצר דולרים ישירות מהלפטופ?
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                } else {
+                                                    return (
+                                                        <div className="flex flex-col items-center w-full" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                                            <h1 className="text-center w-full" style={{ fontSize: '2.8rem', fontWeight: 'bold', marginBottom: '15px' }}>{name}, ההדרכה האישית שלך מוכנה!</h1>
+                                                            <p className="text-center w-full" style={{ color: '#ffffff', fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '15px' }}>{personalityText}</p>
+                                                            <div className="w-[80%] border-b border-white/10 mb-6 mx-auto"></div>
+                                                            <div style={{ ...tightTextStyle, color: 'white', fontSize: '1.25rem', marginBottom: '20px' }}>
+                                                                כנראה שכבר נמאס לך מלקוחות ישראלים. האמת? אי אפשר להאשים אותך. הלקוח הישראלי הוא הלקוח היחיד בעולם שמשלם <span style={{ color: '#ff4d4d', fontWeight: 'bold' }}>לואו-קוסט</span> ומצפה ל<span style={{ color: '#4ade80', fontWeight: 'bold' }}>פרימיום</span>.
+                                                            </div>
+                                                            <p style={{ color: '#3b82f6', fontSize: '1.25rem', fontWeight: 'bold', ...tightTextStyle, marginBottom: '20px' }}>
+                                                                בתור אדם ששואף לעבוד {mappedLocation} ובשביל להגיע למצב שבו יש הכנסה של {mappedIncome} בחודש
+                                                            </p>
+                                                            <p style={{ ...tightTextStyle, color: 'white', fontSize: '1.5rem', fontWeight: 'bold' }}>לא הגיע הזמן לעבוד עם לקוחות שמשלמים יותר ומתלוננים פחות?</p>
+                                                        </div>
+                                                    );
+                                                }
+                                            })()}
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    <h1 className="text-3xl md:text-5xl font-extrabold text-white leading-tight text-center mb-2">רגע לפני שממשיכים, חובה לצפות בזה.</h1>
+                                    <div className="space-y-4 mb-8"><p className="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed text-center font-normal">עכשיו אנחנו צוללים לפרקטיקה: איך מחברים את הכל למערכת שעובדת עבורך ומייצרת הכנסה דולרית יציבה.</p></div>
+                                </>
+                            )}
+                            <div className="video-wrapper">
+                                <iframe 
+                                    src={`https://www.youtube.com/embed/${(stage === 1 || stage === 'bridge') ? video1Id : video2Id}?autoplay=${stage === 'bridge' ? 0 : 1}&modestbranding=1&rel=0&showinfo=0`} 
+                                    frameBorder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen
+                                ></iframe>
+                            </div>
+                            <div className="flex flex-col items-center gap-10 w-full">
+                                {showBtn && (
+                                    <div className="fade-enter fade-enter-active w-full flex flex-col items-center gap-8">
+                                        {stage === 1 ? (
+                                            <>
+                                                <button onClick={handleBridgeTransition} disabled={isSubmitting} className="bg-cta text-white font-extrabold text-[4.2vw] xs:text-[3.8vw] md:text-3xl py-6 px-8 md:px-16 rounded-full shadow-2xl hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 relative z-10 whitespace-nowrap overflow-hidden text-ellipsis">
+                                                    {isSubmitting ? 'מעבד...' : (classification === 'Beginner' ? 'סקרנת אותי, אני רוצה עוד פרטים' : (classification ? 'אני רוצה עוד פרטים' : 'אני רוצה עוד פרטים, סקרנת אותי'))}
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <a href="https://dollaracademy.co.il/bookacall/" className="inline-block bg-cta text-white font-extrabold text-xl md:text-2xl py-5 px-12 rounded-full shadow-xl hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 text-center">עכשיו אני מבין, קח אותי הלאה</a>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {stage === 'bridge' && (
+                        <div className="fixed inset-0 z-[200] flex items-center justify-center fade-enter fade-enter-active" style={{overflowY: 'auto'}}>
+                            <div className="absolute inset-0 bg-[#080f20]" />
+                            <div className="relative z-10 flex flex-col items-center w-full py-8 px-4">
+                                <img src="public/noBgWhite (1) (2).png" alt="Dollar Academy Logo" className="h-16 md:h-20 object-contain mb-6 drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]" />
+                                <div className="w-full max-w-2xl bg-[#080f20] border border-white/20 rounded-[2rem] shadow-[0_0_80px_rgba(31,115,247,0.25),0_40px_100px_rgba(0,0,0,0.7)] p-8 md:p-12 text-center space-y-8 mx-4">
+                                    <h1 className="text-2xl md:text-4xl font-extrabold text-white leading-tight">אישור פרטים וקבלת גישה להדרכה המתקדמת</h1>
+                                    <p className="text-base md:text-xl text-slate-300 leading-relaxed font-normal">כדי לעשות לך סדר בבלאגן, אחד מאנשי המקצוע באקדמיית הדולר יחזור אליך לשיחת ייעוץ פרקטית. אלו הפרטים שהכי נוח ליצור איתך קשר?</p>
+                                    <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-right space-y-4">
+                                        <div className="space-y-2">
+                                            <label className="block text-[12px] text-slate-400 uppercase tracking-wider">שם מלא</label>
+                                            <input 
+                                                ref={modalNameRef}
+                                                type="text" 
+                                                autoComplete="name"
+                                                value={leadData.firstName || ''} 
+                                                onChange={(e) => {
+                                                    const val = e.target.value;
+                                                    const nameRegex = /^[a-zA-Zא-ת\s]*$/;
+                                                    if (nameRegex.test(val)) {
+                                                        setLeadData({...leadData, firstName: val});
+                                                        setNameError(false);
+                                                    } else {
+                                                        setNameError(true);
+                                                    }
+                                                }} 
+                                                className={`w-full bg-white/10 border ${nameError ? 'border-red-500' : 'border-white/20'} rounded-xl px-4 py-3 text-white text-[16px] focus:border-cta outline-none transition-all`} 
+                                            />
+                                            {nameError && <div className="bg-[#ff4d4d] text-white text-[11px] font-bold px-2 py-1 rounded mt-1 inline-block">נא להזין אותיות בלבד</div>}
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="block text-[12px] text-slate-400 uppercase tracking-wider">מייל</label>
+                                            <input 
+                                                type="email" 
+                                                autoComplete="email"
+                                                value={leadData.email || ''} 
+                                                onChange={(e) => { setLeadData({...leadData, email: e.target.value}); setEmailError(false); }} 
+                                                className={`w-full bg-white/10 border ${emailError ? 'border-red-500' : 'border-white/20'} rounded-xl px-4 py-3 text-white text-[16px] focus:border-cta outline-none transition-all text-left`} 
+                                                style={{direction: 'ltr'}} 
+                                            />
+                                            {emailError && <div className="bg-[#ff4d4d] text-white text-[11px] font-bold px-2 py-1 rounded mt-1 inline-block">נא להזין אימייל תקין</div>}
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="block text-[12px] text-slate-400 uppercase tracking-wider">טלפון</label>
+                                            <input 
+                                                type="tel" 
+                                                autoComplete="tel"
+                                                inputMode="numeric"
+                                                value={leadData.phone || ''} 
+                                                onChange={(e) => { setLeadData({...leadData, phone: formatPhone(e.target.value)}); setPhoneError(false); }} 
+                                                className={`w-full bg-white/10 border ${phoneError ? 'border-red-500' : 'border-white/20'} rounded-xl px-4 py-3 text-white text-[16px] focus:border-cta outline-none transition-all text-left`} 
+                                                style={{direction: 'ltr'}} 
+                                            />
+                                            {phoneError && <div className="bg-[#ff4d4d] text-white text-[11px] font-bold px-2 py-1 rounded mt-1 inline-block">נא להזין מספר טלפון תקין (10 ספרות, מתחיל ב-05)</div>}
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col items-center pt-2 w-full"><button onClick={submitHotConversion} disabled={isSubmitting} className="w-full bg-[#1f73f7] text-white font-extrabold text-[4.5vw] md:text-2xl py-5 rounded-full shadow-[0_10px_30px_rgba(31,115,247,0.45)] hover:bg-blue-500 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center text-center whitespace-nowrap overflow-hidden px-4">{isSubmitting ? 'מעבד...' : 'כן, דברו איתי תכלס'}</button></div>
+                                </div>
+                                <div className="max-w-4xl w-full mt-8 pb-4 px-2"><div className="marquee-wrapper"><div className="marquee-content">{[...Array(4)].map((_, i) => (<React.Fragment key={i}>{[ "Screenshot - 2025-05-21T111114.072.png", "Screenshot - 2025-05-21T111126.933.png", "Screenshot - 2025-05-21T111139.461.png", "Screenshot - 2025-05-21T111155.766.png", "Screenshot - 2025-05-21T111213.337.png", "Screenshot - 2025-05-21T111225.083.png", "Screenshot - 2025-05-21T111242.884.png" ].map((img, idx) => (<div key={`img-${i}-${idx}`} className="shrink-0 opacity-80 hover:opacity-100 transition-opacity duration-300"><img src={`public/סטרייפ/${img}`} alt="Stripe Proof" className="h-32 md:h-44 w-auto rounded-xl border border-white/10 shadow-lg object-contain" /></div>))}</React.Fragment>))}</div></div></div>
+                            </div>
+                        </div>
+                    )}
+                </>
+            );
+        };
+
+        const LandingPage = ({ onStartQuiz }) => (
+            <div className="flex flex-col items-center justify-center min-h-[80vh] p-6 fade-enter fade-enter-active w-full">
+                <div className="max-w-3xl w-full text-center space-y-8 center-all">
+                    <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight text-white text-center">
+                        הדרך המוכחת <span className="font-bold text-highlight">לייצר משכורת הייטק בדולרים</span> - מהלפטופ, מכל מקום בעולם
+                    </h1>
+                    <p className="text-xl md:text-2xl text-white max-w-2xl mx-auto leading-relaxed text-center">
+                        גלה את המודל העסקי שמאפשר לישראלים לנצל את פערי המטבע, לעבוד מכל מקום בעולם ולבנות נכס דיגיטלי שמניב רווחים במטבע החזק בעולם. בלי בוס על הראש ובלי תקרת זכוכית — גם אם אין לך ניסיון קודם או אנגלית מושלמת.
+                    </p>
+                    <div className="pt-6 w-full flex justify-center">
+                        <button 
+                            onClick={onStartQuiz}
+                            className="bg-cta text-white font-extrabold text-xl md:text-2xl py-5 px-12 rounded-full shadow-xl hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1"
+                        >
+                            התאם לי את ההדרכה האישית
+                        </button>
+                    </div>
+                    <div className="flex flex-wrap justify-center gap-4 mt-8 w-full">
+                        <div className="bg-white/10 backdrop-blur border border-white/20 rounded-full px-5 py-2 text-white font-semibold flex items-center justify-center gap-2">
+                            <span className="w-5 h-5 bg-cta text-white rounded-full flex items-center justify-center text-xs">✓</span>
+                            בדיקה חינמית
+                        </div>
+                        <div className="bg-white/10 backdrop-blur border border-white/20 rounded-full px-5 py-2 text-white font-semibold flex items-center justify-center gap-2">
+                            <span className="w-5 h-5 bg-cta text-white rounded-full flex items-center justify-center text-xs">✓</span>
+                            מותאם אישית
+                        </div>
+                        <div className="bg-white/10 backdrop-blur border border-white/20 rounded-full px-5 py-2 text-white font-semibold flex items-center justify-center gap-2">
+                            <span className="w-5 h-5 bg-cta text-white rounded-full flex items-center justify-center text-xs">✓</span>
+                            10 שאלות קצרות
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const QuizPage = ({ step, leadData, onChoice, onNext, onPrev, inputValue, setInputValue, errorMsg, inputRef }) => {
+            const q = quizQuestions[step];
+            const progressPercentage = Math.round(((step) / quizQuestions.length) * 100);
+            return (
+                <div className="flex flex-col items-center justify-center min-h-[80vh] p-4 fade-enter fade-enter-active w-full">
+                    <div className="glass-panel w-full max-w-2xl p-8 md:p-12 rounded-3xl relative">
+                        <div className="mb-8">
+                            <div className="flex justify-between text-sm text-white mb-2 font-bold">
+                                <span>התקדמות</span>
+                                <span>{progressPercentage}% הושלם</span>
+                            </div>
+                            <div className="w-full h-2 bg-white/20 rounded-full overflow-hidden">
+                                <div className="h-full bg-cta progress-fill" style={{ width: `${progressPercentage}%` }}></div>
+                            </div>
+                        </div>
+                        <div className="min-h-[300px] flex flex-col justify-center items-center center-all">
+                            <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-8 text-center leading-snug w-full">
+                                {q.question}
+                            </h2>
+                            {q.type === 'input' ? (
+                                <div className="space-y-6 w-full flex flex-col items-center">
+                                    <input
+                                        ref={inputRef}
+                                        type={q.id === 'phone' ? 'text' : q.inputType}
+                                        inputMode={q.id === 'phone' ? 'numeric' : (q.inputType === 'number' ? 'numeric' : undefined)}
+                                        value={inputValue}
+                                        onChange={(e) => {
+                                            if (q.id === 'phone') setInputValue(formatPhone(e.target.value));
+                                            else setInputValue(e.target.value);
+                                        }}
+                                        onKeyDown={(e) => e.key === 'Enter' && onNext()}
+                                        placeholder={q.placeholder}
+                                        className="w-full max-w-sm bg-white/10 border-2 border-white/30 focus:border-cta focus:bg-white/20 text-white rounded-xl p-4 text-xl transition-colors text-center"
+                                    />
+                                    {q.subtext && <p className="text-white/60 text-xs mt-1 text-center">{q.subtext}</p>}
+                                    {errorMsg && <div className="w-full text-center"><p className="inline-block text-white bg-red-500 px-4 py-2 rounded-full font-bold text-sm shadow-lg">{errorMsg}</p></div>}
+                                    <button 
+                                        onClick={onNext}
+                                        className="w-full max-w-sm bg-cta text-white font-semibold py-4 rounded-xl hover:bg-blue-600 transition-all text-lg shadow-lg flex items-center justify-center"
+                                    >
+                                        המשך -&gt;
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="space-y-4 w-full flex flex-col items-center">
+                                    {q.options.map((opt, i) => {
+                                        const isSelected = leadData[q.id] === opt.value;
+                                        return (
+                                            <button
+                                                key={i}
+                                                onClick={() => onChoice(opt.value)}
+                                                className={`w-full max-w-md text-right p-5 pr-8 border-2 rounded-xl transition-all duration-200 flex flex-col items-start justify-center text-white ${
+                                                    isSelected ? 'bg-cta border-cta' : 'bg-white/10 border-white/30 hover:border-cta hover:bg-white/20'
+                                                }`}
+                                            >
+                                                <div className="text-xl font-normal">{opt.label}</div>
+                                                {opt.subtext && <div className="text-white/80 mt-2 text-sm">{opt.subtext}</div>}
+                                            </button>
+                                        )
+                                    })}
+                                </div>
+                            )}
+                             {step > 0 && (
+                                <div className="flex justify-center mt-12 w-full">
+                                    <button onClick={onPrev} className="text-white/60 text-sm font-normal py-2 px-6 rounded-full hover:text-white hover:shadow-[0_0_15px_rgba(82,152,250,0.4)] transition-all duration-300">
+                                        חזור לשאלה הקודמת
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const LoadingPage = () => {
+            const dollars = Array.from({ length: 20 });
+            return (
+                <div className="flex flex-col items-center justify-center min-h-[80vh] p-6 fade-enter fade-enter-active w-full text-center overflow-hidden">
+                    {dollars.map((_, i) => (
+                        <div key={i} className="dollar-bill" style={{ left: `${Math.random() * 100}vw`, animationDuration: `${Math.random() * 2 + 2}s`, animationDelay: `${Math.random() * 3}s`, fontSize: `${Math.random() * 1.5 + 1}rem`, opacity: Math.random() * 0.5 + 0.3 }}>$</div>
+                    ))}
+                    <div className="max-w-xl w-full space-y-8 center-all z-10 relative">
+                        <div className="w-20 h-20 border-4 border-white/20 border-t-cta rounded-full animate-spin"></div>
+                        <h2 className="text-2xl md:text-3xl font-bold text-white leading-relaxed pulse-text">המערכת מנתחת את התשובות שלך ובודקת איזו הדרכה היא המתאימה ביותר עבורך...</h2>
+                        
+                        {/* Alex Hormozi Quote Block - Cloned from loading-2 */}
+                        <div className="pt-8 border-t border-white/10 flex flex-col items-center gap-4 w-full mt-4" style={{ textAlign: 'center' }}>
+                            <img src="public/alex hormozi.png" alt="Alex Hormozi" className="w-16 h-16 rounded-full border-2 border-[#fbbf24] shadow-lg object-cover mx-auto" />
+                            <p style={{ fontSize: '1.15rem', lineHeight: '1.6', color: '#5298fa', fontStyle: 'italic', fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
+                                "אם אתה רוצה להרוויח הרבה כסף ואתה לא גר בארה״ב... תלמד אנגלית, תקנה מחשב ותתחיל למכור שירותים ללקוחות אמריקאים."
+                            </p>
+                            <span className="text-[10px] text-white/40 font-bold uppercase tracking-widest w-full" style={{ textAlign: 'center' }}>- Alex Hormozi</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        function App() {
+            const [view, setViewState] = useState(() => {
+                const r = getHashRoute();
+                if (r === 'training-pro' || r === 'training-beginner' || r === 'training-1') return 'training';
+                return typeof r === 'object' ? 'quiz' : r;
+            });
+            const [quizStep, setQuizStep] = useState(() => {
+                const r = getHashRoute();
+                return typeof r === 'object' ? r.step : 0;
+            });
+            const [leadData, setLeadData] = useState({});
+            const [classification, setClassification] = useState(() => {
+                const r = getHashRoute();
+                if (r === 'training-pro') return 'Experience';
+                if (r === 'training-beginner') return 'Beginner';
+                return '';
+            });
+            const [overrideVideoId, setOverrideVideoId] = useState(() => {
+                const r = getHashRoute();
+                if (r === 'training-pro') return 'lNCtT3jhh2s';
+                if (r === 'training-beginner') return 'DkRAtTA39qY';
+                return '';
+            });
+
+            const [inputValue, setInputValue] = useState('');
+            const [errorMsg, setErrorMsg] = useState('');
+            const inputRef = useRef(null);
+
+            useEffect(() => {
+                if (view === 'quiz') {
+                    const q = quizQuestions[quizStep];
+                    if (q && q.type === 'input' && inputRef.current) {
+                        const timer = setTimeout(() => { if (inputRef.current) inputRef.current.focus(); }, 50);
+                        return () => clearTimeout(timer);
+                    }
+                }
+            }, [quizStep, view]);
+
+            const navigateTo = (route, step = null) => {
+                if (route === 'landing') window.location.hash = '#/';
+                else if (route === 'quiz') window.location.hash = `#/quiz${(step !== null ? step : 0) + 1}`;
+                else if (route === 'loading') window.location.hash = '#/loading';
+                else if (route === 'training') window.location.hash = '#/training-1';
+                else if (route === 'confirm') window.location.hash = '#/confirm';
+                else if (route === 'advanced-training') window.location.hash = '#/advanced-training';
+            };
+
+            // Specialized Pixel Event Tracking Effect
+            useEffect(() => {
+                const trackPixel = () => {
+                    const r = getHashRoute();
+                    if (window.fbq) {
+                        fbq('track', 'PageView');
+                        
+                        if (r === 'landing') {
+                            fbq('track', 'ViewContent');
+                        } else if (r === 'advanced-training') {
+                            fbq('track', 'Lead');
+                        }
+                    }
+                };
+
+                window.addEventListener('hashchange', trackPixel);
+                trackPixel(); // Track initial load
+                return () => window.removeEventListener('hashchange', trackPixel);
+            }, []);
+
+            useEffect(() => {
+                const onHashChange = () => {
+                    const r = getHashRoute();
+                    
+                    if (typeof r === 'object') {
+                        setViewState('quiz');
+                        setQuizStep(r.step);
+                        setInputValue(leadData[quizQuestions[r.step]?.id] || '');
+                        setErrorMsg('');
+                    } else if (r === 'training-pro') {
+                        setViewState('training');
+                        setClassification('Experience');
+                        setOverrideVideoId('lNCtT3jhh2s');
+                    } else if (r === 'training-beginner') {
+                        setViewState('training');
+                        setClassification('Beginner');
+                        setOverrideVideoId('DkRAtTA39qY');
+                    } else if (r === 'training-1') {
+                        setViewState('training');
+                    } else {
+                        setViewState(r);
+                    }
+                };
+
+                // Trigger once on mount to track initial entry
+                onHashChange();
+
+                window.addEventListener('hashchange', onHashChange);
+                return () => window.removeEventListener('hashchange', onHashChange);
+            }, [leadData]);
+
+            const sendWebhook = (url, data) => {
+                fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) }).catch(err => console.error(err));
+            };
+
+            const handleNext = () => {
+                const q = quizQuestions[quizStep];
+                if (q.type === 'input') {
+                    if (!inputValue.trim()) { setErrorMsg('שדה זה הוא חובה'); return; }
+                    if (q.id === 'firstName') {
+                        const nameRegex = /^[a-zA-Z\s\u0590-\u05FF]+$/;
+                        if (!nameRegex.test(inputValue) || inputValue.trim().length < 2) { setErrorMsg('נא להזין שם מלא תקין באותיות בלבד'); return; }
+                    }
+                    if (q.id === 'age') {
+                        const ageNum = parseInt(inputValue, 10);
+                        if (isNaN(ageNum) || ageNum < 15 || ageNum > 99) { setErrorMsg('גיל אינו תקין'); return; }
+                    }
+                    if (q.id === 'email') {
+                        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                        if (!emailRegex.test(inputValue)) { setErrorMsg('נא להזין כתובת מייל תקינה באנגלית בלבד'); return; }
+                    }
+                    if (q.id === 'phone') {
+                        const digits = inputValue.replace(/\D/g, '');
+                        if (digits.length !== 10 || !digits.startsWith('05')) { setErrorMsg('מספר טלפון חייב להכיל 10 ספרות ולהתחיל ב-05'); return; }
+                    }
+                    setErrorMsg('');
+                    const newData = { ...leadData, [q.id]: inputValue };
+                    setLeadData(newData);
+                    proceed(newData);
+                }
+            };
+
+            const proceed = (currentData) => {
+                if (quizStep < quizQuestions.length - 1) {
+                    const nextStep = quizStep + 1;
+                    setQuizStep(nextStep);
+                    setInputValue(currentData[quizQuestions[nextStep].id] || '');
+                    window.history.pushState(null, '', `#/quiz${nextStep + 1}`);
+                } else {
+                    sendWebhook('https://hooks.zapier.com/hooks/catch/16015214/ujre7w1/', currentData);
+                    navigateTo('loading');
+                    setViewState('loading');
+                    setTimeout(() => { navigateTo('training'); setViewState('training'); }, 4000);
+                }
+            };
+
+            return (
+                <div className="min-h-screen flex flex-col justify-between w-full">
+                    <header className="w-full p-8 flex justify-center items-center z-10 relative">
+                        <img src="public/noBgWhite (1) (2).png" alt="Dollar Academy Logo" className="h-20 md:h-28 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform duration-300 cursor-pointer" onClick={() => { navigateTo('landing'); setViewState('landing'); }} />
+                    </header>
+                    <main className="flex-grow z-10 relative flex flex-col justify-center items-center w-full">
+                        {view === 'landing' && <LandingPage onStartQuiz={() => { navigateTo('quiz', 0); setViewState('quiz'); setQuizStep(0); setInputValue(''); }} />}
+                        {view === 'quiz' && <QuizPage step={quizStep} leadData={leadData} onChoice={(val) => { const nd = {...leadData, [quizQuestions[quizStep].id]: val}; setLeadData(nd); proceed(nd); }} onNext={handleNext} onPrev={() => { const ps = quizStep - 1; setQuizStep(ps); setInputValue(leadData[quizQuestions[ps].id] || ''); window.history.pushState(null, '', `#/quiz${ps+1}`); }} inputValue={inputValue} setInputValue={setInputValue} errorMsg={errorMsg} inputRef={inputRef} />}
+                        {view === 'loading' && <LoadingPage />}
+                        {(view === 'training' || view === 'confirm' || view === 'loading-2' || view === 'advanced-training') && <TrainingPage leadData={leadData} setLeadData={setLeadData} classification={classification} overrideVideoId={overrideVideoId} />}
+                    </main>
+                    <footer className="w-full flex flex-col items-center text-center p-8 text-white/50 text-xs tracking-wide z-10 relative mt-auto border-t border-white/5">
+                        <img src="public/noBgWhite (1) (2).png" alt="Logo" className="h-10 md:h-12 object-contain mb-4 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500" />
+                        <div className="mb-2 w-full text-center">© 2026 Dollar Academy. כל הזכויות שמורות.</div>
+                        <div className="flex justify-center items-center gap-2 w-full">
+                            <a href="https://dollaracademy.co.il/%d7%9e%d7%93%d7%99%d7%a0%d7%99%d7%95%d7%aa-%d7%a4%d7%a8%d7%98%d7%99%d7%95%d7%aa/" target="_blank" className="hover:text-white/80 hover:underline transition-colors">מדיניות פרטיות</a>
+                            <span>|</span>
+                            <a href="https://dollaracademy.co.il/%d7%94%d7%a6%d7%94%d7%a8%d7%aa-%d7%a0%d7%92%d7%99%d7%a9%d7%95%d7%aa/" target="_blank" className="hover:text-white/80 hover:underline transition-colors">הצהרת נגישות</a>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
