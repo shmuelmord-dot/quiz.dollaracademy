@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מוקאפ vs לייב — השוואה</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0a0e1a; color:#e0e6f0; font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif; }
+
+  .topbar {
+    position:sticky; top:0; z-index:100;
+    background:rgba(10,14,26,.95); backdrop-filter:blur(12px);
+    border-bottom:1px solid #1e2742;
+    padding:12px 20px;
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  .topbar h1 { font-size:18px; font-weight:700; color:#fff; white-space:nowrap; }
+  .tabs { display:flex; gap:6px; flex-wrap:wrap; }
+  .tab {
+    padding:7px 16px; border-radius:8px; cursor:pointer;
+    background:#161d30; border:1px solid #26304d; color:#8a97be;
+    font-size:13px; font-weight:600; transition:all .2s;
+  }
+  .tab:hover { border-color:#3a4a70; color:#c0caee; }
+  .tab.active { background:#1a3a8a; border-color:#2e59f4; color:#fff; }
+
+  .viewport-toggle {
+    margin-right:auto; display:flex; gap:4px;
+  }
+  .vp-btn {
+    padding:6px 14px; border-radius:6px; cursor:pointer;
+    background:#161d30; border:1px solid #26304d; color:#8a97be;
+    font-size:12px; font-weight:600; transition:all .2s;
+  }
+  .vp-btn:hover { border-color:#3a4a70; }
+  .vp-btn.active { background:#0f2a5a; border-color:#2e59f4; color:#fff; }
+
+  .mode-toggle { display:flex; gap:4px; }
+  .mode-btn {
+    padding:6px 14px; border-radius:6px; cursor:pointer;
+    background:#161d30; border:1px solid #26304d; color:#8a97be;
+    font-size:12px; font-weight:600; transition:all .2s;
+  }
+  .mode-btn:hover { border-color:#3a4a70; }
+  .mode-btn.active { background:#2a1a5a; border-color:#8b5cf6; color:#fff; }
+
+  .compare-container {
+    display:flex; gap:0; height:calc(100vh - 56px); overflow:hidden;
+  }
+
+  .panel {
+    flex:1; display:flex; flex-direction:column; overflow:hidden;
+    border-left:1px solid #1e2742;
+  }
+  .panel:first-child { border-left:none; }
+  .panel-header {
+    padding:8px 16px; background:#111827; border-bottom:1px solid #1e2742;
+    font-size:13px; font-weight:700; text-align:center; flex-shrink:0;
+  }
+  .panel-header.mockup { color:#f59e0b; }
+  .panel-header.live { color:#22c55e; }
+
+  .panel-body {
+    flex:1; overflow-y:auto; overflow-x:hidden; display:flex; justify-content:center;
+    padding:16px; background:#080c16;
+  }
+  .panel-body img {
+    display:block; border-radius:8px;
+    box-shadow:0 4px 24px rgba(0,0,0,.4);
+  }
+  .panel-body iframe {
+    display:block; border:none; border-radius:8px;
+    box-shadow:0 4px 24px rgba(0,0,0,.4); background:#0f1426;
+  }
+  .zoom-box { transform-origin:top center; }
+  .zoom-sizer { overflow:hidden; }
+
+  /* Overlay mode */
+  .overlay-container {
+    flex:1; position:relative; overflow-y:auto;
+    display:flex; justify-content:center; padding:16px; background:#080c16;
+  }
+  .overlay-container img {
+    max-width:100%; height:auto; border-radius:8px;
+    box-shadow:0 4px 24px rgba(0,0,0,.4);
+  }
+  .overlay-container iframe {
+    position:absolute; top:16px; border:none; border-radius:8px;
+    box-shadow:0 4px 24px rgba(0,0,0,.4);
+  }
+  .overlay-slider {
+    position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+    z-index:200; background:rgba(10,14,26,.9); padding:10px 20px;
+    border-radius:12px; border:1px solid #26304d;
+    display:flex; align-items:center; gap:12px;
+  }
+  .overlay-slider label { font-size:13px; color:#8a97be; }
+  .overlay-slider input[type=range] { width:200px; accent-color:#8b5cf6; }
+
+  /* Sync scroll */
+  .sync-scroll-indicator {
+    position:fixed; bottom:20px; right:20px; z-index:200;
+    background:rgba(10,14,26,.9); padding:8px 14px; border-radius:8px;
+    border:1px solid #26304d; font-size:12px; color:#8a97be;
+    cursor:pointer; user-select:none;
+  }
+  .sync-scroll-indicator.active { border-color:#22c55e; color:#22c55e; }
+
+  .hidden { display:none !important; }
+
+  .no-mockup {
+    display:flex; align-items:center; justify-content:center;
+    color:#4a5578; font-size:15px; height:100%;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🔍 מוקאפ vs לייב</h1>
+  <div class="tabs" id="pageTabs"></div>
+  <div class="viewport-toggle">
+    <button class="vp-btn active" data-vp="mobile" onclick="setViewport('mobile')">📱 מובייל</button>
+    <button class="vp-btn" data-vp="desktop" onclick="setViewport('desktop')">🖥 דסקטופ</button>
+  </div>
+  <div class="mode-toggle">
+    <button class="mode-btn active" data-mode="side" onclick="setMode('side')">זה ליד זה</button>
+    <button class="mode-btn" data-mode="overlay" onclick="setMode('overlay')">שכבות</button>
+  </div>
+</div>
+
+<div id="compareArea"></div>
+
+<script>
+const PAGES = [
+  {
+    id: 'landing',
+    label: 'נחיתה',
+    hash: '#/',
+    mockups: {
+      mobile: 'design/reference/final/dollar-express-final/01-landing/mobile.png',
+      desktop: 'design/reference/final/dollar-express-final/01-landing/desktop.png'
+    }
+  },
+  {
+    id: 'landing-modal',
+    label: 'נחיתה — מודאל',
+    hash: '#/',
+    mockups: {
+      mobile: 'design/reference/final/dollar-express-final/01-landing/mobile-tap-on-business.png',
+      desktop: 'design/reference/final/dollar-express-final/01-landing/desktop-tap-on-business.png'
+    }
+  },
+  {
+    id: 'quiz-q4',
+    label: 'שאלון Q4',
+    hash: '#/quiz/4',
+    mockups: {
+      mobile: 'design/reference/final/dollar-express-final/02-quiz/mobile-all-7-questions.png',
+      desktop: 'design/reference/final/dollar-express-final/02-quiz/desktop-question-4.png'
+    }
+  },
+  {
+    id: 'quiz-q7',
+    label: 'שאלון Q7',
+    hash: '#/quiz/7',
+    mockups: {
+      mobile: 'design/reference/final/dollar-express-final/02-quiz/mobile-all-7-questions.png',
+      desktop: 'design/reference/final/dollar-express-final/02-quiz/desktop-question-7.png'
+    }
+  },
+  {
+    id: 'potential',
+    label: 'מפת פוטנציאל',
+    hash: '#/potential',
+    mockups: {
+      mobile: 'design/reference/final/dollar-express-final/03-potential/mobile.png',
+      desktop: 'design/reference/final/dollar-express-final/03-potential/desktop.png'
+    }
+  },
+  {
+    id: 'vsl-1',
+    label: 'VSL — דקה ראשונה',
+    hash: '#/vsl',
+    mockups: {
+      mobile: 'design/reference/final/dollar-express-final/04-vsl/mobile-1-first-minute.png',
+      desktop: 'design/reference/final/dollar-express-final/04-vsl/desktop-1-first-minute.png'
+    }
+  },
+  {
+    id: 'vsl-2',
+    label: 'VSL — אחרי דקה',
+    hash: '#/vsl',
+    mockups: {
+      mobile: 'design/reference/final/dollar-express-final/04-vsl/mobile-2-after-one-minute.png',
+      desktop: 'design/reference/final/dollar-express-final/04-vsl/desktop-2-after-one-minute.png'
+    }
+  },
+  {
+    id: 'vsl-3',
+    label: 'VSL — דוגמאות פתוח',
+    hash: '#/vsl',
+    mockups: {
+      mobile: 'design/reference/final/dollar-express-final/04-vsl/mobile-3-more-examples-open.png',
+      desktop: 'design/reference/final/dollar-express-final/04-vsl/desktop-3-more-examples-open.png'
+    }
+  },
+  {
+    id: 'vsl-4',
+    label: 'VSL — עדויות בזמן ניגון',
+    hash: '#/vsl',
+    mockups: {
+      mobile: null,
+      desktop: 'design/reference/final/dollar-express-final/04-vsl/desktop-4-testimonials-while-playing.png'
+    }
+  }
+];
+
+let currentPage = PAGES[0];
+let currentVP = 'mobile';
+let currentMode = 'side';
+let overlayOpacity = 0.5;
+
+function buildTabs() {
+  const c = document.getElementById('pageTabs');
+  c.innerHTML = '';
+  PAGES.forEach((p, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (i === 0 ? ' active' : '');
+    btn.textContent = p.label;
+    btn.onclick = () => selectPage(p, btn);
+    c.appendChild(btn);
+  });
+}
+
+function selectPage(page, btn) {
+  currentPage = page;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function setViewport(vp) {
+  currentVP = vp;
+  document.querySelectorAll('.vp-btn').forEach(b => b.classList.toggle('active', b.dataset.vp === vp));
+  render();
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  render();
+}
+
+function getIframeSize() {
+  return currentVP === 'mobile'
+    ? { width: 375, height: 812 }
+    : { width: 1440, height: 900 };
+}
+
+function render() {
+  const area = document.getElementById('compareArea');
+  const mockupSrc = currentPage.mockups[currentVP];
+  const iframeSrc = `funnel-express.html${currentPage.hash}`;
+  const sz = getIframeSize();
+
+  const panelW = Math.floor((window.innerWidth - 3) / 2) - 32;
+  const scale = panelW / sz.width;
+  const iframeH = Math.max(sz.height, 2400);
+  const sizerH = Math.round(iframeH * scale);
+
+  function zoomWrap(inner, w, h) {
+    return `<div class="zoom-sizer" style="width:${Math.round(w*scale)}px; height:${Math.round(h*scale)}px;">
+      <div class="zoom-box" style="transform:scale(${scale}); width:${w}px;">${inner}</div>
+    </div>`;
+  }
+
+  if (currentMode === 'side') {
+    area.innerHTML = `
+      <div class="compare-container">
+        <div class="panel">
+          <div class="panel-header mockup">📐 מוקאפ</div>
+          <div class="panel-body" id="mockupScroll">
+            ${mockupSrc
+              ? zoomWrap(`<img src="${mockupSrc}" alt="Mockup" style="width:${sz.width}px;">`, sz.width, iframeH)
+              : '<div class="no-mockup">אין מוקאפ לתצוגה זו</div>'}
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header live">🟢 לייב</div>
+          <div class="panel-body" id="liveScroll">
+            ${zoomWrap(`<iframe src="${iframeSrc}" width="${sz.width}" height="${iframeH}"></iframe>`, sz.width, iframeH)}
+          </div>
+        </div>
+      </div>
+    `;
+    syncScroll();
+  } else {
+    const oScale = (window.innerWidth - 64) / sz.width;
+    const oW = Math.round(sz.width * oScale);
+    const oH = Math.round(iframeH * oScale);
+    area.innerHTML = `
+      <div class="overlay-container" style="height:calc(100vh - 56px);">
+        <div class="zoom-sizer" style="width:${oW}px; height:${oH}px; position:relative;">
+          <div class="zoom-box" style="transform:scale(${oScale}); width:${sz.width}px;">
+            ${mockupSrc
+              ? `<img src="${mockupSrc}" alt="Mockup" style="width:${sz.width}px;">`
+              : '<div class="no-mockup">אין מוקאפ לתצוגה זו</div>'}
+          </div>
+          <div class="zoom-box" style="transform:scale(${oScale}); width:${sz.width}px; position:absolute; top:0; left:0;">
+            <iframe src="${iframeSrc}" width="${sz.width}" height="${iframeH}"
+              style="opacity:${overlayOpacity}; pointer-events:none;"></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="overlay-slider">
+        <label>מוקאפ</label>
+        <input type="range" min="0" max="100" value="${overlayOpacity*100}"
+          oninput="updateOverlay(this.value)">
+        <label>לייב</label>
+      </div>
+    `;
+  }
+}
+
+function updateOverlay(val) {
+  overlayOpacity = val / 100;
+  const iframe = document.querySelector('.overlay-container iframe');
+  if (iframe) iframe.style.opacity = overlayOpacity;
+}
+
+function syncScroll() {
+  const a = document.getElementById('mockupScroll');
+  const b = document.getElementById('liveScroll');
+  if (!a || !b) return;
+  let syncing = false;
+  a.addEventListener('scroll', () => {
+    if (syncing) return;
+    syncing = true;
+    const pct = a.scrollTop / (a.scrollHeight - a.clientHeight || 1);
+    b.scrollTop = pct * (b.scrollHeight - b.clientHeight);
+    syncing = false;
+  });
+  b.addEventListener('scroll', () => {
+    if (syncing) return;
+    syncing = true;
+    const pct = b.scrollTop / (b.scrollHeight - b.clientHeight || 1);
+    a.scrollTop = pct * (a.scrollHeight - a.clientHeight);
+    syncing = false;
+  });
+}
+
+buildTabs();
+render();
+</script>
+</body>
+</html>
