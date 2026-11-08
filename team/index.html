@@ -454,6 +454,16 @@ textarea{resize:vertical;min-height:72px}
         <button class="btn btn-reset" onclick="resetForm()">ניקוי טופס</button>
     </div>
 
+    <!-- UPAY LINK -->
+    <div class="card" style="text-align:center;padding:20px 22px">
+        <div style="font-size:13px;font-weight:700;color:#4282FA;margin-bottom:10px">לינק תשלום לשליחה ללקוח</div>
+        <a href="https://app.upay.co.il/API6/s.php?m=UFI1WUFlcjdMZUJ4RUNiMFB1WUl1QT09" target="_blank" rel="noopener"
+           class="btn btn-primary" style="display:block;text-decoration:none;text-align:center;margin-bottom:10px">
+            פתיחת לינק תשלום UPay
+        </a>
+        <button class="btn btn-reset" style="margin-top:0;font-size:13px" onclick="copyUpay()">העתקת לינק</button>
+    </div>
+
     <div class="history" id="historySection">
         <h3>נשלחו בסשן הזה</h3>
         <div id="historyList"><p class="empty">עדיין לא נשלחו לידים</p></div>
@@ -467,6 +477,11 @@ const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbzC9yLjbRhQwQfqp
 let paid = false;
 let diagOpen = false;
 const sent = [];
+
+function copyUpay() {
+    navigator.clipboard.writeText('https://app.upay.co.il/API6/s.php?m=UFI1WUFlcjdMZUJ4RUNiMFB1WUl1QT09');
+    showToast('הלינק הועתק!', 'ok');
+}
 
 function togglePaid() {
     paid = !paid;
