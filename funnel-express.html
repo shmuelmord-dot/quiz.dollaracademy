@@ -151,6 +151,21 @@
             .tm-seg-fill{transition:none}
         }
     </style>
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1138811345198062');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1138811345198062&ev=PageView&noscript=1"/></noscript>
+
 </head>
 <body>
     <div id="root"></div>
@@ -1092,10 +1107,10 @@
         ];
         const TrustStrip = () => (
             <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:'6px 16px', padding:'0 16px', fontSize:13, color:'#C9D2EC', fontWeight:600 }}>
-                <span>★ 8 שנים בשוק האמריקאי</span>
-                <span>✓ הכנסות מנוהלות +$10M</span>
-                <span>✓ +100 עסקים מלווים</span>
-                <span>✓ +4,000 לקוחות משלמים</span>
+                <span><span style={{color:'#4282FA'}}>★</span> 8 שנים בשוק האמריקאי</span>
+                <span><span style={{color:'#4282FA'}}>✓</span> הכנסות מנוהלות +$10M</span>
+                <span><span style={{color:'#4282FA'}}>✓</span> +100 עסקים מלווים</span>
+                <span><span style={{color:'#4282FA'}}>✓</span> +4,000 לקוחות משלמים</span>
             </div>
         );
 
@@ -1173,12 +1188,13 @@
                                 <div style={{ display:'flex', flexDirection:'column', gap:2, flex:1, minWidth:0 }}>
                                     <span style={{ fontSize:15, fontWeight:700, color:'#F4F6FC' }}>{row.type}</span>
                                     <span style={{ fontSize:12, color:'#6B7BA0', display:'flex', alignItems:'center', gap:4 }}>
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.296 1.828-1.296 2.104 0 4.236.88 5.54 1.608l.888-5.472C17.588.96 15.576.36 13.22.36 9.064.36 6.14 2.712 6.14 6.384c0 3.276 2.46 4.716 5.064 5.592 2.1.708 2.772 1.2 2.772 2.04 0 .96-.84 1.488-2.34 1.488-1.836 0-4.464-.936-6.072-2.076l-.888 5.544C6.268 19.86 8.82 20.64 11.58 20.64c4.464 0 7.272-2.22 7.272-6.12 0-3.432-2.436-4.812-4.876-5.37z" fill="#6B7BA0"/></svg>
-                                        לתמונת מקור מ-Stripe
+                                        <svg width="36" height="15" viewBox="0 0 60 25" fill="none"><path d="M5 12.2C5 11.3 5.7 10.9 6.9 10.9c2.1 0 4.8.6 6.9 1.8V7.1C11.5 6.2 9.3 5.8 6.9 5.8 2.8 5.8 0 8 0 11.5c0 5.5 7.5 4.6 7.5 7 0 1-.8 1.3-2 1.3-1.7 0-4.1-.7-5.9-1.7v5.6c2 .9 4 1.3 5.9 1.3 4.2 0 7.1-2.1 7.1-5.5C12.6 13.8 5 14.9 5 12.2zm14.3-6.1l-3.2.7V9h3.2V15c0 4.1 2 5.8 5.6 5.8 1.7 0 2.9-.4 3.6-.8v-4.2c-.7.3-1.6.5-2.7.5-1.5 0-2.5-.5-2.5-2.3V9h2.5V5.5h-2.5V2.7l-4 .8V6.1zm12.6 3h-.1l-.2-3h-3.9V20.5h4V10.1c.9-1.2 2.5-1 3-.8V5.5c-.5-.2-2.4-.5-3.3 1.2l.5-.6zM40.7 5.5l-4 .9V20.5h4V5.5zm0-1.6l4-3.5V-3h-4v5.9zm8.4-1.6l-4 .8v16.2c0 3 1.5 5.1 4.6 5.1 1.5 0 2.5-.3 3.1-.6v-3.3c-.6.2-3.4 1-3.4-1.5v-6h3.4V5.5h-3.4V2.3h-.3zm12.8 5c-1.5 0-2.5.7-3 1.2l-.2-1h-3.9V20.5h4v-9.8c.7-.9 1.8-1.1 2.3-1.1.3 0 .6 0 .8.1V5.5c-.3-.1-.6-.2-1-.2z" fill="#635BFF"/></svg>
+                                        לתמונת מקור
                                     </span>
                                 </div>
                                 <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:2, flexShrink:0 }}>
                                     <span style={{ fontFamily:'Rubik,sans-serif', fontWeight:800, fontSize:'clamp(20px, 4vw, 26px)', color:'#F4F6FC', direction:'ltr' }}>{row.dailyAmount}</span>
+                                    <span style={{ fontSize:12, color:'#A9B7DE' }}>סליקות ביום אחד</span>
                                     <span style={{ fontSize:12, color:'#4ADE80' }}>{row.monthlyGrowth} צמיחה חודשית</span>
                                 </div>
                             </button>
@@ -1217,6 +1233,7 @@
         // ╚══════════════════════════════════════════════════════╝
         const LandingScreen = ({ navigate }) => {
             const [stripeModalOpen, setStripeModalOpen] = useState(false);
+            useEffect(() => { if (typeof fbq === 'function') fbq('track', 'ViewContent'); }, []);
             return (
             <div style={{ display:'flex', flexDirection:'column', alignItems:'center', width:'100%', gap:36 }}>
                 <div style={{ display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'24px 16px 0', width:'100%', maxWidth:720, textAlign:'center', gap:24 }}>
@@ -1228,7 +1245,7 @@
                     </p>
                     <button onClick={function(){ navigate('#/quiz/1'); }}
                         style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', minHeight:56, padding:'0 36px', borderRadius:100, background:'#2E59F4', color:'#fff', fontFamily:'Rubik,sans-serif', fontSize:'clamp(17px, 4vw, 21px)', fontWeight:800, border:'none', cursor:'pointer', boxShadow:'0 12px 32px rgba(46,89,244,0.35)', transition:'background 0.2s', textAlign:'center' }}>
-                        בוא נבדוק את ההיתכנות שלך ←
+                        בוא נבדוק את ההיתכנות שלך
                     </button>
                     <TrustStrip/>
                 </div>
@@ -1240,7 +1257,7 @@
                 <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:12, padding:'32px 16px 48px', textAlign:'center' }}>
                     <button onClick={function(){ navigate('#/quiz/1'); }}
                         style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', minHeight:56, padding:'0 36px', borderRadius:100, background:'#2E59F4', color:'#fff', fontFamily:'Rubik,sans-serif', fontSize:'clamp(17px, 4vw, 21px)', fontWeight:800, border:'none', cursor:'pointer', boxShadow:'0 12px 32px rgba(46,89,244,0.35)', transition:'background 0.2s', textAlign:'center' }}>
-                        בוא נבדוק את ההיתכנות שלך ←
+                        בוא נבדוק את ההיתכנות שלך
                     </button>
                     <p style={{ fontSize:12, color:'#6B7BA0', margin:0 }}>בחינם לגמרי. כמה שאלות קצרות.</p>
                 </div>
@@ -1451,7 +1468,7 @@
 
             const gaugeScore = useSpringValue(score, { stiffness: 60, damping: 18, delay: 400, onComplete: () => setRevealed(true) });
 
-            useEffect(() => { requestAnimationFrame(() => setMounted(true)); }, []);
+            useEffect(() => { requestAnimationFrame(() => setMounted(true)); if (typeof fbq === 'function') fbq('track', 'AddToCart'); }, []);
 
             const subVals = {
                 model: { software: 91, ecommerce: 87, agency: 89 }[ct] || 82,
@@ -1517,11 +1534,12 @@
                             {/* Instruction */}
                             <p className="text-center text-xs text-txt-note mb-4">לחצו על כל נתון כדי לראות מאיפה הוא מגיע</p>
 
-                            {/* Section C — Three Metric Cards */}
+                            {/* Section C — Three Metric Cards + Inline Detail */}
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                                 {cards.map((card, i) => (
-                                    <button key={card.key} onClick={() => togglePanel(card.key)}
-                                        className={'bg-[#060a17]/80 rounded-2xl p-4 sm:p-5 text-center transition-all duration-200 cursor-pointer apple-enter apple-stagger-' + (i+1) + (revealed ? ' apple-enter-active' : '') + (openPanel === card.key ? ' border-2 border-highlight' : ' border border-slate-800/80 hover:border-slate-600')}>
+                                    <React.Fragment key={card.key}>
+                                    <button onClick={() => togglePanel(card.key)}
+                                        className={'sm:order-1 bg-[#060a17]/80 rounded-2xl p-4 sm:p-5 text-center transition-all duration-200 cursor-pointer apple-enter apple-stagger-' + (i+1) + (revealed ? ' apple-enter-active' : '') + (openPanel === card.key ? ' border-2 border-highlight' : ' border border-slate-800/80 hover:border-slate-600')}>
                                         <span className="text-xs text-slate-400 block mb-1">{card.label}</span>
                                         <span className="font-black text-white block mb-1" style={{ letterSpacing:'-0.03em', fontSize:'clamp(20px, 4vw, 28px)' }}>{card.value}</span>
                                         <span className="text-[11px] text-highlight block mb-3 font-medium">{card.sub}</span>
@@ -1535,113 +1553,112 @@
                                             </svg>
                                         </span>
                                     </button>
+                                    {openPanel === card.key && (
+                                        <div className="sm:order-2 sm:col-span-3 bg-[#060a17]/80 border border-card-border rounded-2xl p-5 sm:p-6 fade-enter fade-enter-active relative">
+                                            <button onClick={() => setOpenPanel(null)} className="absolute top-3 left-3 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 transition-colors z-10" aria-label="סגור">
+                                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+                                            </button>
+
+                                            {openPanel === 'audience' && (
+                                                <div>
+                                                    <h3 className="text-lg sm:text-xl font-extrabold text-txt text-center mb-2">פי 34 אנשים. פי 50 עסקים.</h3>
+                                                    <p className="text-sm text-txt-sec text-center mb-6 max-w-lg mx-auto">גם 100% מהשוק בישראל הם כ-3% מהשוק בארה״ב. כל נקודה כאן היא אוכלוסייה בגודל של ישראל.</p>
+                                                    <div className="flex flex-wrap justify-center gap-1.5 mb-6 max-w-md mx-auto">
+                                                        {Array.from({length: 33}, (_, j) => (
+                                                            <div key={j} className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-highlight"/>
+                                                        ))}
+                                                        <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white border-2 border-slate-600"/>
+                                                    </div>
+                                                    <div className="space-y-4 max-w-lg mx-auto">
+                                                        <div>
+                                                            <p className="text-xs text-txt-note text-right mb-2 font-semibold">אוכלוסייה</p>
+                                                            <div className="space-y-2">
+                                                                <div className="flex items-center gap-3">
+                                                                    <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ישראל</span>
+                                                                    <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-slate-500" style={{width:'3%'}}/></div>
+                                                                    <span className="text-xs text-txt-sec font-semibold w-20 text-left shrink-0">10.1 מיליון</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-3">
+                                                                    <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ארה״ב</span>
+                                                                    <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-highlight" style={{width:'100%'}}/></div>
+                                                                    <span className="text-xs text-txt font-bold w-20 text-left shrink-0">341.8 מיליון</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-xs text-txt-note text-right mb-2 font-semibold">עסקים שאפשר למכור להם</p>
+                                                            <div className="space-y-2">
+                                                                <div className="flex items-center gap-3">
+                                                                    <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ישראל</span>
+                                                                    <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-slate-500" style={{width:'2%'}}/></div>
+                                                                    <span className="text-xs text-txt-sec font-semibold w-20 text-left shrink-0">711 אלף</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-3">
+                                                                    <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ארה״ב</span>
+                                                                    <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-highlight" style={{width:'100%'}}/></div>
+                                                                    <span className="text-xs text-txt font-bold w-20 text-left shrink-0">36.2 מיליון</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-[10px] text-slate-500 text-center mt-5">מקורות: הבנק העולמי 2025 (אוכלוסייה); SBA Office of Advocacy 2026; הלמ״ס 2024. הגדרת ״עסק״ אינה זהה בשני המקורות.</p>
+                                                </div>
+                                            )}
+
+                                            {openPanel === 'dollar' && (
+                                                <div>
+                                                    <h3 className="text-lg sm:text-xl font-extrabold text-txt text-center mb-2">מנוע הדולר: יותר כוח קנייה, ו-0% מע״מ ביצוא</h3>
+                                                    <p className="text-sm text-txt-sec text-center mb-6 max-w-lg mx-auto">ללקוח האמריקאי יש פי 1.5 כוח קנייה לנפש. ובמכירה ללקוחות בחו״ל המע״מ הוא בשיעור אפס, במקום 18% בישראל (בכפוף לתנאי החוק).</p>
+                                                    <div className="flex gap-3 justify-center mb-6">
+                                                        <div className="bg-card border border-card-border rounded-xl px-6 py-4 text-center">
+                                                            <span className="text-[11px] text-txt-note block mb-1">מע״מ ביצוא</span>
+                                                            <span className="text-3xl font-black text-txt">0%</span>
+                                                        </div>
+                                                        <div className="bg-card border border-card-border rounded-xl px-6 py-4 text-center">
+                                                            <span className="text-[11px] text-txt-note block mb-1">מע״מ בישראל</span>
+                                                            <span className="text-3xl font-black text-txt">18%</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="max-w-lg mx-auto">
+                                                        <p className="text-xs text-txt-note text-right mb-2 font-semibold">כוח קנייה לנפש</p>
+                                                        <div className="space-y-2">
+                                                            <div className="flex items-center gap-3">
+                                                                <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ישראל</span>
+                                                                <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-slate-500" style={{width:'66%'}}/></div>
+                                                                <span className="text-xs text-txt-sec font-semibold w-16 text-left shrink-0" style={{direction:'ltr'}}>$59,717</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-3">
+                                                                <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ארה״ב</span>
+                                                                <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-highlight" style={{width:'100%'}}/></div>
+                                                                <span className="text-xs text-txt font-bold w-16 text-left shrink-0" style={{direction:'ltr'}}>$90,027</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-[10px] text-slate-500 text-center mt-5">{'מקורות: הבנק העולמי 2025, חוזר לנפש במונחי כוח קנייה; חוק מס ערך מוסף, סעיף 30. ה-' + subVals.surge + '% הוא הערכה ראשונית לפי הנתונים שמילאת.'}</p>
+                                                </div>
+                                            )}
+
+                                            {openPanel === 'fit' && (
+                                                <div>
+                                                    <h3 className="text-lg sm:text-xl font-extrabold text-txt text-center mb-2">העסק שלך לא מתחיל מאפס</h3>
+                                                    <p className="text-sm text-txt-sec text-center mb-6 max-w-lg mx-auto">
+                                                        {ct === 'ecommerce'
+                                                            ? 'מוצר שכבר נמכר בישראל מגיע לארה״ב עם מחיר, ספקים ולקוחות שכבר קנו. ההערכה מבוססת על מה שסיפרת לנו בטופס:'
+                                                            : 'שירות שכבר עובד בישראל אפשר לתת גם ללקוחות בארה״ב, וברוב המקרים מרחוק. ההערכה מבוססת על מה שסיפרת לנו בטופס:'}
+                                                    </p>
+                                                    <div className="flex flex-wrap gap-2 justify-center mb-6">
+                                                        <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card border border-card-border text-txt">{BIZ_SHORT[ct] || 'עסק'}</span>
+                                                        <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card border border-card-border text-txt">{'מחזור של ' + (REVENUE_LABELS[leadData.revenue] || '') + ' בחודש'}</span>
+                                                    </div>
+                                                    <p className="text-sm text-txt-sec text-center mb-2">בפגישת האפיון בודקים את המספרים האמיתיים של העסק שלך.</p>
+                                                    <p className="text-[11px] text-txt-note text-center">הערכה ראשונית לפי הנתונים שמילאת, לא נתון חיצוני.</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                    </React.Fragment>
                                 ))}
                             </div>
-
-                            {/* Section D — Detail Panels */}
-                            {openPanel && (
-                                <div className="mt-4 bg-[#060a17]/80 border border-card-border rounded-2xl p-5 sm:p-6 fade-enter fade-enter-active relative">
-                                    <button onClick={() => setOpenPanel(null)} className="absolute top-3 left-3 w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-slate-400 transition-colors z-10" aria-label="סגור">
-                                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3L11 11M11 3L3 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
-                                    </button>
-
-                                    {openPanel === 'audience' && (
-                                        <div>
-                                            <h3 className="text-lg sm:text-xl font-extrabold text-txt text-center mb-2">פי 34 אנשים. פי 50 עסקים.</h3>
-                                            <p className="text-sm text-txt-sec text-center mb-6 max-w-lg mx-auto">גם 100% מהשוק בישראל הם כ-3% מהשוק בארה״ב. כל נקודה כאן היא אוכלוסייה בגודל של ישראל.</p>
-                                            <div className="flex flex-wrap justify-center gap-1.5 mb-6 max-w-md mx-auto">
-                                                {Array.from({length: 33}, (_, i) => (
-                                                    <div key={i} className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-highlight"/>
-                                                ))}
-                                                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white border-2 border-slate-600"/>
-                                            </div>
-                                            <div className="space-y-4 max-w-lg mx-auto">
-                                                <div>
-                                                    <p className="text-xs text-txt-note text-right mb-2 font-semibold">אוכלוסייה</p>
-                                                    <div className="space-y-2">
-                                                        <div className="flex items-center gap-3">
-                                                            <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ישראל</span>
-                                                            <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-slate-500" style={{width:'3%'}}/></div>
-                                                            <span className="text-xs text-txt-sec font-semibold w-20 text-left shrink-0">10.1 מיליון</span>
-                                                        </div>
-                                                        <div className="flex items-center gap-3">
-                                                            <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ארה״ב</span>
-                                                            <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-highlight" style={{width:'100%'}}/></div>
-                                                            <span className="text-xs text-txt font-bold w-20 text-left shrink-0">341.8 מיליון</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div>
-                                                    <p className="text-xs text-txt-note text-right mb-2 font-semibold">עסקים שאפשר למכור להם</p>
-                                                    <div className="space-y-2">
-                                                        <div className="flex items-center gap-3">
-                                                            <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ישראל</span>
-                                                            <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-slate-500" style={{width:'2%'}}/></div>
-                                                            <span className="text-xs text-txt-sec font-semibold w-20 text-left shrink-0">711 אלף</span>
-                                                        </div>
-                                                        <div className="flex items-center gap-3">
-                                                            <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ארה״ב</span>
-                                                            <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-highlight" style={{width:'100%'}}/></div>
-                                                            <span className="text-xs text-txt font-bold w-20 text-left shrink-0">36.2 מיליון</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p className="text-[10px] text-slate-500 text-center mt-5">מקורות: הבנק העולמי 2025 (אוכלוסייה); SBA Office of Advocacy 2026; הלמ״ס 2024. הגדרת ״עסק״ אינה זהה בשני המקורות.</p>
-                                        </div>
-                                    )}
-
-                                    {openPanel === 'dollar' && (
-                                        <div>
-                                            <h3 className="text-lg sm:text-xl font-extrabold text-txt text-center mb-2">מנוע הדולר: יותר כוח קנייה, ו-0% מע״מ ביצוא</h3>
-                                            <p className="text-sm text-txt-sec text-center mb-6 max-w-lg mx-auto">ללקוח האמריקאי יש פי 1.5 כוח קנייה לנפש. ובמכירה ללקוחות בחו״ל המע״מ הוא בשיעור אפס, במקום 18% בישראל (בכפוף לתנאי החוק).</p>
-                                            <div className="flex gap-3 justify-center mb-6">
-                                                <div className="bg-card border border-card-border rounded-xl px-6 py-4 text-center">
-                                                    <span className="text-[11px] text-txt-note block mb-1">מע״מ ביצוא</span>
-                                                    <span className="text-3xl font-black text-txt">0%</span>
-                                                </div>
-                                                <div className="bg-card border border-card-border rounded-xl px-6 py-4 text-center">
-                                                    <span className="text-[11px] text-txt-note block mb-1">מע״מ בישראל</span>
-                                                    <span className="text-3xl font-black text-txt">18%</span>
-                                                </div>
-                                            </div>
-                                            <div className="max-w-lg mx-auto">
-                                                <p className="text-xs text-txt-note text-right mb-2 font-semibold">כוח קנייה לנפש</p>
-                                                <div className="space-y-2">
-                                                    <div className="flex items-center gap-3">
-                                                        <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ישראל</span>
-                                                        <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-slate-500" style={{width:'66%'}}/></div>
-                                                        <span className="text-xs text-txt-sec font-semibold w-16 text-left shrink-0" style={{direction:'ltr'}}>$59,717</span>
-                                                    </div>
-                                                    <div className="flex items-center gap-3">
-                                                        <span className="text-[11px] text-txt-note w-12 text-right shrink-0">ארה״ב</span>
-                                                        <div className="flex-1 bg-slate-800 rounded-full h-3 overflow-hidden"><div className="h-full rounded-full bg-highlight" style={{width:'100%'}}/></div>
-                                                        <span className="text-xs text-txt font-bold w-16 text-left shrink-0" style={{direction:'ltr'}}>$90,027</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p className="text-[10px] text-slate-500 text-center mt-5">{'מקורות: הבנק העולמי 2025, חוזר לנפש במונחי כוח קנייה; חוק מס ערך מוסף, סעיף 30. ה-' + subVals.surge + '% הוא הערכה ראשונית לפי הנתונים שמילאת.'}</p>
-                                        </div>
-                                    )}
-
-                                    {openPanel === 'fit' && (
-                                        <div>
-                                            <h3 className="text-lg sm:text-xl font-extrabold text-txt text-center mb-2">העסק שלך לא מתחיל מאפס</h3>
-                                            <p className="text-sm text-txt-sec text-center mb-6 max-w-lg mx-auto">
-                                                {ct === 'ecommerce'
-                                                    ? 'מוצר שכבר נמכר בישראל מגיע לארה״ב עם מחיר, ספקים ולקוחות שכבר קנו. ההערכה מבוססת על מה שסיפרת לנו בטופס:'
-                                                    : 'שירות שכבר עובד בישראל אפשר לתת גם ללקוחות בארה״ב, וברוב המקרים מרחוק. ההערכה מבוססת על מה שסיפרת לנו בטופס:'}
-                                            </p>
-                                            <div className="flex flex-wrap gap-2 justify-center mb-6">
-                                                <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card border border-card-border text-txt">{BIZ_SHORT[ct] || 'עסק'}</span>
-                                                <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card border border-card-border text-txt">{'מחזור של ' + (REVENUE_LABELS[leadData.revenue] || '') + ' בחודש'}</span>
-                                            </div>
-                                            <p className="text-sm text-txt-sec text-center mb-2">בפגישת האפיון בודקים את המספרים האמיתיים של העסק שלך.</p>
-                                            <p className="text-[11px] text-txt-note text-center">הערכה ראשונית לפי הנתונים שמילאת, לא נתון חיצוני.</p>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
 
                             <p className="text-[10px] text-slate-600 text-center mt-6">*הנתונים מבוססים על שקלול מאגרי מידע ואינם מהווים התחייבות לתוצאה כלשהי</p>
                         </div>
@@ -1767,6 +1784,7 @@
             const vipRef = useRef(null);
 
             useEffect(() => {
+                if (typeof fbq === 'function') fbq('track', 'Lead');
                 const seen = sessionStorage.getItem('dollarExpressOfferSeen');
                 if (seen) { setShowOffer(true); return; }
                 const timer = setTimeout(() => {
@@ -1794,8 +1812,20 @@
                 const el = videoRef.current;
                 if (!el) return;
                 const iframe = el.querySelector('iframe');
-                if (iframe && iframe.requestFullscreen) iframe.requestFullscreen();
-                else if (el.requestFullscreen) el.requestFullscreen();
+                const goFS = (t) => {
+                    if (t.requestFullscreen) return t.requestFullscreen();
+                    if (t.webkitRequestFullscreen) return t.webkitRequestFullscreen();
+                    if (t.webkitEnterFullscreen) return t.webkitEnterFullscreen();
+                    return null;
+                };
+                const target = iframe || el;
+                try {
+                    var result = goFS(target);
+                    if (!result && iframe) result = goFS(el);
+                    if (!result) window.open('https://www.youtube.com/watch?v=' + VSL_VIDEO_ID, '_blank');
+                } catch(e) {
+                    window.open('https://www.youtube.com/watch?v=' + VSL_VIDEO_ID, '_blank');
+                }
             };
 
             const handleUnmute = () => {
