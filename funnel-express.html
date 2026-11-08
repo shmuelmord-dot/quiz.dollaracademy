@@ -2110,6 +2110,7 @@
             const [tagDrafts, setTagDrafts] = useState({});
             const [dmOk, setDmOk] = useState(false);
             const [isSummary, setIsSummary] = useState(false);
+            const [diagZoom, setDiagZoom] = useState(null);
 
             var prior = React.useMemo(function() { return buildDiagPrior(leadData); }, []);
             var get = function(id) { return diagOwn(ans, id) && ans[id] != null && ans[id] !== '' ? ans[id] : (diagFilled(prior, id) ? prior[id] : undefined); };
@@ -2363,13 +2364,32 @@
                 if (sp[0] === 'stripe') {
                     var picks = DIAG_STRIPE_PICKS[type] || DIAG_STRIPE_PICKS.service;
                     var item = TM_STRIPE_ITEMS[picks[sp[1]]]; if (!item) return null;
+                    var isOpen = diagZoom && diagZoom.img === item.img;
                     return (
-                        <div style={{ display:'flex', gap:12, alignItems:'center', padding:'12px 16px', background:'#141A2E', borderRadius:12, border:'1px solid #26304D', marginTop:16 }}>
-                            <img src={item.img} alt="" style={{ width:60, height:26, borderRadius:6, objectFit:'cover', border:'1px solid #26304D' }} />
-                            <div>
-                                <div style={{ color:'#F4F6FC', fontSize:14, fontWeight:700, fontFamily:'Rubik,sans-serif' }}>${(item.amount/100).toLocaleString('en-US')}</div>
-                                <div style={{ color:'#6B7BA0', fontSize:12 }}>{item.name}</div>
+                        <div>
+                            <div onClick={function(){ setDiagZoom(isOpen ? null : item); }}
+                                style={{ display:'flex', gap:12, alignItems:'center', padding:'12px 16px', background:'#141A2E', borderRadius:12, border:'1px solid ' + (isOpen ? '#2E59F4' : '#26304D'), marginTop:16, cursor:'pointer', transition:'border-color 0.2s' }}>
+                                <img src={item.img} alt="" style={{ width:60, height:26, borderRadius:6, objectFit:'cover', border:'1px solid #26304D' }} />
+                                <div style={{ flex:1 }}>
+                                    <div style={{ color:'#F4F6FC', fontSize:14, fontWeight:700, fontFamily:'Rubik,sans-serif' }}>${item.amount.toLocaleString('en-US')}</div>
+                                    <div style={{ color:'#6B7BA0', fontSize:12 }}>{item.name}</div>
+                                </div>
+                                <span style={{ color:'#6B7BA0', fontSize:12 }}>{isOpen ? 'סגירה' : 'הגדלה'}</span>
                             </div>
+                            {isOpen && (
+                                <div style={{ width:'100%', marginTop:8, borderRadius:16, background:'#141A2E', border:'1px solid #2E59F4', padding:'16px 16px 20px', position:'relative' }}>
+                                    <button type="button" onClick={function(){ setDiagZoom(null); }}
+                                        style={{ position:'absolute', top:12, left:12, width:32, height:32, borderRadius:'50%', background:'rgba(255,255,255,0.1)', border:'none', color:'#fff', fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', zIndex:1 }}
+                                        aria-label="סגירה">✕</button>
+                                    <div style={{ textAlign:'right', marginBottom:10 }}>
+                                        <div style={{ fontSize:15, fontWeight:700, color:'#F4F6FC' }}>{item.name}</div>
+                                        <div style={{ fontSize:13, color:'#A9B7DE' }}>${item.amount.toLocaleString('en-US')} · {item.month}</div>
+                                    </div>
+                                    <img src={item.img} alt={'צילום מסך מ-Stripe: '+item.name}
+                                        style={{ width:'100%', borderRadius:12, background:'#fff', border:'1px solid #26304D' }}/>
+                                    <p style={{ textAlign:'center', fontSize:11, color:'#6B7BA0', marginTop:8, marginBottom:0 }}>צילום המסך המקורי מחשבון Stripe של הלקוח.</p>
+                                </div>
+                            )}
                         </div>
                     );
                 }
@@ -2398,11 +2418,28 @@
                             ); })}
                         </div>
                         <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
-                            {picks.map(function(idx, i) { var item = TM_STRIPE_ITEMS[idx]; if (!item) return null; return (
-                                <div key={i} style={{ padding:12, background:'#141A2E', borderRadius:12, border:'1px solid #26304D' }}>
-                                    <img src={item.img} alt="" style={{ width:'100%', borderRadius:8, marginBottom:8 }} />
-                                    <div style={{ color:'#F4F6FC', fontSize:14, fontWeight:700, fontFamily:'Rubik,sans-serif' }}>${(item.amount/100).toLocaleString('en-US')}</div>
-                                    <div style={{ color:'#6B7BA0', fontSize:12 }}>{item.name}</div>
+                            {picks.map(function(idx, i) { var item = TM_STRIPE_ITEMS[idx]; if (!item) return null; var isOpen = diagZoom && diagZoom.img === item.img; return (
+                                <div key={i}>
+                                    <div onClick={function(){ setDiagZoom(isOpen ? null : item); }}
+                                        style={{ padding:12, background:'#141A2E', borderRadius:12, border:'1px solid ' + (isOpen ? '#2E59F4' : '#26304D'), cursor:'pointer', transition:'border-color 0.2s' }}>
+                                        <img src={item.img} alt="" style={{ width:'100%', borderRadius:8, marginBottom:8 }} />
+                                        <div style={{ color:'#F4F6FC', fontSize:14, fontWeight:700, fontFamily:'Rubik,sans-serif' }}>${item.amount.toLocaleString('en-US')}</div>
+                                        <div style={{ color:'#6B7BA0', fontSize:12 }}>{item.name}</div>
+                                    </div>
+                                    {isOpen && (
+                                        <div style={{ marginTop:8, borderRadius:16, background:'#141A2E', border:'1px solid #2E59F4', padding:'16px 16px 20px', position:'relative' }}>
+                                            <button type="button" onClick={function(e){ e.stopPropagation(); setDiagZoom(null); }}
+                                                style={{ position:'absolute', top:12, left:12, width:32, height:32, borderRadius:'50%', background:'rgba(255,255,255,0.1)', border:'none', color:'#fff', fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', zIndex:1 }}
+                                                aria-label="סגירה">✕</button>
+                                            <div style={{ textAlign:'right', marginBottom:10 }}>
+                                                <div style={{ fontSize:15, fontWeight:700, color:'#F4F6FC' }}>{item.name}</div>
+                                                <div style={{ fontSize:13, color:'#A9B7DE' }}>${item.amount.toLocaleString('en-US')} · {item.month}</div>
+                                            </div>
+                                            <img src={item.img} alt={'צילום מסך מ-Stripe: '+item.name}
+                                                style={{ width:'100%', borderRadius:12, background:'#fff', border:'1px solid #26304D' }}/>
+                                            <p style={{ textAlign:'center', fontSize:11, color:'#6B7BA0', marginTop:8, marginBottom:0 }}>צילום המסך המקורי מחשבון Stripe של הלקוח.</p>
+                                        </div>
+                                    )}
                                 </div>
                             ); })}
                         </div>
