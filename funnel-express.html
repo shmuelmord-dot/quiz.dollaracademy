@@ -176,6 +176,7 @@
         // ║  CONFIGURATION                                       ║
         // ╚══════════════════════════════════════════════════════╝
         const WEBHOOK_URL   = 'https://hooks.zapier.com/hooks/catch/16015214/49f8r3d/';
+        const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbzC9yLjbRhQwQfqpejJVbjorOtXBs39-DophwySdA8wZcnVy8rnbGShXvN2TNFj5wnZSA/exec';
         const UPAY_LINK     = 'https://app.upay.co.il/API6/s.php?m=d2VVRDY1Z1Axc0wyWXJFNlNVNDJxZz09';
         const WHATSAPP_LINK = 'https://wa.me/972557278140?text=%D7%94%D7%99%D7%99%20%D7%92%D7%99%D7%9C%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D%20%D7%9C%D7%92%D7%91%D7%99%20%D7%91%D7%93%D7%99%D7%A7%D7%AA%20%D7%94%D7%94%D7%99%D7%AA%D7%9B%D7%A0%D7%95%D7%AA%20%D7%95%D7%90%D7%A1%D7%98%D7%A8%D7%98%D7%92%D7%99%D7%99%D7%AA%20%D7%94%D7%97%D7%93%D7%99%D7%A8%D7%94%20%D7%9C%D7%A9%D7%95%D7%A7%20%D7%94%D7%90%D7%9E%D7%A8%D7%99%D7%A7%D7%90%D7%99';
         const VSL_VIDEO_ID  = 'zrXPejmqgUA';
@@ -539,6 +540,33 @@
         const sendWebhook = (url, data) => {
             fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ ...data, submitted_at: new Date().toISOString() }) })
                 .catch(err => console.error('Webhook error:', err));
+        };
+
+        const sendToSheets = (stage, leadData, extra) => {
+            if (!SHEETS_WEBHOOK) return;
+            var payload = {
+                phone: leadData.phone || '',
+                firstName: leadData.firstName || '',
+                email: leadData.email || '',
+                businessType: leadData.businessType || '',
+                motivation: leadData.motivation || '',
+                revenue: leadData.revenue || '',
+                businessDesc: leadData.businessDesc || '',
+                score: leadData.score || '',
+                stage: stage,
+                event: stage,
+                utm_source: leadData.utm_source || '',
+                utm_medium: leadData.utm_medium || '',
+                utm_campaign: leadData.utm_campaign || '',
+                utm_content: leadData.utm_content || '',
+                utm_term: leadData.utm_term || '',
+                fbclid: leadData.fbclid || '',
+                gclid: leadData.gclid || '',
+                referrer: leadData.referrer || ''
+            };
+            if (extra) Object.assign(payload, extra);
+            fetch(SHEETS_WEBHOOK, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) })
+                .catch(err => console.error('Sheets backup error:', err));
         };
 
         const calcScore = (biz, rev, desc) => {
@@ -1308,6 +1336,7 @@
                 const updated = Object.assign({}, leadData, { [q.id]: val });
                 setLeadData(updated);
                 if (q.id === 'firstName') sessionStorage.setItem('firstName', val);
+                if (q.id === 'phone') sendToSheets('quiz-partial', updated);
                 if (step < total - 1) navigate('#/quiz/' + (step + 2));
                 else onComplete(updated);
             };
@@ -1785,6 +1814,7 @@
 
             useEffect(() => {
                 if (typeof fbq === 'function') fbq('track', 'Lead');
+                sendToSheets('vsl', leadData);
                 const seen = sessionStorage.getItem('dollarExpressOfferSeen');
                 if (seen) { setShowOffer(true); return; }
                 const timer = setTimeout(() => {
@@ -2091,6 +2121,7 @@
             };
             var pay = function() {
                 sendWebhook(WEBHOOK_URL, { event:'diagComplete', answers:diagClone(ans), leadData:leadData });
+                sendToSheets('diagnostic', leadData, { diagAnswers: diagClone(ans) });
                 setLeadData(function(p) { return Object.assign({}, p, ans, { diagComplete:true }); });
                 window.location.href = DIAG_UPAY;
             };
@@ -2500,7 +2531,10 @@
         // ║  THANK YOU SCREEN                                      ║
         // ╚══════════════════════════════════════════════════════╝
         const ThankYouScreen = ({ leadData }) => {
-            useEffect(() => { if (typeof fbq === 'function') fbq('track', 'Purchase', { value: 297, currency: 'ILS' }); }, []);
+            useEffect(() => {
+                if (typeof fbq === 'function') fbq('track', 'Purchase', { value: 297, currency: 'ILS' });
+                sendToSheets('paid', leadData);
+            }, []);
 
             const firstName = (leadData.firstName || '').split(' ')[0] || '';
 
@@ -2614,6 +2648,7 @@
             var handleQuizComplete = function(data) {
                 var payload = Object.assign({}, data, { funnel: 'dollar-express' });
                 sendWebhook(WEBHOOK_URL, payload);
+                sendToSheets('quiz', payload);
                 setLeadData(payload);
                 navigate('#/potential');
             };
