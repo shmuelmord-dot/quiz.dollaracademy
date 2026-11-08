@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dollar Academy · הזנת ליד</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700;800&family=Rubik:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Assistant',sans-serif;background:#0B0F1A;color:#F4F6FC;min-height:100vh;padding:20px}
+.wrap{max-width:520px;margin:0 auto}
+.logo{text-align:center;padding:24px 0 8px}
+.logo img{height:32px;opacity:.85}
+h1{text-align:center;font-family:'Rubik',sans-serif;font-weight:800;font-size:24px;margin:0 0 6px;color:#F4F6FC}
+.sub{text-align:center;font-size:15px;color:#8A97BE;margin-bottom:28px}
+.card{background:#141A2E;border:1px solid #1E2742;border-radius:20px;padding:24px 22px 28px}
+.section-title{font-size:13px;font-weight:700;color:#4282FA;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1E2742}
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+label{display:block;font-size:14px;font-weight:600;color:#A9B7DE;margin-bottom:6px}
+label .req{color:#F87171;margin-right:2px}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #26304D;background:#0F1426;color:#F4F6FC;font-family:'Assistant',sans-serif;font-size:15px;outline:none;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{border-color:#2E59F4}
+input::placeholder,textarea::placeholder{color:#4A5578}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238A97BE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center;padding-left:36px;cursor:pointer}
+select option{background:#141A2E;color:#F4F6FC}
+textarea{resize:vertical;min-height:80px}
+.row{display:flex;gap:12px}
+.row .field{flex:1}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:12px;background:#0F1426;border:1px solid #26304D;cursor:pointer;user-select:none}
+.toggle-row span{font-size:15px;font-weight:600}
+.toggle{width:44px;height:24px;border-radius:12px;background:#26304D;position:relative;transition:background .2s;flex-shrink:0}
+.toggle.on{background:#2E59F4}
+.toggle::after{content:'';position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+.toggle.on::after{transform:translateX(-20px)}
+.divider{height:1px;background:#1E2742;margin:20px 0}
+.btn{width:100%;padding:14px;border:none;border-radius:14px;font-family:'Assistant',sans-serif;font-size:17px;font-weight:800;cursor:pointer;transition:all .2s}
+.btn-primary{background:#2E59F4;color:#fff}
+.btn-primary:hover{background:#4270FF}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary:disabled{background:#26304D;color:#6B7BA0;cursor:not-allowed;transform:none}
+.btn-reset{background:transparent;border:1px solid #26304D;color:#A9B7DE;margin-top:10px;font-size:14px;font-weight:600}
+.btn-reset:hover{border-color:#4282FA;color:#F4F6FC}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+.toast.ok{background:#166534;color:#4ADE80;border:1px solid #22C55E}
+.toast.err{background:#7F1D1D;color:#FCA5A5;border:1px solid #EF4444}
+.history{margin-top:20px}
+.history h3{font-size:14px;font-weight:700;color:#8A97BE;margin-bottom:10px}
+.history-item{padding:10px 14px;background:#0F1426;border:1px solid #1E2742;border-radius:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+.history-item .name{font-weight:700;color:#F4F6FC}
+.history-item .time{color:#6B7BA0;font-size:12px;direction:ltr}
+.empty{text-align:center;color:#4A5578;font-size:14px;padding:16px 0}
+@media(max-width:480px){
+  body{padding:12px}
+  .card{padding:18px 16px 22px}
+  .row{flex-direction:column;gap:0}
+  h1{font-size:21px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="logo"><img src="../public/assets/wordmark.png" alt="Dollar Academy"></div>
+    <h1>הזנת ליד חדש</h1>
+    <p class="sub">טופס פנימי · לידים שהגיעו טלפונית</p>
+
+    <div class="card">
+        <div class="section-title">פרטי הלקוח</div>
+        <div class="field">
+            <label><span class="req">*</span> שם מלא</label>
+            <input type="text" id="f-name" placeholder="לדוגמה: ישראל ישראלי" autocomplete="off">
+        </div>
+        <div class="row">
+            <div class="field">
+                <label><span class="req">*</span> טלפון</label>
+                <input type="tel" id="f-phone" placeholder="050-0000000" autocomplete="off" dir="ltr">
+            </div>
+            <div class="field">
+                <label><span class="req">*</span> אימייל</label>
+                <input type="email" id="f-email" placeholder="name@example.com" autocomplete="off" dir="ltr">
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="section-title">פרטי העסק</div>
+
+        <div class="field">
+            <label>סוג עסק</label>
+            <select id="f-biz">
+                <option value="">לא צוין</option>
+                <option value="ecommerce">איקומרס / מוצרים פיזיים</option>
+                <option value="software">תוכנה / SaaS / אפליקציה</option>
+                <option value="agency">סוכנות / שירותים</option>
+                <option value="coaching">ייעוץ / אימון / קורסים</option>
+                <option value="other">אחר</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>תיאור העסק</label>
+            <textarea id="f-desc" placeholder="מה העסק עושה, מה הם מוכרים..."></textarea>
+        </div>
+        <div class="row">
+            <div class="field">
+                <label>מחזור חודשי</label>
+                <select id="f-rev">
+                    <option value="">לא צוין</option>
+                    <option value="0-10k">עד 10K ₪</option>
+                    <option value="10-50k">10-50K ₪</option>
+                    <option value="50-200k">50-200K ₪</option>
+                    <option value="200k+">200K+ ₪</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>רמת מוטיבציה</label>
+                <select id="f-mot">
+                    <option value="">לא צוין</option>
+                    <option value="high">גבוהה</option>
+                    <option value="medium">בינונית</option>
+                    <option value="low">נמוכה</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="section-title">סטטוס</div>
+
+        <div class="field">
+            <div class="toggle-row" onclick="togglePaid()">
+                <span>שילם</span>
+                <div class="toggle" id="f-paid"></div>
+            </div>
+        </div>
+        <div class="field">
+            <label>הערות</label>
+            <textarea id="f-notes" placeholder="הערות חופשיות, מה נאמר בשיחה..."></textarea>
+        </div>
+
+        <div class="divider"></div>
+        <button class="btn btn-primary" id="submitBtn" onclick="submitLead()">שליחה</button>
+        <button class="btn btn-reset" onclick="resetForm()">ניקוי טופס</button>
+    </div>
+
+    <div class="history" id="historySection">
+        <h3>נשלחו בסשן הזה</h3>
+        <div id="historyList"><p class="empty">עדיין לא נשלחו לידים</p></div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbzC9yLjbRhQwQfqpejJVbjorOtXBs39-DophwySdA8wZcnVy8rnbGShXvN2TNFj5wnZSA/exec';
+let paid = false;
+const sent = [];
+
+function togglePaid() {
+    paid = !paid;
+    document.getElementById('f-paid').classList.toggle('on', paid);
+}
+
+function val(id) { return document.getElementById(id).value.trim(); }
+
+function showToast(msg, type) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show ' + type;
+    setTimeout(() => t.className = 'toast', 3000);
+}
+
+function submitLead() {
+    const name = val('f-name');
+    const phone = val('f-phone').replace(/\D/g, '');
+    const email = val('f-email');
+
+    if (!name) { showToast('חסר שם', 'err'); return; }
+    if (!phone || phone.length < 9) { showToast('טלפון לא תקין', 'err'); return; }
+    if (!email || !email.includes('@')) { showToast('אימייל לא תקין', 'err'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'שולח...';
+
+    const payload = {
+        firstName: name,
+        phone: phone,
+        email: email,
+        businessType: val('f-biz') || undefined,
+        businessDesc: val('f-desc') || undefined,
+        revenue: val('f-rev') || undefined,
+        motivation: val('f-mot') || undefined,
+        stage: paid ? 'paid' : 'manual',
+        event: 'manual-entry',
+        notes: val('f-notes') || undefined,
+        source: 'team-form'
+    };
+
+    fetch(SHEETS_WEBHOOK, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(payload)
+    }).then(() => {
+        showToast('הליד נשלח בהצלחה', 'ok');
+        addToHistory(name, phone);
+        resetForm();
+    }).catch(() => {
+        showToast('שגיאה בשליחה, נסה שוב', 'err');
+    }).finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'שליחה';
+    });
+}
+
+function addToHistory(name, phone) {
+    const now = new Date().toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+    sent.push({ name, phone, time: now });
+    const list = document.getElementById('historyList');
+    list.innerHTML = sent.map(s =>
+        '<div class="history-item"><span class="name">' + s.name + '</span><span class="time">' + s.time + '</span></div>'
+    ).reverse().join('');
+}
+
+function resetForm() {
+    ['f-name','f-phone','f-email','f-desc','f-notes'].forEach(id => document.getElementById(id).value = '');
+    ['f-biz','f-rev','f-mot'].forEach(id => document.getElementById(id).selectedIndex = 0);
+    paid = false;
+    document.getElementById('f-paid').classList.remove('on');
+    document.getElementById('f-name').focus();
+}
+</script>
+</body>
+</html>
