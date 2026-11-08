@@ -900,6 +900,7 @@
             const [shownAmt, setShownAmt] = useState(TM_STRIPE_ITEMS[startIdx].amount);
             const [mWin, setMWin] = useState(Math.max(0, Math.min(startIdx, TM_STRIPE_ITEMS.length-4)));
             const [inView, setInView] = useState(false);
+            const [nsModal, setNsModal] = useState(null);
             const numRef = useRef(null);
             const tickRef = useRef(null);
             const rafRef = useRef(null);
@@ -982,6 +983,7 @@
                                 </div>
                                 {isLike(curItem.cat) && <span style={{ flex:'none', padding:'5px 12px', borderRadius:999, background:'#2E59F4', fontSize:12, fontWeight:700, color:'#FFFFFF' }}>כמו העסק שלך</span>}
                             </div>
+                            <button type="button" onClick={function(){ setSPaused(true); setNsModal(curItem); }} style={{ cursor:'pointer', border:'none', background:'none', padding:0, width:'100%' }}>
                             {!sFlip ? (
                                 <div key={'sA-'+sIdx} className="tm-pop" style={{ borderRadius:16, overflow:'hidden', background:'#FFFFFF', boxShadow:'0 22px 60px rgba(0,0,0,0.45)' }}>
                                     <img src={curItem.img} alt={'צילום מסך מ-Stripe: '+curItem.name+', '+curItem.month}
@@ -993,7 +995,8 @@
                                         style={{ width:'100%', aspectRatio:'1200/516', objectFit:'cover' }} loading="lazy"/>
                                 </div>
                             )}
-                            <span style={{ marginTop:-8, fontSize:12, color:'#8A97BE' }}>צילום מסך מחשבון Stripe של הלקוח · {curItem.month}</span>
+                            </button>
+                            <span style={{ marginTop:-8, fontSize:12, color:'#8A97BE' }}>צילום מסך מחשבון Stripe של הלקוח · {curItem.month} · <span style={{ color:'#4282FA', cursor:'pointer' }} onClick={function(){ setSPaused(true); setNsModal(curItem); }}>לחצו להגדלה</span></span>
                             <div style={{ display:'flex', flexWrap:'wrap', alignItems:'center', justifyContent:'space-between', gap:16 }}>
                                 <div style={{ display:'flex', flexWrap:'wrap', alignItems:'baseline', gap:14 }}>
                                     <span style={{ direction:'ltr', fontFamily:'Rubik,sans-serif', fontSize:isMobile?36:50, fontWeight:800, lineHeight:1, color:'#F4F6FC', fontVariantNumeric:'tabular-nums' }}>{money(shownAmt)}</span>
@@ -1058,6 +1061,27 @@
                         </div>
                     </div>
                     <p style={{ margin:0, textAlign:'center', fontSize:12, color:'#8A97BE' }}>צילומי מסך מחשבונות Stripe של לקוחות. התוצאות משתנות מעסק לעסק.</p>
+
+                    {nsModal && (
+                        <div style={{ position:'fixed', inset:0, zIndex:300, display:'flex', justifyContent:'center', background:'rgba(0,0,0,0.8)', padding:0 }}
+                            onClick={function(){ setNsModal(null); }}
+                            className="items-end md:items-center md:p-4">
+                            <div style={{ width:'100%', maxWidth:600, background:'#141A2E', padding:'20px 20px 28px', position:'relative' }}
+                                onClick={function(e){ e.stopPropagation(); }}
+                                className="rounded-t-[20px] md:rounded-2xl">
+                                <button type="button" onClick={function(){ setNsModal(null); }}
+                                    style={{ position:'absolute', top:16, left:16, width:36, height:36, borderRadius:'50%', background:'rgba(255,255,255,0.1)', border:'none', color:'#fff', fontSize:18, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}
+                                    aria-label="סגירה">✕</button>
+                                <div style={{ textAlign:'right', marginBottom:12 }}>
+                                    <div style={{ fontSize:16, fontWeight:700, color:'#F4F6FC' }}>{nsModal.name}</div>
+                                    <div style={{ fontSize:14, color:'#A9B7DE' }}>{money(nsModal.amount)} · {nsModal.month}</div>
+                                </div>
+                                <img src={nsModal.img} alt={'צילום מסך מ-Stripe: '+nsModal.name}
+                                    style={{ width:'100%', borderRadius:12, background:'#fff', border:'1px solid #26304D' }}/>
+                                <p style={{ textAlign:'center', fontSize:12, color:'#6B7BA0', marginTop:10 }}>צילום המסך המקורי מחשבון Stripe של הלקוח.</p>
+                            </div>
+                        </div>
+                    )}
                 </section>
             );
         };
@@ -1216,7 +1240,7 @@
                                 <div style={{ display:'flex', flexDirection:'column', gap:2, flex:1, minWidth:0 }}>
                                     <span style={{ fontSize:15, fontWeight:700, color:'#F4F6FC' }}>{row.type}</span>
                                     <span style={{ fontSize:12, color:'#6B7BA0', display:'flex', alignItems:'center', gap:4 }}>
-                                        <svg width="36" height="15" viewBox="0 0 60 25" fill="none"><path d="M5 12.2C5 11.3 5.7 10.9 6.9 10.9c2.1 0 4.8.6 6.9 1.8V7.1C11.5 6.2 9.3 5.8 6.9 5.8 2.8 5.8 0 8 0 11.5c0 5.5 7.5 4.6 7.5 7 0 1-.8 1.3-2 1.3-1.7 0-4.1-.7-5.9-1.7v5.6c2 .9 4 1.3 5.9 1.3 4.2 0 7.1-2.1 7.1-5.5C12.6 13.8 5 14.9 5 12.2zm14.3-6.1l-3.2.7V9h3.2V15c0 4.1 2 5.8 5.6 5.8 1.7 0 2.9-.4 3.6-.8v-4.2c-.7.3-1.6.5-2.7.5-1.5 0-2.5-.5-2.5-2.3V9h2.5V5.5h-2.5V2.7l-4 .8V6.1zm12.6 3h-.1l-.2-3h-3.9V20.5h4V10.1c.9-1.2 2.5-1 3-.8V5.5c-.5-.2-2.4-.5-3.3 1.2l.5-.6zM40.7 5.5l-4 .9V20.5h4V5.5zm0-1.6l4-3.5V-3h-4v5.9zm8.4-1.6l-4 .8v16.2c0 3 1.5 5.1 4.6 5.1 1.5 0 2.5-.3 3.1-.6v-3.3c-.6.2-3.4 1-3.4-1.5v-6h3.4V5.5h-3.4V2.3h-.3zm12.8 5c-1.5 0-2.5.7-3 1.2l-.2-1h-3.9V20.5h4v-9.8c.7-.9 1.8-1.1 2.3-1.1.3 0 .6 0 .8.1V5.5c-.3-.1-.6-.2-1-.2z" fill="#635BFF"/></svg>
+                                        <svg width="36" height="17" viewBox="0 -4 62 29" fill="none"><path d="M5 12.2C5 11.3 5.7 10.9 6.9 10.9c2.1 0 4.8.6 6.9 1.8V7.1C11.5 6.2 9.3 5.8 6.9 5.8 2.8 5.8 0 8 0 11.5c0 5.5 7.5 4.6 7.5 7 0 1-.8 1.3-2 1.3-1.7 0-4.1-.7-5.9-1.7v5.6c2 .9 4 1.3 5.9 1.3 4.2 0 7.1-2.1 7.1-5.5C12.6 13.8 5 14.9 5 12.2zm14.3-6.1l-3.2.7V9h3.2V15c0 4.1 2 5.8 5.6 5.8 1.7 0 2.9-.4 3.6-.8v-4.2c-.7.3-1.6.5-2.7.5-1.5 0-2.5-.5-2.5-2.3V9h2.5V5.5h-2.5V2.7l-4 .8V6.1zm12.6 3h-.1l-.2-3h-3.9V20.5h4V10.1c.9-1.2 2.5-1 3-.8V5.5c-.5-.2-2.4-.5-3.3 1.2l.5-.6zM40.7 5.5l-4 .9V20.5h4V5.5zm0-1.6l4-3.5V-3h-4v5.9zm8.4-1.6l-4 .8v16.2c0 3 1.5 5.1 4.6 5.1 1.5 0 2.5-.3 3.1-.6v-3.3c-.6.2-3.4 1-3.4-1.5v-6h3.4V5.5h-3.4V2.3h-.3zm12.8 5c-1.5 0-2.5.7-3 1.2l-.2-1h-3.9V20.5h4v-9.8c.7-.9 1.8-1.1 2.3-1.1.3 0 .6 0 .8.1V5.5c-.3-.1-.6-.2-1-.2z" fill="#635BFF"/></svg>
                                         לתמונת מקור
                                     </span>
                                 </div>
@@ -1494,6 +1518,7 @@
             const [revealed, setRevealed] = useState(false);
             const [mounted, setMounted] = useState(false);
             const [openPanel, setOpenPanel] = useState(null);
+            const [stripeModal, setStripeModal] = useState(null);
 
             const gaugeScore = useSpringValue(score, { stiffness: 60, damping: 18, delay: 400, onComplete: () => setRevealed(true) });
 
@@ -1773,20 +1798,46 @@
                                     return matched.slice(0, 3);
                                 })().map(function(it, i) {
                                     return (
-                                        <div key={i} className="rounded-2xl border border-card-border bg-[#060a17]/80 p-3 flex flex-col gap-2">
+                                        <button key={i} type="button" onClick={function(){ setStripeModal(it); }}
+                                            className="rounded-2xl border border-card-border bg-[#060a17]/80 p-3 flex flex-col gap-2 text-right cursor-pointer hover:border-[#2E59F4] transition-colors"
+                                            style={{ background:'transparent' }}>
                                             <img src={it.img} alt={'Stripe: '+it.name} className="w-full rounded-xl bg-white border border-white/10" style={{ aspectRatio:'1200/516', objectFit:'cover' }} loading="lazy"/>
                                             <div className="flex items-baseline justify-between gap-2" style={{ direction:'ltr' }}>
                                                 <span className="font-extrabold text-xl text-txt" style={{ fontFamily:'Rubik,sans-serif' }}>{'$'+it.amount.toLocaleString('en-US')}</span>
                                                 <span className="text-xs text-green-400 font-bold">{it.pct}</span>
                                             </div>
                                             <span className="text-[11px] text-txt-note">{it.month}</span>
-                                            <span className="text-[10px] text-highlight font-semibold">{TM_STRIPE_CATS[it.cat]}</span>
-                                        </div>
+                                            <div className="flex items-center gap-1">
+                                                <svg width="36" height="17" viewBox="0 -4 62 29" fill="none"><path d="M5 12.2C5 11.3 5.7 10.9 6.9 10.9c2.1 0 4.8.6 6.9 1.8V7.1C11.5 6.2 9.3 5.8 6.9 5.8 2.8 5.8 0 8 0 11.5c0 5.5 7.5 4.6 7.5 7 0 1-.8 1.3-2 1.3-1.7 0-4.1-.7-5.9-1.7v5.6c2 .9 4 1.3 5.9 1.3 4.2 0 7.1-2.1 7.1-5.5C12.6 13.8 5 14.9 5 12.2zm14.3-6.1l-3.2.7V9h3.2V15c0 4.1 2 5.8 5.6 5.8 1.7 0 2.9-.4 3.6-.8v-4.2c-.7.3-1.6.5-2.7.5-1.5 0-2.5-.5-2.5-2.3V9h2.5V5.5h-2.5V2.7l-4 .8V6.1zm12.6 3h-.1l-.2-3h-3.9V20.5h4V10.1c.9-1.2 2.5-1 3-.8V5.5c-.5-.2-2.4-.5-3.3 1.2l.5-.6zM40.7 5.5l-4 .9V20.5h4V5.5zm0-1.6l4-3.5V-3h-4v5.9zm8.4-1.6l-4 .8v16.2c0 3 1.5 5.1 4.6 5.1 1.5 0 2.5-.3 3.1-.6v-3.3c-.6.2-3.4 1-3.4-1.5v-6h3.4V5.5h-3.4V2.3h-.3zm12.8 5c-1.5 0-2.5.7-3 1.2l-.2-1h-3.9V20.5h4v-9.8c.7-.9 1.8-1.1 2.3-1.1.3 0 .6 0 .8.1V5.5c-.3-.1-.6-.2-1-.2z" fill="#635BFF"/></svg>
+                                                <span className="text-[10px] text-highlight font-semibold">{TM_STRIPE_CATS[it.cat]}</span>
+                                            </div>
+                                        </button>
                                     );
                                 })}
                             </div>
-                            <p className="text-[10px] text-slate-600 text-center mt-3">צילומי מסך מחשבונות Stripe של לקוחות. התוצאות משתנות מעסק לעסק.</p>
+                            <p className="text-[10px] text-slate-600 text-center mt-3">לחצו על כרטיס לצילום המסך המלא. התוצאות משתנות מעסק לעסק.</p>
                         </div>
+
+                        {stripeModal && (
+                            <div style={{ position:'fixed', inset:0, zIndex:300, display:'flex', justifyContent:'center', background:'rgba(0,0,0,0.8)', padding:0 }}
+                                onClick={function(){ setStripeModal(null); }}
+                                className="items-end md:items-center md:p-4">
+                                <div style={{ width:'100%', maxWidth:600, background:'#141A2E', padding:'20px 20px 28px', position:'relative' }}
+                                    onClick={function(e){ e.stopPropagation(); }}
+                                    className="rounded-t-[20px] md:rounded-2xl">
+                                    <button type="button" onClick={function(){ setStripeModal(null); }}
+                                        style={{ position:'absolute', top:16, left:16, width:36, height:36, borderRadius:'50%', background:'rgba(255,255,255,0.1)', border:'none', color:'#fff', fontSize:18, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}
+                                        aria-label="סגירה">✕</button>
+                                    <div style={{ textAlign:'right', marginBottom:12 }}>
+                                        <div style={{ fontSize:16, fontWeight:700, color:'#F4F6FC' }}>{stripeModal.name}</div>
+                                        <div style={{ fontSize:14, color:'#A9B7DE' }}>{'$'+stripeModal.amount.toLocaleString('en-US')} · {stripeModal.month}</div>
+                                    </div>
+                                    <img src={stripeModal.img} alt={'צילום מסך מ-Stripe: '+stripeModal.name}
+                                        style={{ width:'100%', borderRadius:12, background:'#fff', border:'1px solid #26304D' }}/>
+                                    <p style={{ textAlign:'center', fontSize:12, color:'#6B7BA0', marginTop:10 }}>צילום המסך המקורי מחשבון Stripe של הלקוח.</p>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Section G — Bottom CTA */}
                         <div className="flex justify-center">
@@ -1808,6 +1859,7 @@
             const [showOffer, setShowOffer] = useState(false);
             const [isMuted, setIsMuted] = useState(true);
             const [stickyVisible, setStickyVisible] = useState(false);
+            const [fsOverlay, setFsOverlay] = useState(false);
             const videoRef = useRef(null);
             const closingRef = useRef(null);
             const vipRef = useRef(null);
@@ -1852,9 +1904,9 @@
                 try {
                     var result = goFS(target);
                     if (!result && iframe) result = goFS(el);
-                    if (!result) window.open('https://www.youtube.com/watch?v=' + VSL_VIDEO_ID, '_blank');
+                    if (!result) setFsOverlay(true);
                 } catch(e) {
-                    window.open('https://www.youtube.com/watch?v=' + VSL_VIDEO_ID, '_blank');
+                    setFsOverlay(true);
                 }
             };
 
@@ -1918,6 +1970,17 @@
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
                         </button>
                     </div>
+
+                    {fsOverlay && (
+                        <div style={{ position:'fixed', inset:0, zIndex:9999, background:'#000', display:'flex', flexDirection:'column' }}>
+                            <button type="button" onClick={function(){ setFsOverlay(false); }}
+                                style={{ position:'absolute', top:12, left:12, zIndex:10, width:40, height:40, borderRadius:'50%', background:'rgba(255,255,255,0.15)', border:'none', color:'#fff', fontSize:20, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center' }}
+                                aria-label="סגירה">✕</button>
+                            <iframe src={'https://www.youtube.com/embed/'+VSL_VIDEO_ID+'?autoplay=1&modestbranding=1&rel=0&showinfo=0&enablejsapi=1&playsinline=1'}
+                                style={{ width:'100%', flex:1, border:'none' }}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen/>
+                        </div>
+                    )}
 
                     {showOffer && (
                         <div className="w-full flex flex-col items-center fade-enter fade-enter-active space-y-10 px-4">
