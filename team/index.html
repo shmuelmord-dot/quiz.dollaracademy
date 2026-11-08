@@ -9,12 +9,12 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Assistant',sans-serif;background:#0B0F1A;color:#F4F6FC;min-height:100vh;padding:20px}
-.wrap{max-width:520px;margin:0 auto}
+.wrap{max-width:560px;margin:0 auto}
 .logo{text-align:center;padding:24px 0 8px}
 .logo img{height:32px;opacity:.85}
 h1{text-align:center;font-family:'Rubik',sans-serif;font-weight:800;font-size:24px;margin:0 0 6px;color:#F4F6FC}
 .sub{text-align:center;font-size:15px;color:#8A97BE;margin-bottom:28px}
-.card{background:#141A2E;border:1px solid #1E2742;border-radius:20px;padding:24px 22px 28px}
+.card{background:#141A2E;border:1px solid #1E2742;border-radius:20px;padding:24px 22px 28px;margin-bottom:16px}
 .section-title{font-size:13px;font-weight:700;color:#4282FA;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #1E2742}
 .field{margin-bottom:16px}
 .field:last-child{margin-bottom:0}
@@ -25,7 +25,7 @@ input:focus,select:focus,textarea:focus{border-color:#2E59F4}
 input::placeholder,textarea::placeholder{color:#4A5578}
 select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238A97BE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center;padding-left:36px;cursor:pointer}
 select option{background:#141A2E;color:#F4F6FC}
-textarea{resize:vertical;min-height:80px}
+textarea{resize:vertical;min-height:72px}
 .row{display:flex;gap:12px}
 .row .field{flex:1}
 .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:12px;background:#0F1426;border:1px solid #26304D;cursor:pointer;user-select:none}
@@ -42,21 +42,46 @@ textarea{resize:vertical;min-height:80px}
 .btn-primary:disabled{background:#26304D;color:#6B7BA0;cursor:not-allowed;transform:none}
 .btn-reset{background:transparent;border:1px solid #26304D;color:#A9B7DE;margin-top:10px;font-size:14px;font-weight:600}
 .btn-reset:hover{border-color:#4282FA;color:#F4F6FC}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1}
 .toast.ok{background:#166534;color:#4ADE80;border:1px solid #22C55E}
 .toast.err{background:#7F1D1D;color:#FCA5A5;border:1px solid #EF4444}
-.history{margin-top:20px}
+.history{margin-top:4px}
 .history h3{font-size:14px;font-weight:700;color:#8A97BE;margin-bottom:10px}
 .history-item{padding:10px 14px;background:#0F1426;border:1px solid #1E2742;border-radius:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
 .history-item .name{font-weight:700;color:#F4F6FC}
 .history-item .time{color:#6B7BA0;font-size:12px;direction:ltr}
 .empty{text-align:center;color:#4A5578;font-size:14px;padding:16px 0}
+
+.accordion-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:14px;background:#0F1426;border:1px solid #26304D;cursor:pointer;color:#F4F6FC;font-family:'Assistant',sans-serif;font-size:16px;font-weight:700;transition:border-color .2s}
+.accordion-toggle:hover{border-color:#2E59F4}
+.accordion-toggle .arrow{transition:transform .25s;color:#8A97BE;font-size:14px}
+.accordion-toggle.open .arrow{transform:rotate(180deg)}
+.accordion-toggle .badge{font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;background:#1E2742;color:#8A97BE;margin-right:8px}
+.accordion-toggle.has-data .badge{background:#166534;color:#4ADE80}
+.accordion-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.accordion-body.open{max-height:4000px}
+.accordion-inner{padding:16px 0 0}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:7px 14px;border-radius:10px;background:#0F1426;border:1px solid #26304D;color:#A9B7DE;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;user-select:none}
+.chip.on{background:#1a2a5c;border-color:#2E59F4;color:#F4F6FC}
+
+.product-row{display:flex;gap:10px;margin-bottom:10px;align-items:center}
+.product-row input:first-child{flex:2}
+.product-row input:last-child{flex:1}
+
+.type-section{display:none}
+.type-section.visible{display:block}
+
+.step-label{font-size:12px;font-weight:700;color:#2E59F4;background:#0F1426;display:inline-block;padding:3px 12px;border-radius:8px;margin-bottom:12px;border:1px solid #1E2742}
+
 @media(max-width:480px){
   body{padding:12px}
   .card{padding:18px 16px 22px}
   .row{flex-direction:column;gap:0}
   h1{font-size:21px}
+  .product-row{flex-direction:column;gap:8px}
 }
 </style>
 </head>
@@ -66,6 +91,7 @@ textarea{resize:vertical;min-height:80px}
     <h1>הזנת ליד חדש</h1>
     <p class="sub">טופס פנימי · לידים שהגיעו טלפונית</p>
 
+    <!-- CONTACT + BASIC -->
     <div class="card">
         <div class="section-title">פרטי הלקוח</div>
         <div class="field">
@@ -84,34 +110,8 @@ textarea{resize:vertical;min-height:80px}
         </div>
 
         <div class="divider"></div>
-        <div class="section-title">פרטי העסק</div>
-
-        <div class="field">
-            <label>סוג עסק</label>
-            <select id="f-biz">
-                <option value="">לא צוין</option>
-                <option value="ecommerce">איקומרס / מוצרים פיזיים</option>
-                <option value="software">תוכנה / SaaS / אפליקציה</option>
-                <option value="agency">סוכנות / שירותים</option>
-                <option value="coaching">ייעוץ / אימון / קורסים</option>
-                <option value="other">אחר</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>תיאור העסק</label>
-            <textarea id="f-desc" placeholder="מה העסק עושה, מה הם מוכרים..."></textarea>
-        </div>
+        <div class="section-title">סטטוס</div>
         <div class="row">
-            <div class="field">
-                <label>מחזור חודשי</label>
-                <select id="f-rev">
-                    <option value="">לא צוין</option>
-                    <option value="0-10k">עד 10K ₪</option>
-                    <option value="10-50k">10-50K ₪</option>
-                    <option value="50-200k">50-200K ₪</option>
-                    <option value="200k+">200K+ ₪</option>
-                </select>
-            </div>
             <div class="field">
                 <label>רמת מוטיבציה</label>
                 <select id="f-mot">
@@ -121,23 +121,335 @@ textarea{resize:vertical;min-height:80px}
                     <option value="low">נמוכה</option>
                 </select>
             </div>
-        </div>
-
-        <div class="divider"></div>
-        <div class="section-title">סטטוס</div>
-
-        <div class="field">
-            <div class="toggle-row" onclick="togglePaid()">
-                <span>שילם</span>
-                <div class="toggle" id="f-paid"></div>
+            <div class="field" style="flex:0 0 auto;display:flex;align-items:flex-end;padding-bottom:16px">
+                <div class="toggle-row" onclick="togglePaid()" style="min-width:120px">
+                    <span>שילם</span>
+                    <div class="toggle" id="f-paid"></div>
+                </div>
             </div>
         </div>
         <div class="field">
-            <label>הערות</label>
+            <label>הערות מהשיחה</label>
             <textarea id="f-notes" placeholder="הערות חופשיות, מה נאמר בשיחה..."></textarea>
         </div>
+    </div>
 
-        <div class="divider"></div>
+    <!-- DIAGNOSTIC ACCORDION -->
+    <div class="card" id="diagCard">
+        <button type="button" class="accordion-toggle" id="diagToggle" onclick="toggleDiag()">
+            <span>שאלון דיאגנוסטי <span class="badge" id="diagBadge">ריק</span></span>
+            <span class="arrow">▼</span>
+        </button>
+        <div class="accordion-body" id="diagBody">
+            <div class="accordion-inner">
+
+                <!-- STEP 1: INTRO -->
+                <div class="step-label">שלב 1 · העסק</div>
+                <div class="row">
+                    <div class="field">
+                        <label>שלב העסק</label>
+                        <select id="d-stage" onchange="onTypeChange()">
+                            <option value="">—</option>
+                            <option value="active">עסק פעיל</option>
+                            <option value="idea">רעיון / עסק חדש</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>מה מוכרים</label>
+                        <select id="d-type" onchange="onTypeChange()">
+                            <option value="">—</option>
+                            <option value="physical">מוצר פיזי</option>
+                            <option value="service">שירות / ייעוץ / קורס</option>
+                            <option value="field">שירות בשטח</option>
+                            <option value="software">תוכנה / אפליקציה</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>העסק במשפט</label>
+                    <input type="text" id="d-oneLiner" placeholder="מה מוכרים ולמי">
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <label>כמה זמן פעיל</label>
+                        <select id="d-years">
+                            <option value="">—</option>
+                            <option>פחות משנה</option>
+                            <option>1–3 שנים</option>
+                            <option>3–10 שנים</option>
+                            <option>מעל 10 שנים</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>כמה נמכרו</label>
+                        <select id="d-sold">
+                            <option value="">—</option>
+                            <option>עד 100</option>
+                            <option>100–1,000</option>
+                            <option>1,000–10,000</option>
+                            <option>מעל 10,000</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- STEP 2: PRODUCTS -->
+                <div class="step-label">שלב 2 · המוצרים</div>
+                <div class="field">
+                    <label>מוצרים / שירותים (שם + מחיר ב-₪)</label>
+                    <div class="product-row">
+                        <input type="text" id="d-p1-name" placeholder="שם המוצר">
+                        <input type="text" id="d-p1-price" placeholder="מחיר" dir="ltr">
+                    </div>
+                    <div class="product-row">
+                        <input type="text" id="d-p2-name" placeholder="מוצר 2 (אופציונלי)">
+                        <input type="text" id="d-p2-price" placeholder="מחיר" dir="ltr">
+                    </div>
+                    <div class="product-row">
+                        <input type="text" id="d-p3-name" placeholder="מוצר 3 (אופציונלי)">
+                        <input type="text" id="d-p3-price" placeholder="מחיר" dir="ltr">
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- STEP 3: WHY / DIFFERENTIATION -->
+                <div class="step-label">שלב 3 · הבידול</div>
+                <div class="field">
+                    <label>למה קונים ממנו</label>
+                    <div class="chips" id="d-whyUs">
+                        <span class="chip" onclick="toggleChip(this)">איכות וחומרים</span>
+                        <span class="chip" onclick="toggleChip(this)">מחיר</span>
+                        <span class="chip" onclick="toggleChip(this)">שירות אישי</span>
+                        <span class="chip" onclick="toggleChip(this)">עיצוב</span>
+                        <span class="chip" onclick="toggleChip(this)">חדשנות / פטנט</span>
+                        <span class="chip" onclick="toggleChip(this)">מוניטין</span>
+                        <span class="chip" onclick="toggleChip(this)">מהירות</span>
+                        <span class="chip" onclick="toggleChip(this)">התאמה אישית</span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>הערת בידול</label>
+                    <input type="text" id="d-whyNote" placeholder="משהו נוסף על הבידול שלהם">
+                </div>
+                <div class="field">
+                    <label>מתחרים שמכיר</label>
+                    <input type="text" id="d-competitors" placeholder="שמות או אתרים, מופרדים בפסיקים">
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- STEP 4: NUMBERS -->
+                <div class="step-label">שלב 4 · המספרים</div>
+                <div class="row">
+                    <div class="field">
+                        <label>מחזור חודשי</label>
+                        <select id="d-revenue">
+                            <option value="">—</option>
+                            <option>עד 50 אלף ₪</option>
+                            <option>50–150 אלף ₪</option>
+                            <option>150–500 אלף ₪</option>
+                            <option>מעל 500 אלף ₪</option>
+                            <option>מעדיפים לא לציין</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>רווחיות</label>
+                        <select id="d-margin">
+                            <option value="">—</option>
+                            <option>פחות מ-20%</option>
+                            <option>20–40%</option>
+                            <option>40–60%</option>
+                            <option>מעל 60%</option>
+                            <option>לא בטוחים</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>מקורות לקוחות</label>
+                    <div class="chips" id="d-sources">
+                        <span class="chip" onclick="toggleChip(this)">המלצות</span>
+                        <span class="chip" onclick="toggleChip(this)">מודעות ממומנות</span>
+                        <span class="chip" onclick="toggleChip(this)">גוגל</span>
+                        <span class="chip" onclick="toggleChip(this)">רשתות חברתיות</span>
+                        <span class="chip" onclick="toggleChip(this)">חנויות / מפיצים</span>
+                        <span class="chip" onclick="toggleChip(this)">אתר</span>
+                        <span class="chip" onclick="toggleChip(this)">וואטסאפ / טלפון</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <label>הוצאות פרסום חודשיות</label>
+                        <select id="d-adSpend">
+                            <option value="">—</option>
+                            <option>לא מפרסמים</option>
+                            <option>עד 5,000 ₪</option>
+                            <option>5,000–20,000 ₪</option>
+                            <option>20,000–50,000 ₪</option>
+                            <option>מעל 50,000 ₪</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>מה זה מביא</label>
+                        <input type="text" id="d-adResult" placeholder="פניות, מכירות...">
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- TYPE-SPECIFIC: PHYSICAL -->
+                <div class="type-section" id="sec-physical">
+                    <div class="step-label">מוצר פיזי</div>
+                    <div class="row">
+                        <div class="field">
+                            <label>עלות ייצור ליחידה</label>
+                            <input type="text" id="d-unitCost" placeholder="₪" dir="ltr">
+                        </div>
+                        <div class="field">
+                            <label>איפה מייצרים</label>
+                            <select id="d-madeWhere">
+                                <option value="">—</option>
+                                <option>בישראל</option>
+                                <option>במזרח אסיה</option>
+                                <option>באירופה</option>
+                                <option>במקום אחר</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="field">
+                            <label>קיבולת ייצור / חודש</label>
+                            <select id="d-capacity">
+                                <option value="">—</option>
+                                <option>עד 100</option>
+                                <option>100–1,000</option>
+                                <option>1,000–10,000</option>
+                                <option>מעל 10,000</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>החזרות / אחריות</label>
+                            <select id="d-returns">
+                                <option value="">—</option>
+                                <option>כמעט אין</option>
+                                <option>עד 5%</option>
+                                <option>יותר מ-5%</option>
+                                <option>לא יודעים</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>מידות ומשקל באריזה</label>
+                        <input type="text" id="d-dims" placeholder="למשל: 30x20x10 ס״מ, 2 ק״ג">
+                    </div>
+                    <div class="field">
+                        <label>הרכבה / התקנה</label>
+                        <select id="d-install">
+                            <option value="">—</option>
+                            <option value="self">הלקוח מרכיב לבד</option>
+                            <option value="install">צריך התקנה</option>
+                        </select>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+
+                <!-- TYPE-SPECIFIC: SERVICE -->
+                <div class="type-section" id="sec-service">
+                    <div class="step-label">שירות / ייעוץ</div>
+                    <div class="field">
+                        <label>אפשר מרחוק?</label>
+                        <select id="d-remote">
+                            <option value="">—</option>
+                            <option>מרחוק לגמרי</option>
+                            <option>חייבים להגיע</option>
+                            <option>משולב</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>תהליך מכירה</label>
+                        <textarea id="d-salesProcess" placeholder="איך מגיעים מליד למכירה" style="min-height:60px"></textarea>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+
+                <!-- TYPE-SPECIFIC: FIELD -->
+                <div class="type-section" id="sec-field">
+                    <div class="step-label">שירות בשטח</div>
+                    <div class="field">
+                        <label>מה צריך לתת את השירות</label>
+                        <div class="chips" id="d-fieldNeeds">
+                            <span class="chip" onclick="toggleChip(this)">רישיון מקצועי</span>
+                            <span class="chip" onclick="toggleChip(this)">ביטוח</span>
+                            <span class="chip" onclick="toggleChip(this)">עובדים בשטח</span>
+                            <span class="chip" onclick="toggleChip(this)">ציוד</span>
+                            <span class="chip" onclick="toggleChip(this)">רכב</span>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+
+                <!-- TYPE-SPECIFIC: SOFTWARE -->
+                <div class="type-section" id="sec-software">
+                    <div class="step-label">תוכנה / אפליקציה</div>
+                    <div class="row">
+                        <div class="field">
+                            <label>שלב המוצר</label>
+                            <select id="d-swStage">
+                                <option value="">—</option>
+                                <option>בפיתוח</option>
+                                <option>יש משתמשים</option>
+                                <option>יש משלמים</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>מודל גבייה</label>
+                            <select id="d-billing">
+                                <option value="">—</option>
+                                <option>מנוי</option>
+                                <option>תשלום חד-פעמי</option>
+                                <option>לפי שימוש</option>
+                                <option>עוד לא החלטנו</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+
+                <!-- STEP 5: DECISION -->
+                <div class="step-label">שלב 5 · ההחלטה</div>
+                <div class="field">
+                    <label>מטרה בארה״ב</label>
+                    <input type="text" id="d-usGoal" placeholder="מה הכי חשוב להשיג בשנה הקרובה">
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <label>טיימליין</label>
+                        <select id="d-timeline">
+                            <option value="">—</option>
+                            <option>מיד</option>
+                            <option>תוך 3 חודשים</option>
+                            <option>תוך חצי שנה</option>
+                            <option>עוד לא יודעים</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>איך רוצה לעשות את זה</label>
+                        <select id="d-mode">
+                            <option value="">—</option>
+                            <option value="self">לבד — ילמדו אותי</option>
+                            <option value="pros">לבד + אנשי מקצוע</option>
+                            <option value="dfy">שיעשו בשבילי הכול</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="card">
         <button class="btn btn-primary" id="submitBtn" onclick="submitLead()">שליחה</button>
         <button class="btn btn-reset" onclick="resetForm()">ניקוי טופס</button>
     </div>
@@ -153,11 +465,35 @@ textarea{resize:vertical;min-height:80px}
 <script>
 const SHEETS_WEBHOOK = 'https://script.google.com/macros/s/AKfycbzC9yLjbRhQwQfqpejJVbjorOtXBs39-DophwySdA8wZcnVy8rnbGShXvN2TNFj5wnZSA/exec';
 let paid = false;
+let diagOpen = false;
 const sent = [];
 
 function togglePaid() {
     paid = !paid;
     document.getElementById('f-paid').classList.toggle('on', paid);
+}
+
+function toggleDiag() {
+    diagOpen = !diagOpen;
+    document.getElementById('diagBody').classList.toggle('open', diagOpen);
+    document.getElementById('diagToggle').classList.toggle('open', diagOpen);
+}
+
+function toggleChip(el) {
+    el.classList.toggle('on');
+    updateDiagBadge();
+}
+
+function getChips(containerId) {
+    return Array.from(document.querySelectorAll('#' + containerId + ' .chip.on')).map(c => c.textContent);
+}
+
+function onTypeChange() {
+    const t = val('d-type');
+    ['physical','service','field','software'].forEach(s => {
+        document.getElementById('sec-' + s).classList.toggle('visible', t === s);
+    });
+    updateDiagBadge();
 }
 
 function val(id) { return document.getElementById(id).value.trim(); }
@@ -167,6 +503,88 @@ function showToast(msg, type) {
     t.textContent = msg;
     t.className = 'toast show ' + type;
     setTimeout(() => t.className = 'toast', 3000);
+}
+
+function countDiagFields() {
+    let n = 0;
+    ['d-stage','d-type','d-oneLiner','d-years','d-sold','d-revenue','d-margin','d-adSpend','d-adResult',
+     'd-unitCost','d-madeWhere','d-capacity','d-returns','d-dims','d-install','d-remote','d-salesProcess',
+     'd-swStage','d-billing','d-usGoal','d-timeline','d-mode','d-whyNote','d-competitors',
+     'd-p1-name','d-p2-name','d-p3-name'].forEach(id => { if (val(id)) n++; });
+    n += getChips('d-whyUs').length > 0 ? 1 : 0;
+    n += getChips('d-sources').length > 0 ? 1 : 0;
+    n += getChips('d-fieldNeeds').length > 0 ? 1 : 0;
+    return n;
+}
+
+function updateDiagBadge() {
+    const n = countDiagFields();
+    const badge = document.getElementById('diagBadge');
+    const toggle = document.getElementById('diagToggle');
+    badge.textContent = n > 0 ? n + ' שדות' : 'ריק';
+    toggle.classList.toggle('has-data', n > 0);
+}
+
+document.getElementById('diagCard').addEventListener('input', updateDiagBadge);
+document.getElementById('diagCard').addEventListener('change', updateDiagBadge);
+
+function buildDiagAnswers() {
+    const d = {};
+    const set = (k, v) => { if (v) d[k] = v; };
+
+    set('stage', val('d-stage'));
+    set('type', val('d-type'));
+    set('oneLiner', val('d-oneLiner'));
+    set('yearsActive', val('d-years'));
+    set('soldCount', val('d-sold'));
+
+    const products = [];
+    for (let i = 1; i <= 3; i++) {
+        const name = val('d-p' + i + '-name');
+        if (name) products.push({ name, price: val('d-p' + i + '-price') || null });
+    }
+    if (products.length) d.topProducts = products;
+
+    const whyUs = getChips('d-whyUs');
+    if (whyUs.length) d.whyUs = whyUs;
+    set('whyNote', val('d-whyNote'));
+    const comp = val('d-competitors');
+    if (comp) d.competitors = comp.split(/[,،]/).map(s => s.trim()).filter(Boolean);
+
+    set('monthlyRevenue', val('d-revenue'));
+    set('margin', val('d-margin'));
+    const sources = getChips('d-sources');
+    if (sources.length) d.sources = sources;
+    set('adSpend', val('d-adSpend'));
+    set('adResult', val('d-adResult'));
+
+    const t = val('d-type');
+    if (t === 'physical') {
+        set('unitCost', val('d-unitCost'));
+        set('madeWhere', val('d-madeWhere'));
+        set('capacity', val('d-capacity'));
+        set('returns', val('d-returns'));
+        set('dims', val('d-dims'));
+        set('install', val('d-install'));
+    }
+    if (t === 'service') {
+        set('remote', val('d-remote'));
+        set('salesProcess', val('d-salesProcess'));
+    }
+    if (t === 'field') {
+        const fn = getChips('d-fieldNeeds');
+        if (fn.length) d.fieldNeeds = fn;
+    }
+    if (t === 'software') {
+        set('swStage', val('d-swStage'));
+        set('billing', val('d-billing'));
+    }
+
+    set('usGoal', val('d-usGoal'));
+    set('timeline', val('d-timeline'));
+    set('mode', val('d-mode'));
+
+    return Object.keys(d).length ? d : null;
 }
 
 function submitLead() {
@@ -182,19 +600,22 @@ function submitLead() {
     btn.disabled = true;
     btn.textContent = 'שולח...';
 
+    const diagAnswers = buildDiagAnswers();
+
     const payload = {
         firstName: name,
         phone: phone,
         email: email,
-        businessType: val('f-biz') || undefined,
-        businessDesc: val('f-desc') || undefined,
-        revenue: val('f-rev') || undefined,
+        businessType: val('d-type') || undefined,
+        businessDesc: val('d-oneLiner') || undefined,
+        revenue: val('d-revenue') || undefined,
         motivation: val('f-mot') || undefined,
-        stage: paid ? 'paid' : 'manual',
+        stage: paid ? 'paid' : 'diagnostic',
         event: 'manual-entry',
         notes: val('f-notes') || undefined,
         source: 'team-form'
     };
+    if (diagAnswers) payload.diagAnswers = diagAnswers;
 
     fetch(SHEETS_WEBHOOK, {
         method: 'POST',
@@ -222,11 +643,15 @@ function addToHistory(name, phone) {
 }
 
 function resetForm() {
-    ['f-name','f-phone','f-email','f-desc','f-notes'].forEach(id => document.getElementById(id).value = '');
-    ['f-biz','f-rev','f-mot'].forEach(id => document.getElementById(id).selectedIndex = 0);
+    document.querySelectorAll('input[type="text"],input[type="tel"],input[type="email"],textarea').forEach(el => el.value = '');
+    document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+    document.querySelectorAll('.chip.on').forEach(el => el.classList.remove('on'));
     paid = false;
     document.getElementById('f-paid').classList.remove('on');
+    onTypeChange();
+    updateDiagBadge();
     document.getElementById('f-name').focus();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
 </body>
