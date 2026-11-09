@@ -6,6 +6,15 @@
     <title>Dollar Express — בדיקת היתכנות לשוק האמריקאי | Dollar Academy</title>
     <meta name="description" content="בדיקת היתכנות ואסטרטגיית חדירה לשוק האמריקאי לעסקים ישראלים — Dollar Academy">
 
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KN2VN7Q00"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9KN2VN7Q00', { send_page_view: false });
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800&family=Assistant:wght@300;400;600;700&family=Heebo:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -256,8 +265,7 @@
             { id: 'businessDesc', type: 'textarea', question: 'ספר לנו על העסק בכמה משפטים',
               placeholder: 'מה אתה מוכר? למי? איך? מה מייחד אותך? כמה עובדים יש היום בעסק ובאיזה תפקידים? האם יש שותפים? אם כן כמה?',
               minLength: 20, nextLabel: 'המשך' },
-            { id: 'firstName', type: 'input', inputType: 'text', question: 'מה השם המלא שלך?',
-              placeholder: 'הכנס/י את שמך המלא', nextLabel: 'המשך' },
+            { id: 'name', type: 'name', question: 'איך קוראים לך?', nextLabel: 'המשך' },
             { id: 'phone', type: 'input', inputType: 'tel', question: 'מה הטלפון הנייד שלך?',
               placeholder: '05X-XXXXXXX', nextLabel: 'המשך' },
             { id: 'email', type: 'input', inputType: 'email', question: 'מה המייל שלך?',
@@ -502,6 +510,7 @@
         function buildDiagPrior(ld) {
             const p = {};
             if (ld.firstName) p.name = ld.firstName;
+            if (ld.lastName) p.lastName = ld.lastName;
             if (ld.phone) p.phone = ld.phone;
             if (ld.email) p.email = ld.email;
             if (ld.businessDesc) p.oneLiner = ld.businessDesc;
@@ -547,6 +556,7 @@
             var payload = {
                 phone: leadData.phone || '',
                 firstName: leadData.firstName || '',
+                lastName: leadData.lastName || '',
                 email: leadData.email || '',
                 businessType: leadData.businessType || '',
                 motivation: leadData.motivation || '',
@@ -565,7 +575,11 @@
                 referrer: leadData.referrer || ''
             };
             if (extra) Object.assign(payload, extra);
-            fetch(SHEETS_WEBHOOK, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) })
+            var params = new URLSearchParams();
+            Object.entries(payload).forEach(function(kv) {
+                params.append(kv[0], typeof kv[1] === 'object' ? JSON.stringify(kv[1]) : String(kv[1] != null ? kv[1] : ''));
+            });
+            fetch(SHEETS_WEBHOOK, { method: 'POST', mode: 'no-cors', body: params })
                 .catch(err => console.error('Sheets backup error:', err));
         };
 
@@ -1316,9 +1330,11 @@
         // ╚══════════════════════════════════════════════════════╝
         const QuizScreen = ({ step, leadData, setLeadData, onComplete, navigate }) => {
             const [inputValue, setInputValue] = useState('');
+            const [lastNameValue, setLastNameValue] = useState('');
             const [errorMsg, setErrorMsg] = useState('');
             const [picked, setPicked] = useState(null);
             const inputRef = useRef(null);
+            const lastNameRef = useRef(null);
 
             const q = quizQuestions[step];
             const total = quizQuestions.length;
@@ -1326,7 +1342,12 @@
 
             useEffect(() => {
                 setPicked(null);
-                setInputValue(leadData[q.id] || '');
+                if (q.type === 'name') {
+                    setInputValue(leadData.firstName || '');
+                    setLastNameValue(leadData.lastName || '');
+                } else {
+                    setInputValue(leadData[q.id] || '');
+                }
                 setErrorMsg('');
                 setTimeout(() => { if (inputRef.current) inputRef.current.focus(); }, 100);
             }, [step]);
@@ -1339,9 +1360,13 @@
             };
 
             const validate = () => {
+                if (q.type === 'name') {
+                    if (inputValue.trim().length < 2) { setErrorMsg('נא להזין שם פרטי'); return false; }
+                    if (lastNameValue.trim().length < 2) { setErrorMsg('נא להזין שם משפחה'); return false; }
+                    return true;
+                }
                 const val = inputValue.trim();
                 if (q.type === 'textarea' && val.length < (q.minLength || 20)) { setErrorMsg('נא לכתוב לפחות ' + (q.minLength||20) + ' תווים'); return false; }
-                if (q.id === 'firstName' && val.length < 2) { setErrorMsg('נא להזין שם מלא'); return false; }
                 if (q.id === 'phone') { const d = val.replace(/\D/g, ''); if (d.length !== 10 || !d.startsWith('05')) { setErrorMsg('נא להזין מספר טלפון ישראלי תקין (05X-XXXXXXX)'); return false; } }
                 if (q.id === 'email') { if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { setErrorMsg('נא להזין כתובת מייל תקינה'); return false; } }
                 return true;
@@ -1349,11 +1374,17 @@
 
             const handleNext = () => {
                 if (!validate()) return;
-                const val = inputValue.trim();
                 setErrorMsg('');
-                const updated = Object.assign({}, leadData, { [q.id]: val });
+                var updated;
+                if (q.type === 'name') {
+                    updated = Object.assign({}, leadData, { firstName: inputValue.trim(), lastName: lastNameValue.trim() });
+                    sessionStorage.setItem('firstName', inputValue.trim());
+                    sessionStorage.setItem('lastName', lastNameValue.trim());
+                } else {
+                    const val = inputValue.trim();
+                    updated = Object.assign({}, leadData, { [q.id]: val });
+                }
                 setLeadData(updated);
-                if (q.id === 'firstName') sessionStorage.setItem('firstName', val);
                 if (q.id === 'phone') sendToSheets('quiz-partial', updated);
                 if (step < total - 1) navigate('#/quiz/' + (step + 2));
                 else onComplete(updated);
@@ -1382,7 +1413,27 @@
                             <h2 className="font-extrabold text-white text-center leading-snug w-full mb-4" style={{ fontSize:'clamp(1.35rem, 5.5vw, 1.875rem)' }}>{q.question}</h2>
                             {q.subtitle && <p style={{ fontSize:15, color:'#A9B7DE', textAlign:'center', marginBottom:24, lineHeight:1.5 }}>{q.subtitle}</p>}
 
-                            {q.type === 'choice' ? (
+                            {q.type === 'name' ? (
+                                <div className="space-y-5 w-full flex flex-col items-center">
+                                    <div className="w-full max-w-sm flex gap-3" style={{direction:'rtl'}}>
+                                        <input ref={inputRef} type="text" autoComplete="given-name"
+                                            value={inputValue} onChange={(e) => setInputValue(e.target.value)}
+                                            onKeyDown={(e) => e.key==='Enter' && lastNameRef.current && lastNameRef.current.focus()}
+                                            placeholder="שם פרטי"
+                                            className="flex-1 bg-white/10 border-2 border-white/30 focus:border-cta focus:bg-white/20 text-white rounded-xl p-4 text-xl transition-colors text-right outline-none"/>
+                                        <input ref={lastNameRef} type="text" autoComplete="family-name"
+                                            value={lastNameValue} onChange={(e) => setLastNameValue(e.target.value)}
+                                            onKeyDown={(e) => e.key==='Enter' && handleNext()}
+                                            placeholder="שם משפחה"
+                                            className="flex-1 bg-white/10 border-2 border-white/30 focus:border-cta focus:bg-white/20 text-white rounded-xl p-4 text-xl transition-colors text-right outline-none"/>
+                                    </div>
+                                    {errorMsg && <div className="w-full text-center"><p className="inline-block text-white bg-red-500 px-4 py-2 rounded-full font-bold text-sm shadow-lg">{errorMsg}</p></div>}
+                                    <button onClick={handleNext}
+                                        className="cta-glow w-full max-w-sm bg-cta text-white font-bold py-4 px-4 rounded-xl hover:bg-blue-600 active:scale-95 transition-all text-base md:text-lg shadow-lg text-center leading-tight">
+                                        {q.nextLabel || 'המשך'}
+                                    </button>
+                                </div>
+                            ) : q.type === 'choice' ? (
                                 <div className="space-y-4 w-full flex flex-col items-center">
                                     {q.options.map((opt, i) => {
                                         const sel = picked === opt.value;
@@ -1417,7 +1468,7 @@
                                     <input ref={inputRef}
                                         type={q.id==='phone'?'text':q.inputType}
                                         inputMode={q.id==='phone'?'numeric':undefined}
-                                        autoComplete={q.id==='firstName'?'name':q.id==='phone'?'tel':q.id==='email'?'email':'off'}
+                                        autoComplete={q.id==='phone'?'tel':q.id==='email'?'email':'off'}
                                         value={inputValue}
                                         onChange={(e) => q.id==='phone' ? setInputValue(formatPhone(e.target.value)) : setInputValue(e.target.value)}
                                         onKeyDown={(e) => e.key==='Enter' && handleNext()}
@@ -1507,7 +1558,7 @@
         const PotentialScreen = ({ leadData, navigate }) => {
             const score = calcScore(leadData.businessType, leadData.revenue, leadData.businessDesc);
             const ct = contentType(leadData.businessType);
-            const firstName = (leadData.firstName || '').split(' ')[0] || '';
+            const firstName = leadData.firstName || '';
 
             const [revealed, setRevealed] = useState(false);
             const [mounted, setMounted] = useState(false);
@@ -2507,11 +2558,19 @@
                         <h2 style={DS.ttl}>{st.title(ctx)}</h2>
                         <p style={DS.lead}>{st.lead(ctx)}</p>
                         <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
-                            <div>
-                                <label style={DS.label}>שם מלא</label>
-                                <input type="text" value={get('name') || ''} onChange={function(e){ setA('name', e.target.value); }}
-                                    style={Object.assign({}, DS.field, errs.name ? DS.fieldErr : {})} />
-                                {errs.name && <div style={DS.err}>שם חובה</div>}
+                            <div style={{ display:'flex', gap:12 }}>
+                                <div style={{ flex:1 }}>
+                                    <label style={DS.label}>שם פרטי</label>
+                                    <input type="text" autoComplete="given-name" value={get('name') || ''} onChange={function(e){ setA('name', e.target.value); }}
+                                        style={Object.assign({}, DS.field, errs.name ? DS.fieldErr : {})} />
+                                    {errs.name && <div style={DS.err}>שם פרטי חובה</div>}
+                                </div>
+                                <div style={{ flex:1 }}>
+                                    <label style={DS.label}>שם משפחה</label>
+                                    <input type="text" autoComplete="family-name" value={get('lastName') || ''} onChange={function(e){ setA('lastName', e.target.value); }}
+                                        style={Object.assign({}, DS.field, errs.lastName ? DS.fieldErr : {})} />
+                                    {errs.lastName && <div style={DS.err}>שם משפחה חובה</div>}
+                                </div>
                             </div>
                             <div>
                                 <label style={DS.label}>אימייל</label>
@@ -2630,7 +2689,7 @@
                 sendToSheets('paid', leadData);
             }, []);
 
-            const firstName = (leadData.firstName || '').split(' ')[0] || '';
+            const firstName = leadData.firstName || '';
 
             const NEXT_STEPS = [
                 { icon: '📞', label: 'השלב הבא', value: 'שיחת היכרות טלפונית עם גיל' },
@@ -2711,9 +2770,19 @@
                 catch(e) { return {}; }
             });
 
+            var trackRoute = function(hash) {
+                if (window.gtag) {
+                    var h = hash || window.location.hash || '#/';
+                    var title = h.replace('#/', '') || 'landing';
+                    gtag('event', 'page_view', { page_title: title, page_location: window.location.href, page_path: h });
+                }
+                if (window.fbq) fbq('track', 'PageView');
+            };
+
             useEffect(function() {
-                var onHash = function() { setRoute(window.location.hash || '#/'); window.scrollTo(0, 0); };
+                var onHash = function() { setRoute(window.location.hash || '#/'); window.scrollTo(0, 0); trackRoute(); };
                 window.addEventListener('hashchange', onHash);
+                trackRoute();
                 return function() { window.removeEventListener('hashchange', onHash); };
             }, []);
 

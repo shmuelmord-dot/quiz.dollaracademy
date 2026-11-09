@@ -94,9 +94,15 @@ textarea{resize:vertical;min-height:72px}
     <!-- CONTACT + BASIC -->
     <div class="card">
         <div class="section-title">פרטי הלקוח</div>
-        <div class="field">
-            <label><span class="req">*</span> שם מלא</label>
-            <input type="text" id="f-name" placeholder="לדוגמה: ישראל ישראלי" autocomplete="off">
+        <div class="row">
+            <div class="field">
+                <label><span class="req">*</span> שם פרטי</label>
+                <input type="text" id="f-firstName" placeholder="ישראל" autocomplete="given-name">
+            </div>
+            <div class="field">
+                <label><span class="req">*</span> שם משפחה</label>
+                <input type="text" id="f-lastName" placeholder="ישראלי" autocomplete="family-name">
+            </div>
         </div>
         <div class="row">
             <div class="field">
@@ -603,11 +609,13 @@ function buildDiagAnswers() {
 }
 
 function submitLead() {
-    const name = val('f-name');
+    const firstName = val('f-firstName');
+    const lastName = val('f-lastName');
     const phone = val('f-phone').replace(/\D/g, '');
     const email = val('f-email');
 
-    if (!name) { showToast('חסר שם', 'err'); return; }
+    if (!firstName) { showToast('חסר שם פרטי', 'err'); return; }
+    if (!lastName) { showToast('חסר שם משפחה', 'err'); return; }
     if (!phone || phone.length < 9) { showToast('טלפון לא תקין', 'err'); return; }
     if (!email || !email.includes('@')) { showToast('אימייל לא תקין', 'err'); return; }
 
@@ -618,27 +626,33 @@ function submitLead() {
     const diagAnswers = buildDiagAnswers();
 
     const payload = {
-        firstName: name,
+        firstName: firstName,
+        lastName: lastName,
         phone: phone,
         email: email,
-        businessType: val('d-type') || undefined,
-        businessDesc: val('d-oneLiner') || undefined,
-        revenue: val('d-revenue') || undefined,
-        motivation: val('f-mot') || undefined,
+        businessType: val('d-type') || '',
+        businessDesc: val('d-oneLiner') || '',
+        revenue: val('d-revenue') || '',
+        motivation: val('f-mot') || '',
         stage: paid ? 'paid' : 'diagnostic',
         event: 'manual-entry',
-        notes: val('f-notes') || undefined,
+        notes: val('f-notes') || '',
         source: 'team-form'
     };
     if (diagAnswers) payload.diagAnswers = diagAnswers;
 
+    const params = new URLSearchParams();
+    Object.entries(payload).forEach(([k, v]) => {
+        params.append(k, typeof v === 'object' ? JSON.stringify(v) : String(v != null ? v : ''));
+    });
+
     fetch(SHEETS_WEBHOOK, {
         method: 'POST',
         mode: 'no-cors',
-        body: JSON.stringify(payload)
+        body: params
     }).then(() => {
         showToast('הליד נשלח בהצלחה', 'ok');
-        addToHistory(name, phone);
+        addToHistory(firstName + ' ' + lastName, phone);
         resetForm();
     }).catch(() => {
         showToast('שגיאה בשליחה, נסה שוב', 'err');
@@ -665,7 +679,7 @@ function resetForm() {
     document.getElementById('f-paid').classList.remove('on');
     onTypeChange();
     updateDiagBadge();
-    document.getElementById('f-name').focus();
+    document.getElementById('f-firstName').focus();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>

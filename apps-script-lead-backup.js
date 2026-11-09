@@ -1,19 +1,26 @@
-var HEADERS = ['טלפון','שם','אימייל','סוג עסק','מוטיבציה','מחזור','תיאור העסק','ציון פוטנציאל','שלב אחרון','שילם','תאריך כניסה','עדכון אחרון','utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','referrer','gclid','תשובות דיאגנוסטי'];
+var HEADERS = ['טלפון','שם פרטי','שם משפחה','אימייל','סוג עסק','מוטיבציה','מחזור','תיאור העסק','ציון פוטנציאל','שלב אחרון','שילם','תאריך כניסה','עדכון אחרון','utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','referrer','gclid','תשובות דיאגנוסטי'];
 
 var FIELD_MAP = {
-  'טלפון':'phone', 'שם':'firstName', 'אימייל':'email', 'סוג עסק':'businessType',
-  'מוטיבציה':'motivation', 'מחזור':'revenue', 'תיאור העסק':'businessDesc',
-  'ציון פוטנציאל':'score', 'שלב אחרון':'stage', 'שילם':'paid',
+  'טלפון':'phone', 'שם פרטי':'firstName', 'שם משפחה':'lastName', 'אימייל':'email',
+  'סוג עסק':'businessType', 'מוטיבציה':'motivation', 'מחזור':'revenue',
+  'תיאור העסק':'businessDesc', 'ציון פוטנציאל':'score', 'שלב אחרון':'stage', 'שילם':'paid',
   'utm_source':'utm_source', 'utm_medium':'utm_medium', 'utm_campaign':'utm_campaign',
   'utm_content':'utm_content', 'utm_term':'utm_term', 'fbclid':'fbclid',
   'referrer':'referrer', 'gclid':'gclid'
 };
 
-var STAGE_ORDER = { 'quiz-partial':0, 'quiz':1, 'potential':2, 'vsl':3, 'diagnostic':4, 'paid':5 };
+var STAGE_ORDER = { 'quiz-partial':0, 'quiz':1, 'potential':2, 'vsl':3, 'diagnostic':4, 'paid':5, 'manual-entry':4 };
+
+function parseBody(e) {
+  if (e.postData && e.postData.contents) {
+    try { return JSON.parse(e.postData.contents); } catch(_) {}
+  }
+  return e.parameter || {};
+}
 
 function doPost(e) {
   try {
-    var data = JSON.parse(e.postData.contents);
+    var data = parseBody(e);
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var leads = ss.getSheetByName('לידים');
     var events = ss.getSheetByName('אירועים');
@@ -36,7 +43,11 @@ function doPost(e) {
         if (h === 'תאריך כניסה' || h === 'עדכון אחרון') return ts;
         if (h === 'שלב אחרון') return data.stage || 'quiz';
         if (h === 'שילם') return data.stage === 'paid' ? 'כן' : '';
-        if (h === 'תשובות דיאגנוסטי') return data.diagAnswers ? JSON.stringify(data.diagAnswers) : '';
+        if (h === 'תשובות דיאגנוסטי') {
+          var da = data.diagAnswers;
+          if (typeof da === 'string') { try { da = JSON.parse(da); } catch(_) {} }
+          return da ? JSON.stringify(da) : '';
+        }
         return data[FIELD_MAP[h]] || '';
       });
       leads.appendRow(newRow);
@@ -53,14 +64,16 @@ function doPost(e) {
           // don't overwrite
         } else if (data[key] && !ex[i]) {
           ex[i] = data[key];
-        } else if (data[key] && (h === 'שם' || h === 'אימייל' || h === 'ציון פוטנציאל')) {
+        } else if (data[key] && (h === 'שם פרטי' || h === 'שם משפחה' || h === 'אימייל' || h === 'ציון פוטנציאל')) {
           ex[i] = data[key];
         }
       });
 
-      if (data.stage === 'paid') ex[9] = 'כן';
-      if (data.diagAnswers) ex[20] = JSON.stringify(data.diagAnswers);
-      ex[11] = ts;
+      if (data.stage === 'paid') ex[10] = 'כן';
+      var da2 = data.diagAnswers;
+      if (typeof da2 === 'string') { try { da2 = JSON.parse(da2); } catch(_) {} }
+      if (da2) ex[21] = JSON.stringify(da2);
+      ex[12] = ts;
 
       range.setValues([ex]);
     }
