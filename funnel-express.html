@@ -1385,7 +1385,9 @@
                     updated = Object.assign({}, leadData, { [q.id]: val });
                 }
                 setLeadData(updated);
-                if (q.id === 'phone') sendToSheets('quiz-partial', updated);
+                if (q.id === 'phone') sendToSheets('quiz-partial', updated, { event: 'quiz-step-' + (step + 1) });
+                else if (updated.phone) sendToSheets('quiz-partial', updated, { event: 'quiz-step-' + (step + 1) });
+                if (window.gtag) gtag('event', 'quiz_step', { step_number: step + 1, question_id: q.id });
                 if (step < total - 1) navigate('#/quiz/' + (step + 2));
                 else onComplete(updated);
             };
@@ -1917,6 +1919,8 @@
                 const timer = setTimeout(() => {
                     setShowOffer(true);
                     sessionStorage.setItem('dollarExpressOfferSeen', '1');
+                    sendToSheets('vsl', leadData, { event: 'vsl-offer-shown' });
+                    if (window.gtag) gtag('event', 'vsl_offer_shown');
                 }, 60000);
                 return () => clearTimeout(timer);
             }, []);
@@ -2185,6 +2189,11 @@
             }, [ans, curId]);
 
             useEffect(function() {
+                sendToSheets('diagnostic', leadData, { event: 'diagnostic-start' });
+                if (window.gtag) gtag('event', 'diagnostic_start');
+            }, []);
+
+            useEffect(function() {
                 var m = route && route.match(/^#\/diagnostic\/(\d+)$/);
                 if (m) {
                     var stepNum = parseInt(m[1]) - 1;
@@ -2220,6 +2229,8 @@
             };
             var goNext = function() {
                 if (!validate()) return;
+                sendToSheets('diagnostic', leadData, { event: 'diag-step-' + (si + 1) + '-' + st.id });
+                if (window.gtag) gtag('event', 'diagnostic_step', { step_number: si + 1, step_id: st.id });
                 sendWebhook(WEBHOOK_URL, { event:'diagStep', step:st.id, answers:diagClone(ans), lead_id:leadData.lead_id });
                 if (si >= vs.length - 1) { setIsSummary(true); navigate('#/diagnostic/' + (vs.length + 1)); window.scrollTo(0,0); return; }
                 setErrs({}); navigate('#/diagnostic/' + (si + 2)); window.scrollTo(0, 0);
