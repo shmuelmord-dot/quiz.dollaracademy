@@ -1569,7 +1569,12 @@
 
             const gaugeScore = useSpringValue(score, { stiffness: 60, damping: 18, delay: 400, onComplete: () => setRevealed(true) });
 
-            useEffect(() => { requestAnimationFrame(() => setMounted(true)); if (typeof fbq === 'function') fbq('track', 'AddToCart'); }, []);
+            useEffect(() => {
+                requestAnimationFrame(() => setMounted(true));
+                if (typeof fbq === 'function') fbq('track', 'AddToCart');
+                sendToSheets('potential', leadData, { event: 'potential-view' });
+                if (window.gtag) gtag('event', 'potential_view');
+            }, []);
 
             const subVals = {
                 model: { software: 91, ecommerce: 87, agency: 89 }[ct] || 82,
