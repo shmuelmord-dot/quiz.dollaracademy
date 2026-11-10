@@ -2246,7 +2246,8 @@
             };
             var pay = function() {
                 sendWebhook(WEBHOOK_URL, { event:'diagComplete', answers:diagClone(ans), leadData:leadData });
-                sendToSheets('diagnostic', leadData, { diagAnswers: diagClone(ans) });
+                sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', diagAnswers: diagClone(ans) });
+                if (window.gtag) gtag('event', 'diagnostic_complete');
                 setLeadData(function(p) { return Object.assign({}, p, ans, { diagComplete:true }); });
                 window.location.href = DIAG_UPAY;
             };
