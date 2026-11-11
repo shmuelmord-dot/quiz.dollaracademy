@@ -334,7 +334,7 @@
             margin: ['פחות מ-20%','20–40%','40–60%','מעל 60%','לא בטוחים'],
             sources: ['המלצות','מודעות ממומנות','חיפוש בגוגל','רשתות חברתיות','חנויות או מפיצים','אתר','וואטסאפ או טלפון','אחר'],
             adSpend: ['לא מפרסמים','עד 5,000 ₪','5,000–20,000 ₪','20,000–50,000 ₪','מעל 50,000 ₪'],
-            install: [{ v:'self', l:'הלקוח מרכיב לבד', d:'מגיע באריזה, בלי טכנאי' },{ v:'install', l:'צריך התקנה', d:'מתקין מגיע ללקוח' }],
+            install: [{ v:'finished', l:'מוצר מוגמר', d:'מגיע מוכן לשימוש, ללא הרכבה' },{ v:'self', l:'הלקוח מרכיב לבד', d:'מגיע באריזה, בלי טכנאי' },{ v:'install', l:'צריך התקנה', d:'מתקין מגיע ללקוח' }],
             madeWhere: ['בישראל','במזרח אסיה','באירופה','במקום אחר'],
             capacity: ['עד 100','100–1,000','1,000–10,000','מעל 10,000'],
             returns: ['כמעט אף אחד','עד 5%','יותר מ-5%','לא יודעים'],
@@ -422,8 +422,8 @@
                   software:'בתוכנה, שלב המוצר ומודל הגבייה קובעים מאיפה מתחילים.'
               }[c.type]),
               questions: [
-                  { id:'install', type:'choice', cards:true, required:true, show: diagIsType('physical'), label:'הלקוח מרכיב לבד, או שצריך התקנה?', options: DIAG_OPT.install,
-                    echo: v => v === 'install' ? 'זה משנה את המודל. נבדוק מתקינים מקומיים מול ערכה להרכבה עצמית.' : '' },
+                  { id:'install', type:'choice', cards:true, required:true, show: diagIsType('physical'), label:'איך הלקוח מקבל את המוצר?', options: DIAG_OPT.install,
+                    echo: v => v === 'install' ? 'זה משנה את המודל. נבדוק מתקינים מקומיים מול ערכה להרכבה עצמית.' : v === 'finished' ? 'מצוין, זה מפשט את הלוגיסטיקה בארה״ב.' : '' },
                   { id:'unitCost', type:'money', required:true, show: diagIsType('physical'), label:'כמה עולה לך לייצר יחידה של המוצר המוביל?', labelIdea:'כמה אתה מעריך שיעלה לייצר יחידה?',
                     hint:'בערך, בשקלים.', placeholder:'עלות ליחידה', unsureLabel:'לא בטוח כרגע', suffix:' ליחידה', errMsg: () => 'כתוב עלות משוערת, או סמן שאתה לא בטוח.' },
                   { id:'dims', type:'dims', required:true, show: diagIsType('physical'), label:'מה המידות והמשקל באריזה?', hint:'של המוצר המוביל, כמו שהוא נשלח.',
@@ -491,7 +491,8 @@
             if (why && why.length) out.push('בדיקה אם היתרון שלך ('+why.join(', ')+') מחזיק מול המתחרים'+(compName ? ', כולל '+compName : ''));
             const t = c.type;
             if (t==='physical') { const d=c.get('dims'); out.push(d && !d.unsure && d.l ? 'עלות משלוח ומכס לארה״ב לפי '+DIAG_LRI+d.l+'×'+d.w+'×'+d.h+DIAG_PDI+' ס״מ ו-'+d.kg+' ק״ג' : 'עלות משלוח ומכס לארה״ב לפי מידות המוצר');
-                if (c.get('install')==='install') out.push('מתקינים מקומיים בארה״ב מול ערכה להרכבה עצמית'); }
+                if (c.get('install')==='install') out.push('מתקינים מקומיים בארה״ב מול ערכה להרכבה עצמית');
+                else if (c.get('install')==='self') out.push('ערכת הרכבה עצמית מותאמת לצרכן אמריקאי'); }
             if (t==='service') out.push(c.get('remote')==='חייבים להגיע' ? 'מה נדרש כדי לתת את השירות בארה״ב בפועל' : 'משפך מכירה מרחוק ללקוחות בארה״ב');
             if (t==='field') { const n=c.get('fieldNeeds'); out.push('מה נדרש כדי לפעול בארה״ב'+(n && n.length ? ': '+n.join(', ') : '')); }
             if (t==='software') { const b=c.get('billing'); out.push(b && b !== 'עוד לא החלטנו' ? 'תמחור בדולרים במודל של '+b : 'מודל תמחור וגבייה בדולרים'); }
@@ -506,6 +507,32 @@
                 g ? 'תוכנית פריצה שבנויה סביב המטרה שלך: '+g : 'תוכנית פריצה: מה עושים, באיזה סדר ומה זה דורש',
                 'ואם תרצה, איך הצוות שלנו בונה ומפעיל את המערכת בשבילך'
             ];
+        }
+        function buildDiagReport(answers, ctx, visibleSteps) {
+            var report = [];
+            var ld = ctx.get('name') || ctx.get('phone') ? {
+                title: 'פרטי קשר',
+                items: [
+                    ctx.get('name') ? { q: 'שם', a: (ctx.get('name') || '') + (ctx.get('lastName') ? ' ' + ctx.get('lastName') : '') } : null,
+                    ctx.get('phone') ? { q: 'טלפון', a: ctx.get('phone') } : null,
+                    ctx.get('email') ? { q: 'אימייל', a: ctx.get('email') } : null
+                ].filter(Boolean)
+            } : null;
+            if (ld && ld.items.length) report.push(ld);
+            visibleSteps.forEach(function(step) {
+                if (step.kind === 'details') return;
+                var title = typeof step.title === 'function' ? step.title(ctx) : (step.short || step.id);
+                var section = { title: title, items: [] };
+                var qs = step.questions ? step.questions.filter(function(q) { return !q.show || q.show(ctx); }) : [];
+                qs.forEach(function(q) {
+                    var val = diagOwn(answers, q.id) ? answers[q.id] : (diagFilled({}, q.id) ? undefined : undefined);
+                    if (val != null && val !== '') {
+                        section.items.push({ q: q.short || q.label, a: diagPretty(q, val, ctx) });
+                    }
+                });
+                if (section.items.length > 0) report.push(section);
+            });
+            return report;
         }
         function buildDiagPrior(ld) {
             const p = {};
@@ -2234,7 +2261,7 @@
             };
             var goNext = function() {
                 if (!validate()) return;
-                sendToSheets('diagnostic', leadData, { event: 'diag-step-' + (si + 1) + '-' + st.id });
+                sendToSheets('diagnostic', leadData, { event: 'diag-step-' + (si + 1) + '-' + st.id, diagAnswers: diagClone(ans) });
                 if (window.gtag) gtag('event', 'diagnostic_step', { step_number: si + 1, step_id: st.id });
                 sendWebhook(WEBHOOK_URL, { event:'diagStep', step:st.id, answers:diagClone(ans), lead_id:leadData.lead_id });
                 if (si >= vs.length - 1) { setIsSummary(true); navigate('#/diagnostic/' + (vs.length + 1)); window.scrollTo(0,0); return; }
@@ -2245,8 +2272,9 @@
                 if (si > 0) { setErrs({}); navigate('#/diagnostic/' + si); window.scrollTo(0, 0); }
             };
             var pay = function() {
-                sendWebhook(WEBHOOK_URL, { event:'diagComplete', answers:diagClone(ans), leadData:leadData });
-                sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', diagAnswers: diagClone(ans) });
+                var report = buildDiagReport(ans, ctx, vs);
+                sendWebhook(WEBHOOK_URL, { event:'diagComplete', answers:diagClone(ans), diagReport: report, leadData:leadData });
+                sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', diagAnswers: diagClone(ans), diagReport: JSON.stringify(report) });
                 if (window.gtag) gtag('event', 'diagnostic_complete');
                 setLeadData(function(p) { return Object.assign({}, p, ans, { diagComplete:true }); });
                 window.location.href = DIAG_UPAY;
@@ -2556,13 +2584,40 @@
                 );
             };
 
+            var isStepComplete = function(step) {
+                if (!step.questions) return true;
+                var qs = step.questions.filter(function(q) { return q.required && (!q.show || q.show(ctx)); });
+                return qs.every(function(q) { return diagIsAnswered(q, get(q.id), ctx); });
+            };
+
             var progressBar = function() {
                 if (ni < 0) return null;
                 return (
-                    <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:16 }}>
-                        <span style={{ color:'#6B7BA0', fontSize:13, whiteSpace:'nowrap' }}>שלב {ni+1} מתוך {ns.length}</span>
-                        <div style={{ flex:1, height:4, background:'#1A2238', borderRadius:2, overflow:'hidden' }}>
-                            <div style={{ width:((ni+1)/ns.length*100)+'%', height:'100%', background:'#4282FA', borderRadius:2, transition:'width 0.3s' }} />
+                    <div style={{ marginBottom:16 }}>
+                        <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:10 }}>
+                            <span style={{ color:'#6B7BA0', fontSize:13, whiteSpace:'nowrap' }}>שלב {ni+1} מתוך {ns.length}</span>
+                            <div style={{ flex:1, height:4, background:'#1A2238', borderRadius:2, overflow:'hidden' }}>
+                                <div style={{ width:((ni+1)/ns.length*100)+'%', height:'100%', background:'#4282FA', borderRadius:2, transition:'width 0.3s' }} />
+                            </div>
+                        </div>
+                        <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+                            {ns.map(function(s, idx) {
+                                var done = isStepComplete(s);
+                                var current = s.id === (st && st.id);
+                                var label = typeof s.shortFn === 'function' ? s.shortFn(ctx) : (s.short || '');
+                                return (
+                                    <div key={s.id} style={{
+                                        display:'inline-flex', alignItems:'center', gap:4, padding:'3px 10px',
+                                        borderRadius:100, fontSize:12, fontFamily:'Assistant,sans-serif',
+                                        background: current ? 'rgba(66,130,250,0.14)' : done ? 'rgba(46,204,113,0.1)' : 'transparent',
+                                        border: '1px solid ' + (current ? '#4282FA' : done ? 'rgba(46,204,113,0.3)' : '#26304D'),
+                                        color: current ? '#7FA6FF' : done ? '#2ecc71' : '#6B7BA0'
+                                    }}>
+                                        <span style={{ fontSize:11 }}>{done ? '✓' : (idx+1)}</span>
+                                        {label && <span>{label}</span>}
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 );
