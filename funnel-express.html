@@ -2204,12 +2204,13 @@
             const [isSummary, setIsSummary] = useState(false);
             const [diagZoom, setDiagZoom] = useState(null);
             const [fillDone, setFillDone] = useState(false);
+            const detailsPassed = React.useRef(false);
 
             var prior = React.useMemo(function() { return buildDiagPrior(leadData); }, []);
             var get = function(id) { return diagOwn(ans, id) && ans[id] != null && ans[id] !== '' ? ans[id] : (diagFilled(prior, id) ? prior[id] : undefined); };
             var ipri = function(id) { return diagFilled(prior, id); };
             var type = get('type'), stage = get('stage');
-            var ctx = { get:get, inPrior:ipri, type:type, stage:stage, isActive:stage==='active', isIdea:stage==='idea', hasContact:!!(ipri('name')&&ipri('phone')&&ipri('email')) };
+            var ctx = { get:get, inPrior:ipri, type:type, stage:stage, isActive:stage==='active', isIdea:stage==='idea', hasContact:!!(leadData.firstName && leadData.phone && leadData.email) || detailsPassed.current };
 
             var vs = DIAG_STEPS.filter(function(s) { return !s.show || s.show(ctx); });
             var ns = vs.filter(function(s) { return s.numbered; });
@@ -2258,8 +2259,10 @@
                 if (st.kind === 'details') {
                     var e = {};
                     if (!get('name') || !get('name').trim()) e.name = true;
+                    if (!get('lastName') || !get('lastName').trim()) e.lastName = true;
                     if (!get('email') || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(get('email'))) e.email = true;
-                    if (!get('phone') || diagDigits(get('phone')).length < 9) e.phone = true;
+                    var ph = diagDigits(get('phone') || '');
+                    if (!ph || ph.length !== 10 || ph.charAt(0) !== '0' || ph.charAt(1) !== '5') e.phone = true;
                     setErrs(e); return Object.keys(e).length === 0;
                 }
                 var e = {};
@@ -2268,6 +2271,7 @@
             };
             var goNext = function() {
                 if (!validate()) return;
+                if (st && st.kind === 'details') detailsPassed.current = true;
                 sendToSheets('diagnostic', leadData, { event: 'diag-step-' + (si + 1) + '-' + st.id, diagAnswers: diagClone(ans) });
                 if (window.gtag) gtag('event', 'diagnostic_step', { step_number: si + 1, step_id: st.id });
                 sendWebhook(WEBHOOK_URL, { event:'diagStep', step:st.id, answers:diagClone(ans), lead_id:leadData.lead_id });
@@ -2670,7 +2674,7 @@
                                 <label style={DS.label}>טלפון</label>
                                 <input type="tel" value={get('phone') || ''} onChange={function(e){ setA('phone', e.target.value); }}
                                     style={Object.assign({}, DS.field, errs.phone ? DS.fieldErr : {})} />
-                                {errs.phone && <div style={DS.err}>מספר טלפון תקין</div>}
+                                {errs.phone && <div style={DS.err}>מספר נייד ישראלי (05XXXXXXXX)</div>}
                             </div>
                         </div>
                         <button type="button" onClick={goNext} style={Object.assign({}, DS.btn, { marginTop:24 })}>המשך</button>
