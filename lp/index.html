@@ -190,12 +190,12 @@
         const WHATSAPP_LINK = 'https://wa.me/972557278140?text=%D7%94%D7%99%D7%99%20%D7%92%D7%99%D7%9C%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D%20%D7%9C%D7%92%D7%91%D7%99%20%D7%91%D7%93%D7%99%D7%A7%D7%AA%20%D7%94%D7%94%D7%99%D7%AA%D7%9B%D7%A0%D7%95%D7%AA%20%D7%95%D7%90%D7%A1%D7%98%D7%A8%D7%98%D7%92%D7%99%D7%99%D7%AA%20%D7%94%D7%97%D7%93%D7%99%D7%A8%D7%94%20%D7%9C%D7%A9%D7%95%D7%A7%20%D7%94%D7%90%D7%9E%D7%A8%D7%99%D7%A7%D7%90%D7%99';
         const VSL_VIDEO_ID  = 'zrXPejmqgUA';
         const FEATURED_VIDEO_ID = 'VY0adZ8EVuw';
-        const LOGO = '../public/noBgWhite (1) (2).png';
+        const LOGO = 'public/noBgWhite (1) (2).png';
 
         // ╔══════════════════════════════════════════════════════╗
         // ║  DATA                                                ║
         // ╚══════════════════════════════════════════════════════╝
-        const TM_CI = '../public/assets/clients/';
+        const TM_CI = 'public/assets/clients/';
         const TM_CLIENTS = [
             { id:'shai', name:'שי בוזגלו', img:TM_CI+'shai-buzaglo.jpg', quotes:['מה שאתם מצפים לקבל בשקלים, תקבלו בדולרים.','החלום הוורוד הזה, להקים איזשהו עסק מניב מעבר לים. את הדרך להגשים אותו קשה לי לדמיין בלי שחר ושמואל.'], ch:{ t:3, time:'0:03', topic:'הכנסה בדולרים', q:0 } },
             { id:'ron', name:'רון חיים', img:TM_CI+'ron-haim.jpg', quotes:['לעשות את זה לבד… זה פשוט בזבוז זמן, ולוקח הרבה יותר זמן וכסף בניסוי וטעייה.'], ch:{ t:18, time:'0:18', topic:'בלי ניסוי וטעייה', q:0 } },
@@ -217,10 +217,10 @@
         ];
         TM_PROOF_CARDS.forEach(function(k) { k.ch = TM_CHAPTERS.findIndex(function(c) { return c.id === k.client; }); });
         const TM_VIDEO_DURATION = 202;
-        const TM_VIDEO_POSTER = '../public/assets/clients/testimonials-video-poster.jpg';
+        const TM_VIDEO_POSTER = 'public/assets/clients/testimonials-video-poster.jpg';
         const TM_STRIPE_CATS = { products:'מוצרים ואיקומרס', software:'תוכנה ואפליקציות', agency:'סוכנויות ושירותים', coaching:'ייעוץ, אימון וקורסים' };
         const TM_LEAD_CAT_MAP = { ecommerce:['products'], software:['software'], agency:['agency','coaching'], other:[] };
-        const TM_SP = '../public/data/stripe-monthly/';
+        const TM_SP = 'public/data/stripe-monthly/';
         const TM_STRIPE_ITEMS = [
             { name:'אפליקציית ניהול נכסי נדל״ן למשקיעים', cat:'software', amount:122030, pct:'+13.4%', month:'ינואר 2026', img:TM_SP+'exp1.webp' },
             { name:'סוכנות יצירת תוכן ב-AI', cat:'agency', amount:76120, pct:'+8.1%', month:'מרץ 2026', img:TM_SP+'exp2.webp' },
@@ -273,7 +273,7 @@
               subtitle: 'בזמן שהמפה שלך נוצרת, נשלח לך עותק שלה גם למייל.' },
         ];
 
-        const TM_SD = '../public/data/stripe-daily/';
+        const TM_SD = 'public/data/stripe-daily/';
         const TM_STRIPE_DAILY = [
             { img:TM_SD+'day-01.webp', amount:'$7,310', payments:8, type:'תוכנת ניהול רשימות תפוצה לעסקי איקומרס' },
             { img:TM_SD+'day-02.webp', amount:'$11,750', payments:18, type:'חנות איקומרס למוצרים לכלבים קטנים' },
@@ -303,7 +303,7 @@
         // ╚══════════════════════════════════════════════════════╝
         const DIAG_UPAY = 'https://app.upay.co.il/API6/s.php?m=UFI1WUFlcjdMZUJ4RUNiMFB1WUl1QT09';
         const DIAG_LRI = '⁦', DIAG_PDI = '⁩';
-        const DIAG_CI = '../public/assets/clients/';
+        const DIAG_CI = 'public/assets/clients/';
         const DIAG_QUOTES = {
             daniel:       { img: DIAG_CI+'daniel-moshe.jpg',   name: 'דניאל משה',       q: 'לפני שלושה חודשים נכנסתי לאקדמיית הדולר. לפני עשר דקות סיימתי עוד שיחה עם עוד לקוח אמריקאי משלם.' },
             kobiWeeks:    { img: DIAG_CI+'kobi-rabinovitz.jpg', name: 'קובי רבינוביץ',   q: 'מה שהיה לוקח לי בעצמי כמה חודשים, עשיתי פה בשבועיים, שלושה, ארבעה שבועות.' },
@@ -1187,10 +1187,10 @@
             { client:'raziel', q:1 }, { client:'gal', q:0 }, { client:'shai', q:0 },
         ];
         const LANDING_STRIPE_TABLE = [
-            { type:'יועץ התנהלות פיננסית', dailyAmount:'$9,150', payments:10, monthlyGrowth:'+11.6%', screenshot:'../public/data/stripe-daily/day-07.webp' },
-            { type:'תוכנת ניהול רשימות תפוצה לעסקי איקומרס', dailyAmount:'$7,310', payments:8, monthlyGrowth:'+4.9%', screenshot:'../public/data/stripe-daily/day-01.webp' },
-            { type:'חנות איקומרס למוצרים לכלבים קטנים', dailyAmount:'$11,750', payments:18, monthlyGrowth:'+8.9%', screenshot:'../public/data/stripe-daily/day-02.webp' },
-            { type:'סוכנות שיווק לעסקי קוסמטיקה (Med Spa)', dailyAmount:'$11,550', payments:16, monthlyGrowth:'+10.4%', screenshot:'../public/data/stripe-daily/day-03.webp' },
+            { type:'יועץ התנהלות פיננסית', dailyAmount:'$9,150', payments:10, monthlyGrowth:'+11.6%', screenshot:'public/data/stripe-daily/day-07.webp' },
+            { type:'תוכנת ניהול רשימות תפוצה לעסקי איקומרס', dailyAmount:'$7,310', payments:8, monthlyGrowth:'+4.9%', screenshot:'public/data/stripe-daily/day-01.webp' },
+            { type:'חנות איקומרס למוצרים לכלבים קטנים', dailyAmount:'$11,750', payments:18, monthlyGrowth:'+8.9%', screenshot:'public/data/stripe-daily/day-02.webp' },
+            { type:'סוכנות שיווק לעסקי קוסמטיקה (Med Spa)', dailyAmount:'$11,550', payments:16, monthlyGrowth:'+10.4%', screenshot:'public/data/stripe-daily/day-03.webp' },
         ];
         const TrustStrip = () => (
             <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:'6px 16px', padding:'0 16px', fontSize:13, color:'#C9D2EC', fontWeight:600 }}>
@@ -1412,8 +1412,10 @@
                     updated = Object.assign({}, leadData, { [q.id]: val });
                 }
                 setLeadData(updated);
-                if (q.id === 'phone') sendToSheets('quiz-partial', updated, { event: 'quiz-step-' + (step + 1) });
-                else if (updated.phone) sendToSheets('quiz-partial', updated, { event: 'quiz-step-' + (step + 1) });
+                if (q.id === 'phone' || updated.phone) {
+                    sendToSheets('quiz-partial', updated, { event: 'quiz-step-' + (step + 1) });
+                    sendWebhook(WEBHOOK_URL, { event:'quizStep', step: step + 1, questionId: q.id, phone: updated.phone, lead_id: updated.lead_id });
+                }
                 if (window.gtag) gtag('event', 'quiz_step', { step_number: step + 1, question_id: q.id });
                 if (step < total - 1) navigate('#/quiz/' + (step + 2));
                 else onComplete(updated);
@@ -1600,6 +1602,7 @@
                 requestAnimationFrame(() => setMounted(true));
                 if (typeof fbq === 'function') fbq('track', 'AddToCart');
                 sendToSheets('potential', leadData, { event: 'potential-view' });
+                sendWebhook(WEBHOOK_URL, { event:'potentialView', score: leadData.score, businessType: leadData.businessType, phone: leadData.phone, lead_id: leadData.lead_id });
                 if (window.gtag) gtag('event', 'potential_view');
             }, []);
 
@@ -1945,13 +1948,15 @@
 
             useEffect(() => {
                 if (typeof fbq === 'function') fbq('track', 'Lead');
-                sendToSheets('vsl', leadData);
+                sendToSheets('vsl', leadData, { event: 'vsl-page-load' });
+                sendWebhook(WEBHOOK_URL, { event:'vslPageLoad', phone: leadData.phone, lead_id: leadData.lead_id });
                 const seen = sessionStorage.getItem('dollarExpressOfferSeen');
                 if (seen) { setShowOffer(true); return; }
                 const timer = setTimeout(() => {
                     setShowOffer(true);
                     sessionStorage.setItem('dollarExpressOfferSeen', '1');
                     sendToSheets('vsl', leadData, { event: 'vsl-offer-shown' });
+                    sendWebhook(WEBHOOK_URL, { event:'vslOfferShown', phone: leadData.phone, lead_id: leadData.lead_id });
                     if (window.gtag) gtag('event', 'vsl_offer_shown');
                 }, 60000);
                 return () => clearTimeout(timer);
@@ -2187,9 +2192,11 @@
                 bridge: { fontSize:14, lineHeight:1.6, color:'#A9B7DE', padding:'12px 16px', background:'#141A2E', borderRadius:12, borderRight:'3px solid #4282FA', marginBottom:16 },
             };
             const [ans, setAns] = useState(function() {
+                if (fillMode) { try { sessionStorage.removeItem('diagState'); } catch(e) {} return {}; }
                 try { var d = sessionStorage.getItem('diagState'); return d ? JSON.parse(d).ans || {} : {}; } catch(e) { return {}; }
             });
             const [curId, setCurId] = useState(function() {
+                if (fillMode) return null;
                 try { var d = sessionStorage.getItem('diagState'); return d ? JSON.parse(d).curId || null : null; } catch(e) { return null; }
             });
             const [errs, setErrs] = useState({});
@@ -2199,12 +2206,13 @@
             const [isSummary, setIsSummary] = useState(false);
             const [diagZoom, setDiagZoom] = useState(null);
             const [fillDone, setFillDone] = useState(false);
+            const detailsPassed = React.useRef(false);
 
-            var prior = React.useMemo(function() { return buildDiagPrior(leadData); }, []);
+            var prior = React.useMemo(function() { return fillMode ? {} : buildDiagPrior(leadData); }, []);
             var get = function(id) { return diagOwn(ans, id) && ans[id] != null && ans[id] !== '' ? ans[id] : (diagFilled(prior, id) ? prior[id] : undefined); };
             var ipri = function(id) { return diagFilled(prior, id); };
             var type = get('type'), stage = get('stage');
-            var ctx = { get:get, inPrior:ipri, type:type, stage:stage, isActive:stage==='active', isIdea:stage==='idea', hasContact:!!(get('name')&&get('phone')&&get('email')) };
+            var ctx = { get:get, inPrior:ipri, type:type, stage:stage, isActive:stage==='active', isIdea:stage==='idea', hasContact: fillMode ? detailsPassed.current : !!(leadData.firstName && leadData.phone && leadData.email) || detailsPassed.current };
 
             var vs = DIAG_STEPS.filter(function(s) { return !s.show || s.show(ctx); });
             var ns = vs.filter(function(s) { return s.numbered; });
@@ -2223,6 +2231,7 @@
 
             useEffect(function() {
                 sendToSheets('diagnostic', leadData, { event: 'diagnostic-start', source: fillMode ? 'direct-fill' : 'funnel' });
+                sendWebhook(WEBHOOK_URL, { event:'diagnosticStart', source: fillMode ? 'direct-fill' : 'funnel', phone: leadData.phone, lead_id: leadData.lead_id });
                 if (window.gtag) gtag('event', 'diagnostic_start', { source: fillMode ? 'direct-fill' : 'funnel' });
             }, []);
 
@@ -2252,8 +2261,10 @@
                 if (st.kind === 'details') {
                     var e = {};
                     if (!get('name') || !get('name').trim()) e.name = true;
+                    if (!get('lastName') || !get('lastName').trim()) e.lastName = true;
                     if (!get('email') || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(get('email'))) e.email = true;
-                    if (!get('phone') || diagDigits(get('phone')).length < 9) e.phone = true;
+                    var ph = diagDigits(get('phone') || '');
+                    if (!ph || ph.length !== 10 || ph.charAt(0) !== '0' || ph.charAt(1) !== '5') e.phone = true;
                     setErrs(e); return Object.keys(e).length === 0;
                 }
                 var e = {};
@@ -2262,6 +2273,7 @@
             };
             var goNext = function() {
                 if (!validate()) return;
+                if (st && st.kind === 'details') detailsPassed.current = true;
                 sendToSheets('diagnostic', leadData, { event: 'diag-step-' + (si + 1) + '-' + st.id, diagAnswers: diagClone(ans) });
                 if (window.gtag) gtag('event', 'diagnostic_step', { step_number: si + 1, step_id: st.id });
                 sendWebhook(WEBHOOK_URL, { event:'diagStep', step:st.id, answers:diagClone(ans), lead_id:leadData.lead_id });
@@ -2664,7 +2676,7 @@
                                 <label style={DS.label}>טלפון</label>
                                 <input type="tel" value={get('phone') || ''} onChange={function(e){ setA('phone', e.target.value); }}
                                     style={Object.assign({}, DS.field, errs.phone ? DS.fieldErr : {})} />
-                                {errs.phone && <div style={DS.err}>מספר טלפון תקין</div>}
+                                {errs.phone && <div style={DS.err}>מספר נייד ישראלי (05XXXXXXXX)</div>}
                             </div>
                         </div>
                         <button type="button" onClick={goNext} style={Object.assign({}, DS.btn, { marginTop:24 })}>המשך</button>
@@ -2788,7 +2800,8 @@
         const ThankYouScreen = ({ leadData }) => {
             useEffect(() => {
                 if (typeof fbq === 'function') fbq('track', 'Purchase', { value: 297, currency: 'ILS' });
-                sendToSheets('paid', leadData);
+                sendToSheets('paid', leadData, { event: 'paid' });
+                sendWebhook(WEBHOOK_URL, { event:'paid', phone: leadData.phone, lead_id: leadData.lead_id, firstName: leadData.firstName, lastName: leadData.lastName });
             }, []);
 
             const firstName = leadData.firstName || '';
