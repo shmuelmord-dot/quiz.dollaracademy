@@ -163,8 +163,8 @@ function sendDiagPdf(data, phone, ts) {
       text.setFontSize(12);
       text.setForegroundColor(0, it.q.length, '#888888');
       text.setBold(0, it.q.length, false);
-      text.setForegroundColor(it.q.length + 3, it.q.length + 3 + it.a.length, '#163650');
-      text.setBold(it.q.length + 3, it.q.length + 3 + it.a.length, true);
+      text.setForegroundColor(it.q.length + 3, it.q.length + 2 + it.a.length, '#163650');
+      text.setBold(it.q.length + 3, it.q.length + 2 + it.a.length, true);
     }
     body.appendParagraph('');
   }
@@ -181,7 +181,7 @@ function sendDiagPdf(data, phone, ts) {
   var subject = 'שאלון דיאגנוסטי — ' + name + ' — Dollar Express';
   var emailHtml = html;
 
-  var recipients = ['info@dollaracademy.co.il', 'gill.andreyev@gmail.com'];
+  var recipients = ['info@dollaracademy.co.il', 'gill.andreyev@gmail.com', 'sam@shmuelmordechay.com'];
   for (var r = 0; r < recipients.length; r++) {
     MailApp.sendEmail({
       to: recipients[r],

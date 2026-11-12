@@ -1412,8 +1412,10 @@
                     updated = Object.assign({}, leadData, { [q.id]: val });
                 }
                 setLeadData(updated);
-                if (q.id === 'phone') sendToSheets('quiz-partial', updated, { event: 'quiz-step-' + (step + 1) });
-                else if (updated.phone) sendToSheets('quiz-partial', updated, { event: 'quiz-step-' + (step + 1) });
+                if (q.id === 'phone' || updated.phone) {
+                    sendToSheets('quiz-partial', updated, { event: 'quiz-step-' + (step + 1) });
+                    sendWebhook(WEBHOOK_URL, { event:'quizStep', step: step + 1, questionId: q.id, phone: updated.phone, lead_id: updated.lead_id });
+                }
                 if (window.gtag) gtag('event', 'quiz_step', { step_number: step + 1, question_id: q.id });
                 if (step < total - 1) navigate('#/quiz/' + (step + 2));
                 else onComplete(updated);
@@ -1600,6 +1602,7 @@
                 requestAnimationFrame(() => setMounted(true));
                 if (typeof fbq === 'function') fbq('track', 'AddToCart');
                 sendToSheets('potential', leadData, { event: 'potential-view' });
+                sendWebhook(WEBHOOK_URL, { event:'potentialView', score: leadData.score, businessType: leadData.businessType, phone: leadData.phone, lead_id: leadData.lead_id });
                 if (window.gtag) gtag('event', 'potential_view');
             }, []);
 
@@ -1945,13 +1948,15 @@
 
             useEffect(() => {
                 if (typeof fbq === 'function') fbq('track', 'Lead');
-                sendToSheets('vsl', leadData);
+                sendToSheets('vsl', leadData, { event: 'vsl-page-load' });
+                sendWebhook(WEBHOOK_URL, { event:'vslPageLoad', phone: leadData.phone, lead_id: leadData.lead_id });
                 const seen = sessionStorage.getItem('dollarExpressOfferSeen');
                 if (seen) { setShowOffer(true); return; }
                 const timer = setTimeout(() => {
                     setShowOffer(true);
                     sessionStorage.setItem('dollarExpressOfferSeen', '1');
                     sendToSheets('vsl', leadData, { event: 'vsl-offer-shown' });
+                    sendWebhook(WEBHOOK_URL, { event:'vslOfferShown', phone: leadData.phone, lead_id: leadData.lead_id });
                     if (window.gtag) gtag('event', 'vsl_offer_shown');
                 }, 60000);
                 return () => clearTimeout(timer);
@@ -2204,7 +2209,7 @@
             var get = function(id) { return diagOwn(ans, id) && ans[id] != null && ans[id] !== '' ? ans[id] : (diagFilled(prior, id) ? prior[id] : undefined); };
             var ipri = function(id) { return diagFilled(prior, id); };
             var type = get('type'), stage = get('stage');
-            var ctx = { get:get, inPrior:ipri, type:type, stage:stage, isActive:stage==='active', isIdea:stage==='idea', hasContact:!!(get('name')&&get('phone')&&get('email')) };
+            var ctx = { get:get, inPrior:ipri, type:type, stage:stage, isActive:stage==='active', isIdea:stage==='idea', hasContact:!!(ipri('name')&&ipri('phone')&&ipri('email')) };
 
             var vs = DIAG_STEPS.filter(function(s) { return !s.show || s.show(ctx); });
             var ns = vs.filter(function(s) { return s.numbered; });
@@ -2223,6 +2228,7 @@
 
             useEffect(function() {
                 sendToSheets('diagnostic', leadData, { event: 'diagnostic-start', source: fillMode ? 'direct-fill' : 'funnel' });
+                sendWebhook(WEBHOOK_URL, { event:'diagnosticStart', source: fillMode ? 'direct-fill' : 'funnel', phone: leadData.phone, lead_id: leadData.lead_id });
                 if (window.gtag) gtag('event', 'diagnostic_start', { source: fillMode ? 'direct-fill' : 'funnel' });
             }, []);
 
@@ -2788,7 +2794,8 @@
         const ThankYouScreen = ({ leadData }) => {
             useEffect(() => {
                 if (typeof fbq === 'function') fbq('track', 'Purchase', { value: 297, currency: 'ILS' });
-                sendToSheets('paid', leadData);
+                sendToSheets('paid', leadData, { event: 'paid' });
+                sendWebhook(WEBHOOK_URL, { event:'paid', phone: leadData.phone, lead_id: leadData.lead_id, firstName: leadData.firstName, lastName: leadData.lastName });
             }, []);
 
             const firstName = leadData.firstName || '';

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מפת אירועים — Dollar Express</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Heebo', Arial, sans-serif; background: #f8f9fb; color: #163650; padding: 32px 16px; }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .hdr { text-align: center; margin-bottom: 28px; }
+  .hdr h1 { font-size: 24px; font-weight: 700; color: #163650; margin-bottom: 4px; }
+  .hdr p { font-size: 14px; color: #6B7BA0; }
+  .legend { display: flex; gap: 16px; justify-content: center; margin-bottom: 24px; flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #6B7BA0; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .stage { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px 22px; margin-bottom: 6px; }
+  .stage-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .stage-num { background: #163650; color: #fff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; flex-shrink: 0; }
+  .stage-title { font-size: 16px; font-weight: 700; color: #163650; }
+  .stage-route { font-size: 12px; color: #6B7BA0; direction: ltr; text-align: right; }
+  .events { margin-right: 42px; display: flex; flex-direction: column; gap: 8px; }
+  .ev { display: flex; align-items: flex-start; gap: 10px; background: #f4f7fb; border-radius: 10px; padding: 10px 14px; }
+  .tags { display: flex; gap: 4px; flex-shrink: 0; margin-top: 2px; flex-wrap: wrap; }
+  .tag { color: #fff; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+  .tag-sheets { background: #163650; }
+  .tag-zapier { background: #ea7e30; }
+  .tag-pdf { background: #993556; }
+  .tag-pixel { background: #0F6E56; }
+  .ev-name { font-size: 14px; font-weight: 700; color: #163650; direction: ltr; text-align: right; }
+  .ev-desc { font-size: 12px; color: #6B7BA0; line-height: 1.5; }
+  .ev-note { background: #f4f7fb; border-radius: 10px; padding: 10px 14px; margin-right: 42px; font-size: 13px; color: #6B7BA0; }
+  .connector { display: flex; justify-content: center; }
+  .connector-line { width: 2px; height: 14px; background: #d0d7e2; }
+  .sep { margin: 28px 0; border-top: 1.5px dashed #d0d7e2; position: relative; }
+  .sep span { position: absolute; top: -11px; right: 50%; transform: translateX(50%); background: #f8f9fb; padding: 0 14px; font-size: 12px; color: #9aa5b8; white-space: nowrap; }
+  .alt { background: #FFF8ED; border: 2px solid #ea7e30; border-radius: 14px; padding: 18px 22px; }
+  .alt .stage-num { background: #ea7e30; border-radius: 8px; }
+  .alt .stage-title { color: #412402; }
+  .alt .stage-route { color: #854F0B; }
+  .alt .ev { background: rgba(234,126,48,0.08); }
+  .alt .ev-name { color: #412402; }
+  .alt .ev-desc { color: #854F0B; }
+  .alt-desc { margin-right: 42px; font-size: 13px; color: #854F0B; margin-bottom: 12px; line-height: 1.6; }
+  .footer { margin-top: 28px; background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px 22px; }
+  .footer h3 { font-size: 15px; font-weight: 700; margin-bottom: 14px; }
+  .dest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dest { display: flex; align-items: flex-start; gap: 8px; }
+  .dest-name { font-size: 13px; font-weight: 700; color: #163650; }
+  .dest-info { font-size: 12px; color: #6B7BA0; }
+  .source-note { font-weight: 400; color: #854F0B; font-size: 12px; }
+  @media (max-width: 500px) {
+    .dest-grid { grid-template-columns: 1fr; }
+    .events, .ev-note, .alt-desc { margin-right: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <h1>מפת אירועים — Dollar Express</h1>
+    <p>כל האירועים שנשלחים במסע הליד, לפי שלב</p>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:#163650"></span> Google Sheets</span>
+    <span><span class="dot" style="background:#ea7e30"></span> Zapier</span>
+    <span><span class="dot" style="background:#993556"></span> PDF Email</span>
+    <span><span class="dot" style="background:#0F6E56"></span> Facebook / Google</span>
+  </div>
+
+  <!-- 1 Landing -->
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-num">1</div>
+      <div><div class="stage-title">דף נחיתה</div><div class="stage-route">#/</div></div>
+    </div>
+    <div class="ev-note">אין אירוע — הליד רואה את הדף ולוחץ על הכפתור כדי להתחיל</div>
+  </div>
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- 2 Quiz -->
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-num">2</div>
+      <div><div class="stage-title">שאלון ראשוני (6 שאלות)</div><div class="stage-route">#/quiz/1 — #/quiz/6</div></div>
+    </div>
+    <div class="events">
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span></div>
+        <div><div class="ev-name">quiz-step-{n}</div><div class="ev-desc">stage: quiz-partial — נשלח אחרי כל תשובה (רק אם יש טלפון). כולל questionId</div></div>
+      </div>
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span></div>
+        <div><div class="ev-name">quiz (complete)</div><div class="ev-desc">stage: quiz — כל 6 השאלות הושלמו, כל הנתונים נשמרים</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- 3 Potential -->
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-num">3</div>
+      <div><div class="stage-title">מפת פוטנציאל</div><div class="stage-route">#/potential</div></div>
+    </div>
+    <div class="events">
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span></div>
+        <div><div class="ev-name">potential-view</div><div class="ev-desc">stage: potential — הליד ראה את ניתוח הפוטנציאל שלו. כולל score + businessType</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- 4 VSL -->
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-num">4</div>
+      <div><div class="stage-title">סרטון מכירה (VSL)</div><div class="stage-route">#/vsl</div></div>
+    </div>
+    <div class="events">
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span></div>
+        <div><div class="ev-name">vsl-page-load</div><div class="ev-desc">stage: vsl — הליד נכנס לדף הסרטון</div></div>
+      </div>
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span></div>
+        <div><div class="ev-name">vsl-offer-shown</div><div class="ev-desc">stage: vsl — עברו 60 שניות, ההצעה וכפתור התשלום נחשפים</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- 5 Diagnostic -->
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-num">5</div>
+      <div><div class="stage-title">שאלון דיאגנוסטי (7 שלבים)</div><div class="stage-route">#/diagnostic/1 — #/diagnostic/7</div></div>
+    </div>
+    <div class="events">
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span></div>
+        <div><div class="ev-name">diagnostic-start</div><div class="ev-desc">stage: diagnostic — הליד התחיל את השאלון הדיאגנוסטי<br><span class="source-note">כולל שדה source: funnel / direct-fill</span></div></div>
+      </div>
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span></div>
+        <div><div class="ev-name">diag-step-{n}-{stepId}</div><div class="ev-desc">stage: diagnostic — כל שלב בשאלון + כל התשובות עד כה</div></div>
+      </div>
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span><span class="tag tag-pdf">PDF</span></div>
+        <div><div class="ev-name">diagnostic-complete</div><div class="ev-desc">stage: diagnostic — השאלון הושלם, סיכום PDF נשלח למיילים, כל התשובות נשמרות</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="connector"><div class="connector-line"></div></div>
+
+  <!-- 6 Payment -->
+  <div class="stage">
+    <div class="stage-head">
+      <div class="stage-num">6</div>
+      <div><div class="stage-title">תשלום + תודה</div><div class="stage-route">#/thank-you (הפניה מ-UPAY)</div></div>
+    </div>
+    <div class="events">
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span><span class="tag tag-pixel">FB/GA</span></div>
+        <div><div class="ev-name">paid</div><div class="ev-desc">stage: paid — הליד שילם, fbq Purchase + גישה ל-GHL ליומן</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Separator -->
+  <div class="sep"><span>נתיב חלופי</span></div>
+
+  <!-- Direct Fill -->
+  <div class="alt">
+    <div class="stage-head">
+      <div class="stage-num">&#x1F517;</div>
+      <div><div class="stage-title">לינק מילוי ישיר (לקוח ששילם)</div><div class="stage-route">/lp/?fill=1</div></div>
+    </div>
+    <div class="alt-desc">גיל שולח את הלינק ללקוח שכבר שילם. הלקוח ממלא את השאלון הדיאגנוסטי בלבד — בלי קוויז, בלי VSL, בלי תשלום.</div>
+    <div class="events">
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span></div>
+        <div><div class="ev-name">diagnostic-start <span class="source-note">(source: direct-fill)</span></div></div>
+      </div>
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span></div>
+        <div><div class="ev-name">diag-step-{n}-{stepId}</div></div>
+      </div>
+      <div class="ev">
+        <div class="tags"><span class="tag tag-sheets">Sheets</span><span class="tag tag-zapier">Zapier</span><span class="tag tag-pdf">PDF</span></div>
+        <div><div class="ev-name">diagnostic-complete <span class="source-note">(source: direct-fill)</span></div><div class="ev-desc">הסיום מציג "תודה, התשובות נשמרו" — בלי הפניה לתשלום</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Destinations -->
+  <div class="footer">
+    <h3>לאן הנתונים מגיעים?</h3>
+    <div class="dest-grid">
+      <div class="dest">
+        <span class="dot" style="background:#163650; margin-top:4px; flex-shrink:0"></span>
+        <div><div class="dest-name">Google Sheets</div><div class="dest-info">גיליון "לידים" + "אירועים"</div></div>
+      </div>
+      <div class="dest">
+        <span class="dot" style="background:#ea7e30; margin-top:4px; flex-shrink:0"></span>
+        <div><div class="dest-name">Zapier</div><div class="dest-info">אוטומציות + GHL CRM</div></div>
+      </div>
+      <div class="dest">
+        <span class="dot" style="background:#993556; margin-top:4px; flex-shrink:0"></span>
+        <div><div class="dest-name">PDF Email</div><div class="dest-info">info@ + gill + sam</div></div>
+      </div>
+      <div class="dest">
+        <span class="dot" style="background:#0F6E56; margin-top:4px; flex-shrink:0"></span>
+        <div><div class="dest-name">Facebook / Google</div><div class="dest-info">אירועי המרה (Purchase)</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
