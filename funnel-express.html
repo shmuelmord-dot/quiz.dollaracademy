@@ -2192,9 +2192,11 @@
                 bridge: { fontSize:14, lineHeight:1.6, color:'#A9B7DE', padding:'12px 16px', background:'#141A2E', borderRadius:12, borderRight:'3px solid #4282FA', marginBottom:16 },
             };
             const [ans, setAns] = useState(function() {
+                if (fillMode) { try { sessionStorage.removeItem('diagState'); } catch(e) {} return {}; }
                 try { var d = sessionStorage.getItem('diagState'); return d ? JSON.parse(d).ans || {} : {}; } catch(e) { return {}; }
             });
             const [curId, setCurId] = useState(function() {
+                if (fillMode) return null;
                 try { var d = sessionStorage.getItem('diagState'); return d ? JSON.parse(d).curId || null : null; } catch(e) { return null; }
             });
             const [errs, setErrs] = useState({});
@@ -2206,11 +2208,11 @@
             const [fillDone, setFillDone] = useState(false);
             const detailsPassed = React.useRef(false);
 
-            var prior = React.useMemo(function() { return buildDiagPrior(leadData); }, []);
+            var prior = React.useMemo(function() { return fillMode ? {} : buildDiagPrior(leadData); }, []);
             var get = function(id) { return diagOwn(ans, id) && ans[id] != null && ans[id] !== '' ? ans[id] : (diagFilled(prior, id) ? prior[id] : undefined); };
             var ipri = function(id) { return diagFilled(prior, id); };
             var type = get('type'), stage = get('stage');
-            var ctx = { get:get, inPrior:ipri, type:type, stage:stage, isActive:stage==='active', isIdea:stage==='idea', hasContact:!!(leadData.firstName && leadData.phone && leadData.email) || detailsPassed.current };
+            var ctx = { get:get, inPrior:ipri, type:type, stage:stage, isActive:stage==='active', isIdea:stage==='idea', hasContact: fillMode ? detailsPassed.current : !!(leadData.firstName && leadData.phone && leadData.email) || detailsPassed.current };
 
             var vs = DIAG_STEPS.filter(function(s) { return !s.show || s.show(ctx); });
             var ns = vs.filter(function(s) { return s.numbered; });
