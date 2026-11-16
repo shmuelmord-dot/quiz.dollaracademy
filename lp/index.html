@@ -2287,8 +2287,8 @@
             var pay = function() {
                 var report = buildDiagReport(ans, ctx, vs);
                 sendWebhook(WEBHOOK_URL, { event:'diagComplete', answers:diagClone(ans), diagReport: report, leadData:leadData });
-                sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', diagAnswers: diagClone(ans), diagReport: JSON.stringify(report) });
-                if (window.gtag) gtag('event', 'diagnostic_complete');
+                sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', source: 'funnel', diagAnswers: diagClone(ans), diagReport: JSON.stringify(report) });
+                if (window.gtag) gtag('event', 'diagnostic_complete', { source: 'funnel' });
                 setLeadData(function(p) { return Object.assign({}, p, ans, { diagComplete:true }); });
                 window.location.href = DIAG_UPAY;
             };
@@ -2296,7 +2296,7 @@
                 var ld = Object.assign({}, leadData, { firstName: ans.name || '', lastName: '', phone: ans.phone || '', email: ans.email || '' });
                 var report = buildDiagReport(ans, ctx, vs);
                 sendWebhook(WEBHOOK_URL, { event:'diagComplete', source:'direct-fill', answers:diagClone(ans), diagReport: report, leadData:ld });
-                sendToSheets('diagnostic', ld, { event: 'diagnostic-complete', diagAnswers: diagClone(ans), diagReport: JSON.stringify(report) });
+                sendToSheets('diagnostic', ld, { event: 'diagnostic-complete', source: 'direct-fill', diagAnswers: diagClone(ans), diagReport: JSON.stringify(report) });
                 if (window.gtag) gtag('event', 'diagnostic_complete', { source: 'direct-fill' });
                 setLeadData(function(p) { return Object.assign({}, p, ld, { diagComplete:true }); });
                 setFillDone(true);
