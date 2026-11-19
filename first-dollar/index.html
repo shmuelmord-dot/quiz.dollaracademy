@@ -1261,7 +1261,7 @@ const TestimonialsSection = () => {
             <div style={{ position:'relative', width:'100%', maxWidth:1040, marginTop:isMobile?28:44 }}>
                 <div style={{ position:'relative', aspectRatio:'16/9', borderRadius:isMobile?18:26, overflow:'hidden', background:'#070A14', border:'1px solid #26304D', boxShadow:'0 40px 120px rgba(46,89,244,0.20),0 24px 60px rgba(0,0,0,0.5)' }}>
                     <div id="fd-yt-target" style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}/>
-                    {!vidPlaying && <img src={TM_VIDEO_POSTER} alt="" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover' }}/>}
+                    {!vidPlaying && <img src={TM_VIDEO_POSTER} alt="" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'contain' }}/>}
                     <div style={{ position:'absolute', top:isMobile?12:24, right:isMobile?14:28, display:'flex', flexDirection:'column', gap:isMobile?1:3, zIndex:2 }}>
                         <span style={{ fontFamily:'Rubik,sans-serif', fontSize:isMobile?14:19, fontWeight:700, color:'#F4F6FC' }}>הלקוחות שלנו, במילים שלהם</span>
                         <span style={{ fontSize:isMobile?11:13, color:'#A9B7DE' }}>סרטון ההמלצות של אקדמיית הדולר · 3:22</span>
