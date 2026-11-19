@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הדולר הראשון · אקדמיית הדולר</title>
+<meta name="description" content="מחקר שוק, פגישת אפיון ברעננה ותוכנית פריצה לעסק שלך. משם אתה בוחר: לבצע לבד, או שאנחנו בונים לך את כל הסיסטם, עד הליד האמריקאי הראשון.">
+<meta property="og:title" content="הדולר הראשון · אקדמיית הדולר">
+<meta property="og:description" content="מחקר שוק, פגישת אפיון ברעננה ותוכנית פריצה לעסק שלך. משם אתה בוחר: לבצע לבד, או שאנחנו בונים לך את כל הסיסטם, עד הליד האמריקאי הראשון.">
+<meta property="og:image" content="assets/founders/og-image.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/brand/symbol.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Rubik:wght@500;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LV7X4L3ZFC"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-LV7X4L3ZFC');</script>
+<!-- Meta Pixel -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1138811345198062');fbq('track','PageView');</script>
+
+<style>
+body{margin:0;background:#0A0D18;color:#F4F6FC;font-family:Assistant,'Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+img{display:block}
+button{font-family:inherit}
+.mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;direction:ltr;unicode-bidi:isolate}
+.gridbg{background-image:linear-gradient(rgba(66,130,250,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(66,130,250,.07) 1px,transparent 1px);background-size:64px 64px}
+.tile{transition:border-color .2s ease,transform .2s ease}.tile:hover{border-color:#3A4E8C;transform:translateY(-2px)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.55)}100%{box-shadow:0 0 0 10px rgba(74,222,128,0)}}.live{animation:pulse 1.8s ease-out infinite}
+@keyframes tm-ring{0%{box-shadow:0 0 0 0 rgba(46,89,244,.5),0 16px 40px rgba(0,0,0,.5)}100%{box-shadow:0 0 0 26px rgba(46,89,244,0),0 16px 40px rgba(0,0,0,.5)}}
+.tm-ring{animation:tm-ring 1.8s ease-out infinite}
+@keyframes tm-swap{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}.tm-swap{animation:tm-swap .45s ease both}
+@keyframes tm-pop{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}.tm-pop{animation:tm-pop .4s ease both}
+.tm-ava{transition:width .25s ease,height .25s ease,border-color .25s ease,box-shadow .25s ease}
+.tm-card{transition:border-color .2s ease,background-color .2s ease,transform .2s ease}.tm-card:hover{transform:translateY(-3px)}
+.tm-seg-fill{transition:width 100ms linear}
+.fade-enter{opacity:0;transform:translateY(10px)}.fade-enter-active{opacity:1;transform:translateY(0);transition:opacity 400ms,transform 400ms}
+html{scroll-behavior:smooth}
+.styled-scrollbar{scrollbar-width:thin;scrollbar-color:#26304D transparent}
+.p03-row{transition:background-color .2s ease,border-color .2s ease}.p03-row[aria-pressed="false"]:hover{background-color:rgba(46,89,244,.07)!important}
+.p03-row:focus-visible,.p03-tbtn:focus-visible,.p03-again:focus-visible{outline:2px solid #7AA6FF;outline-offset:2px}
+.p03-tbtn:hover,.p03-again:hover{border-color:#4282FA!important}
+.p03-tile9{transition:background-color .2s ease,border-color .2s ease}.p03-tile9[aria-pressed="false"]:hover{border-color:#3A4E8C!important}
+.p03-tile9:focus-visible{outline:2px solid #7AA6FF;outline-offset:2px}
+.p03-mod{animation:p03-modIn .35s ease-out both}
+@keyframes p03-modIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.p03-clone::after{content:"";position:absolute;top:0;bottom:0;right:0;width:2px;background:#9DB8FF;box-shadow:0 0 22px 6px rgba(66,130,250,.5);pointer-events:none;opacity:0;animation:p03-scan .9s cubic-bezier(.3,.6,.2,1) both}
+@keyframes p03-scan{0%{right:0;opacity:1}85%{opacity:1}100%{right:100%;opacity:0}}
+.p03-print{animation:p03-printIn .9s cubic-bezier(.3,.6,.2,1) both}
+@keyframes p03-printIn{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
+.p03-dot{position:absolute;top:50%;right:0;width:8px;height:8px;margin-top:-4px;border-radius:50%;background:#9DB8FF;box-shadow:0 0 10px 2px rgba(122,166,255,.7);animation:p03-flow 1.8s linear infinite}
+@keyframes p03-flow{from{right:0}to{right:calc(100% - 8px)}}
+.p03-vdot{position:absolute;left:50%;top:0;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#9DB8FF;box-shadow:0 0 10px 2px rgba(122,166,255,.7);animation:p03-vflow 1.8s linear infinite}
+@keyframes p03-vflow{from{top:-4px}to{top:calc(100% - 4px)}}
+.p03-rowtimer{transform-origin:right center;animation-name:p03-rowfill;animation-timing-function:linear;animation-fill-mode:both}
+@keyframes p03-rowfill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.p03-stamp{animation:p03-stamp .45s cubic-bezier(.2,.8,.3,1.25) .75s both}
+@keyframes p03-stamp{from{opacity:0;transform:rotate(-10deg) scale(1.7)}to{opacity:.92;transform:rotate(-10deg) scale(1)}}
+.p03-pop{animation:p03-pop .6s cubic-bezier(.2,.8,.2,1.15) .3s both}
+@keyframes p03-pop{from{opacity:0;transform:translateY(-16px) scale(.96)}to{opacity:1;transform:none}}
+.p03-bp{background-color:#0F1426;background-image:linear-gradient(rgba(66,130,250,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(66,130,250,.07) 1px,transparent 1px);background-position:center center}
+@media(min-width:1024px){
+section[id]{scroll-margin-top:80px}
+.section-h2{font-size:36px!important}
+.hero-h1{font-size:48px!important}
+.hero-ctas{flex-wrap:nowrap!important}
+.hero-ctas>a{width:auto!important;flex:1}
+.stuck-grid{grid-template-columns:1fr 1fr!important}
+.process-list{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:20px!important}
+.process-list>li{flex-direction:column!important;gap:12px!important;border-radius:22px;background:#141A2E;border:1px solid #26304D;padding:20px 18px!important}
+.process-list>li>span:last-child{padding:0!important}
+.step-connector{display:none!important}
+.booklet-grid{grid-template-columns:1fr 1fr!important}
+.about-figure{flex-direction:row!important}
+.about-figure>img{aspect-ratio:3/4!important;width:50%!important;min-width:0}
+.about-figure>figcaption{flex:1}
+.about-stats{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.fit-grid{grid-template-columns:1fr 1fr!important}
+.faq-list button{font-size:17px!important}
+.cta-buttons{flex-wrap:nowrap!important}
+.cta-buttons>a{width:auto!important;flex:1}
+}
+@media(prefers-reduced-motion:reduce){
+.tile,.live{transition:none;animation:none}.tile:hover{transform:none}
+.tm-ring,.tm-swap,.tm-pop{animation:none}
+.tm-ava,.tm-card{transition:none}.tm-card:hover{transform:none}
+.tm-seg-fill{transition:none}
+.p03-mod,.p03-print,.p03-rowtimer,.p03-stamp,.p03-pop{animation:none!important}
+.p03-row,.p03-tile9{transition:none}
+.p03-clone::after,.p03-dot,.p03-vdot{display:none}
+html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ════════════════════════════════════════════════════
+//  CONSTANTS
+// ════════════════════════════════════════════════════
+const INTRO_CALL = 'https://api.leadconnectorhq.com/widget/bookings/gil-strategy2fbm3w9hb2h7bhy5ig';
+const WHATSAPP_LINK = 'https://wa.me/972557278140?text=%D7%94%D7%99%D7%99%20%D7%92%D7%99%D7%9C%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A7%D7%91%D7%9C%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D%20%D7%9C%D7%92%D7%91%D7%99%20%D7%91%D7%93%D7%99%D7%A7%D7%AA%20%D7%94%D7%94%D7%99%D7%AA%D7%9B%D7%A0%D7%95%D7%AA%20%D7%95%D7%90%D7%A1%D7%98%D7%A8%D7%98%D7%92%D7%99%D7%99%D7%AA%20%D7%94%D7%97%D7%93%D7%99%D7%A8%D7%94%20%D7%9C%D7%A9%D7%95%D7%A7%20%D7%94%D7%90%D7%9E%D7%A8%D7%99%D7%A7%D7%90%D7%99';
+const FEATURED_VIDEO_ID = 'VY0adZ8EVuw';
+const VSL_VIDEO_ID = 'zrXPejmqgUA';
+const MAPS_LINK = 'https://maps.google.com/?q=%D7%94%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94+15+%D7%A8%D7%A2%D7%A0%D7%A0%D7%94';
+
+const CI = 'assets/clients/';
+const TM_CLIENTS = [
+    { id:'shai', name:'שי בוזגלו', img:CI+'shai-buzaglo.jpg', quotes:['מה שאתם מצפים לקבל בשקלים, תקבלו בדולרים.','החלום הוורוד הזה, להקים איזשהו עסק מניב מעבר לים. את הדרך להגשים אותו קשה לי לדמיין בלי שחר ושמואל.'], ch:{ t:3, time:'0:03', topic:'הכנסה בדולרים', q:0 } },
+    { id:'ron', name:'רון חיים', img:CI+'ron-haim.jpg', quotes:['לעשות את זה לבד… זה פשוט בזבוז זמן, ולוקח הרבה יותר זמן וכסף בניסוי וטעייה.'], ch:{ t:18, time:'0:18', topic:'בלי ניסוי וטעייה', q:0 } },
+    { id:'daniel', name:'דניאל משה', img:CI+'daniel-moshe.jpg', quotes:['לפני שלושה חודשים נכנסתי לאקדמיית הדולר. לפני עשר דקות סיימתי עוד שיחה עם עוד לקוח אמריקאי משלם.'], ch:{ t:53, time:'0:53', topic:'לקוח אמריקאי משלם', q:0 } },
+    { id:'sol', name:'סול רנטו', img:CI+'sol-rento.jpg', quotes:['נותנים את האמת בפנים… זה כאילו שילוב של קואצ׳רים עם יועצים עסקיים ויועצי שיווק, והכול, וחברים.'], ch:{ t:79, time:'1:19', topic:'האמת בפנים', q:0 } },
+    { id:'liram', name:'לירם אהרוני', img:CI+'liram-aharoni.jpg', quotes:['להרוויח כסף בדולרים ולא בשקלים, עם לקוחות שהם אמריקאים. זה המקום.'], ch:{ t:114, time:'1:54', topic:'דולרים, לא שקלים', q:0 } },
+    { id:'kobi', name:'קובי רבינוביץ', img:CI+'kobi-rabinovitz.jpg', quotes:['מה שהיה לוקח לי בעצמי כמה חודשים, עשיתי פה בשבועיים, שלושה, ארבעה שבועות.','צוות שמנחה אותי, שמונע ממני לעשות שטויות לא הכרחיות.'], ch:{ t:137, time:'2:17', topic:'שבועות במקום חודשים', q:0 } },
+    { id:'raziel', name:'רזיאל ינאי', img:CI+'raziel-yanai.jpg', quotes:['לא היה לי רקע בתחום של סוכנויות שיווק מחוץ לארץ… הם הפכו דברים מורכבים לפשוטים.','משהו שנראה לי בעבר כמו פרויקט גדול ומפחיד הפך להיות ממש משחק.'], ch:{ t:160, time:'2:40', topic:'בלי רקע קודם', q:0 } },
+    { id:'gal', name:'גל אברהם', img:CI+'gal-avraham.jpg', quotes:['כל מי שרוצה עסק אמיתי באמריקה, עם לקוחות אמריקאים.'], ch:{ t:179, time:'2:59', topic:'עסק אמיתי באמריקה', q:0 } },
+    { id:'ofir', name:'אופיר קרן', img:CI+'ofir-keren.jpg', quotes:['באמת אכפת להם מההצלחה שלכם, וזה מורגש בכל אינטראקציה איתם.'], ch:null },
+];
+const TM_BY_ID = {}; TM_CLIENTS.forEach(c => { TM_BY_ID[c.id] = c; });
+const TM_CHAPTERS = TM_CLIENTS.filter(c => c.ch);
+const TM_PROOF_CARDS = [
+    { head:'3 חודשים', desc:'מהכניסה לאקדמיה ועד שיחות עם לקוחות אמריקאים משלמים', client:'daniel' },
+    { head:'2–4 שבועות', desc:'במקום כמה חודשים של ניסוי וטעייה לבד', client:'kobi' },
+    { head:'$ ולא ₪', desc:'לקוחות אמריקאים, הכנסה בדולרים', client:'liram' },
+    { head:'ארה״ב', desc:'בלי רקע בשיווק מחוץ לארץ, והכול הפך לפשוט', client:'raziel' },
+];
+TM_PROOF_CARDS.forEach(k => { k.ch = TM_CHAPTERS.findIndex(c => c.id === k.client); });
+const TM_VIDEO_DURATION = 202;
+const TM_VIDEO_POSTER = 'assets/clients/testimonials-video-poster.jpg';
+const TM_STRIPE_CATS = { products:'מוצרים ואיקומרס', software:'תוכנה ואפליקציות', agency:'סוכנויות ושירותים', coaching:'ייעוץ, אימון וקורסים' };
+const SP = 'data/stripe-monthly/';
+const TM_STRIPE_ITEMS = [
+    { name:'אפליקציית ניהול נכסי נדל״ן למשקיעים', cat:'software', amount:122030, pct:'+13.4%', month:'ינואר 2026', img:SP+'exp1.webp' },
+    { name:'סוכנות יצירת תוכן ב-AI', cat:'agency', amount:76120, pct:'+8.1%', month:'מרץ 2026', img:SP+'exp2.webp' },
+    { name:'תוכנת מעקב וניטור אחרי יעילות עובדים', cat:'software', amount:39991, pct:'+13.1%', month:'דצמבר 2025', img:SP+'exp3.webp' },
+    { name:'חנות איקומרס למוצרים לכלבים קטנים', cat:'products', amount:182177, pct:'+8.9%', month:'יולי 2026', img:SP+'exp4.webp' },
+    { name:'חנות איקומרס למוצרי טיפוח וקוסמטיקה', cat:'products', amount:94923, pct:'+6.1%', month:'דצמבר 2025', img:SP+'exp5.webp' },
+    { name:'סוכנות שיווק לעסקי קוסמטיקה (Med Spa)', cat:'agency', amount:170243, pct:'+10.4%', month:'ספטמבר 2026', img:SP+'exp6.webp' },
+    { name:'תוכנת ניהול רשימות תפוצה לעסקי איקומרס', cat:'software', amount:212243, pct:'+4.9%', month:'פברואר 2026', img:SP+'exp7.webp' },
+    { name:'חברת סיפוק לידים לחברות ניקוי מזגנים', cat:'agency', amount:44370, pct:'+35.6%', month:'מרץ 2026', img:SP+'exp8.webp' },
+    { name:'חברת ייעוץ השקעות בקריפטו', cat:'coaching', amount:47471, pct:'+4.9%', month:'אפריל 2026', img:SP+'exp9.webp' },
+    { name:'אפליקציה עם תרגולים לשיפור שינה', cat:'software', amount:29511, pct:'+41.8%', month:'יוני 2026', img:SP+'exp10.webp' },
+    { name:'מארקטפלייס שמחבר יוצרי UGC לבעלי עסקים', cat:'software', amount:18710, pct:'+73.3%', month:'אוגוסט 2026', img:SP+'exp11.webp' },
+    { name:'עורך וידאו ומעצב גרפי', cat:'agency', amount:64520, pct:'+17.4%', month:'מאי 2026', img:SP+'exp12.webp' },
+    { name:'מאמן כושר ותזונה אונליין', cat:'coaching', amount:18970, pct:'+36.2%', month:'אוקטובר 2026', img:SP+'exp14.webp' },
+    { name:'חברת ניקיון משרדים', cat:'agency', amount:37195, pct:'+37.3%', month:'פברואר 2026', img:SP+'exp15.webp' },
+    { name:'קורס לימוד ספרדית', cat:'coaching', amount:88202, pct:'+14.9%', month:'אוגוסט 2026', img:SP+'exp16.webp' },
+    { name:'יועץ התנהלות פיננסית', cat:'coaching', amount:291774, pct:'+11.6%', month:'ספטמבר 2026', img:SP+'exp17.webp' },
+    { name:'סדנאות אונליין להכנה ללידה', cat:'coaching', amount:31044, pct:'+24.3%', month:'אפריל 2026', img:SP+'exp18.webp' },
+];
+
+const FAQ_DATA = [
+    ['צריך לטוס לארה״ב?', 'לא. הפגישה ברעננה, וההקמה כולה נעשית מכאן, מישראל.'],
+    ['האנגלית שלי לא מספיק טובה. זו בעיה?', 'המערכת נבנית באנגלית מההתחלה, AI עוזר לכתוב, ואם תרצה, נציג פיליפיני מאומן יכול לדבר עם הלקוחות.'],
+    ['אין לי קשרים בארה״ב.', 'את החיבורים אנחנו מביאים: רואי חשבון ועורכי דין בארה״ב. המומחיות בתחום שלך כבר קיימת.'],
+    ['מה אם זה לא מתאים לעסק שלי?', 'בשביל זה יש מחקר שוק ופגישת אפיון. אם זה לא מתאים, תדע את זה אחרי שעה וחצי, לא אחרי שנה.'],
+    ['מה עם מיסוי?', 'המיסוי של תושב ישראל עם חברה אמריקאית תלוי במקרה. רואה חשבון בודק איתך את המבנה הנכון לפני ההקמה.'],
+    ['אתם מבטיחים מכירות?', 'לא. אנחנו מתחייבים לתשתית אמריקאית מוכנה לעבודה, עד הליד האמריקאי הראשון. את המכירות אתה עושה, עם הכלים והמערכות שבנינו.'],
+    ['כמה זמן לוקחת ההקמה?', 'תלוי בעסק. לוח הזמנים נקבע בכתב בפגישה, לפני שמתחילים.'],
+];
+
+const PROCESS_STEPS = [
+    { num:'01', title:'סינון ראשוני', desc:'השאלון ומפת הפוטנציאל: בודקים אם לעסק שלך יש מה לחפש בארה״ב, לפני שמשקיעים בזה שקל.', tag:'✓ כבר עשית', tagColor:'green', filled:true },
+    { num:'02', title:'מחקר שוק לעסק שלך', desc:'לפני שנפגשים, הצוות שלנו חוקר את התחום שלך בארה״ב: מי הקהל, מי המתחרים, איך ההצעה צריכה להיראות, ומה ההבדל בין הקהל הישראלי שלך לקהל האמריקאי שלך?', tag:'לפני הפגישה', tagColor:'blue' },
+    { num:'03', title:'פגישת אפיון ברעננה', desc:'פנים מול פנים, במשרדים שלנו. מציגים את הממצאים ומשרטטים על הלוח מה העסק שלך צריך כדי למכור בארה״ב.', tag:'פנים מול פנים', tagColor:'blue' },
+    { num:'04', title:'תכנית הפריצה שלך', desc:'יוצאים עם חוברת אסטרטגיה אישית: מפת השוק, התמחור, ותוכנית הפריצה מא׳ ועד ת׳ - מחולקת לפי שלבים ולוחות זמנים.', tag:'נשאר אצלך', tagColor:'blue' },
+    { num:'05', title:'ההחלטה שלך', desc:'לבצע לבד לפי תכנית הפריצה, או שאנחנו בונים לך את כל הסיסטם. עם כל המידע מול העיניים, בלי לחץ.', tag:'שתי דרכים', tagColor:'blue' },
+    { num:'06', title:'הקמה ומסירה', desc:'אנחנו מקימים את התשתית האמריקאית לפי לוח זמנים כתוב, ומלווים אותך עד הליד האמריקאי הראשון: כשכל התשתית קיימת, ואתה כבר עובד בשוק האמריקאי.', tag:'Done For You', tagColor:'blue', filled:true },
+];
+
+const BUSINESS_CARD_ITEMS = [
+    { title:'תשתית משפטית מאושרת ומוכנה', sub:null, icon:'building' },
+    { title:'גבייה ופיננסים', sub:'מרמת המסוף סליקה עד חשבון הבנק שמקושר לחשבון הישראלי שלך', icon:'card' },
+    { title:'מספרים אמריקאים, חייגנים והודעות', sub:'כולל כל האישורים הרגולטוריים', icon:'phone' },
+    { title:'מערכת ניהול עסק מותאמת לעסק שלך', sub:'כולל כל הכלים והאוטומציות', icon:'layers' },
+    { title:'דפי נחיתה, נכסים שיווקיים, ואתר שמדבר אמריקאית', sub:null, icon:'globe' },
+];
+
+const PRODUCT_TILES = [
+    { name:'ישות משפטית מאושרת', icon:'building' },
+    { name:'גבייה ובנקאות', icon:'card' },
+    { name:'אמצעי תקשורת, כולל כל הרגולציות שצריך', icon:'phone' },
+    { name:'מערכת מכירות וניהול עסק', icon:'layers' },
+    { name:'נוכחות', icon:'globe' },
+    { name:'מפת שוק', icon:'map' },
+    { name:'אנשי מקצוע', icon:'users' },
+    { name:'גיוס והשמה של העובד הראשון', icon:'headphones' },
+];
+
+// ════════════════════════════════════════════════════
+//  SVG ICONS
+// ════════════════════════════════════════════════════
+const ICONS = {
+    building: <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>,
+    card: <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>,
+    phone: <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>,
+    layers: <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>,
+    globe: <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>,
+    map: <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></svg>,
+    users: <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>,
+    headphones: <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>,
+    newlead: <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>,
+    check: <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>,
+    x: <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F87171" strokeWidth="2.6" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>,
+    arrowDown: <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>,
+    pin: <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+    play: <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M8 5v14l11-7z"/></svg>,
+};
+
+const WhatsAppIcon = ({size=18}) => <img src="assets/brand/whatsapp.png" alt="" style={{width:size,height:size}} />;
+
+// ════════════════════════════════════════════════════
+//  HEADER
+// ════════════════════════════════════════════════════
+const NAV_LINKS = [
+    { href:'#process', label:'התהליך' },
+    { href:'#product', label:'מה מקבלים' },
+    { href:'#proof', label:'סיפורי הצלחה' },
+    { href:'#about', label:'מי אנחנו' },
+    { href:'#faq', label:'שאלות נפוצות' },
+];
+const Header = () => {
+    const [scrolled, setScrolled] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [active, setActive] = useState('');
+    useEffect(() => {
+        const h = () => setScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', h, { passive: true });
+        return () => window.removeEventListener('scroll', h);
+    }, []);
+    useEffect(() => {
+        const ids = NAV_LINKS.map(l => l.href.slice(1));
+        const cb = (entries) => {
+            entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+        };
+        const io = new IntersectionObserver(cb, { rootMargin:'-80px 0px -60% 0px', threshold:0 });
+        ids.forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
+        return () => io.disconnect();
+    }, []);
+    useEffect(() => {
+        if (menuOpen) document.body.style.overflow = 'hidden';
+        else document.body.style.overflow = '';
+        return () => { document.body.style.overflow = ''; };
+    }, [menuOpen]);
+    const closeMenu = () => setMenuOpen(false);
+    return (
+        <>
+        <header style={{ position:'sticky', top:0, zIndex:50, width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between', gap:16, padding:'14px 20px',
+            borderBottom:'1px solid #1A2240', background: scrolled ? 'rgba(10,13,24,0.95)' : 'rgba(10,13,24,0.8)', backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)', transition:'background 0.3s ease' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:14 }}>
+                <img src="assets/brand/wordmark.png" alt="Dollar Academy" style={{ height:18, width:'auto' }} />
+            </div>
+            <nav className="desktop-nav" style={{ display:'none', alignItems:'center', gap:28, fontSize:14, fontWeight:600, color:'#A9B7DE' }}>
+                {NAV_LINKS.map(l => (
+                    <a key={l.href} href={l.href} style={{ transition:'color .2s', color: active === l.href.slice(1) ? '#F4F6FC' : undefined, borderBottom: active === l.href.slice(1) ? '2px solid #2E59F4' : '2px solid transparent', paddingBottom:2 }}>{l.label}</a>
+                ))}
+                <span className="mono" style={{ padding:'4px 10px', borderRadius:999, border:'1px solid #2A3A7A', fontSize:12, fontWeight:600, color:'#9DB8FF' }}>IL → US</span>
+            </nav>
+            <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener" className="desktop-wa" style={{ display:'none', alignItems:'center', gap:8, width:40, height:40, borderRadius:'50%', background:'#2E59F4', justifyContent:'center' }}>
+                    <WhatsAppIcon />
+                </a>
+                <a href={INTRO_CALL} target="_blank" rel="noopener" className="desktop-cta" style={{ display:'none', alignItems:'center', gap:8, minHeight:40, padding:'0 16px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontFamily:'Rubik,Assistant,sans-serif', fontSize:14, fontWeight:700 }}>
+                    שיחת אינטרו
+                </a>
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener" className="mobile-wa" style={{ display:'inline-flex', alignItems:'center', gap:8, minHeight:44, padding:'0 14px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontFamily:'Rubik,Assistant,sans-serif', fontSize:14, fontWeight:700 }}>
+                    <WhatsAppIcon />דברו איתנו
+                </a>
+                <button type="button" className="hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'סגור תפריט' : 'פתח תפריט'}
+                    style={{ display:'flex', alignItems:'center', justifyContent:'center', width:44, height:44, borderRadius:12, border:'1px solid #26304D', background:'transparent', color:'#F4F6FC', fontSize:22, cursor:'pointer' }}>
+                    {menuOpen ? '✕' : '☰'}
+                </button>
+            </div>
+            <style>{`@media(min-width:1024px){.desktop-nav{display:flex!important}.desktop-wa{display:inline-flex!important}.desktop-cta{display:inline-flex!important}.mobile-wa{display:none!important}.hamburger{display:none!important}}`}</style>
+        </header>
+        {menuOpen && <div style={{ position:'fixed', inset:0, zIndex:49, background:'rgba(10,13,24,0.98)', backdropFilter:'blur(20px)', WebkitBackdropFilter:'blur(20px)', display:'flex', flexDirection:'column', padding:'80px 24px 40px', gap:8, overflowY:'auto' }}>
+            {NAV_LINKS.map(l => (
+                <a key={l.href} href={l.href} onClick={closeMenu} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'18px 0', borderBottom:'1px solid #1A2240', fontSize:18, fontWeight:700, color:'#F4F6FC' }}>
+                    {l.label}<span style={{ color:'#4282FA', fontSize:20 }}>‹</span>
+                </a>
+            ))}
+            <div style={{ marginTop:24, display:'flex', flexDirection:'column', gap:12 }}>
+                <a href={INTRO_CALL} target="_blank" rel="noopener" onClick={closeMenu} style={{ display:'flex', alignItems:'center', justifyContent:'center', minHeight:56, borderRadius:14, background:'#2E59F4', color:'#FFFFFF', fontFamily:'Rubik,Assistant,sans-serif', fontSize:17, fontWeight:700 }}>
+                    לתיאום שיחת אינטרו עם גיל
+                </a>
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener" onClick={closeMenu} style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:10, minHeight:56, borderRadius:14, border:'1px solid #2E3B66', color:'#F4F6FC', fontFamily:'Rubik,Assistant,sans-serif', fontSize:17, fontWeight:700 }}>
+                    <WhatsAppIcon size={20} />וואטסאפ לצוות
+                </a>
+            </div>
+            <a href={MAPS_LINK} target="_blank" rel="noopener" onClick={closeMenu} style={{ marginTop:16, display:'flex', alignItems:'center', justifyContent:'center', gap:8, fontSize:14, fontWeight:600, color:'#A9B7DE' }}>
+                {ICONS.pin}התעשייה 15, רעננה
+            </a>
+        </div>}
+        </>
+    );
+};
+
+// ════════════════════════════════════════════════════
+//  HERO
+// ════════════════════════════════════════════════════
+const Hero = () => (
+    <section className="gridbg" style={{ width:'100%', padding:'40px 20px 56px', display:'flex', justifyContent:'center' }}>
+        <div style={{ width:'100%', maxWidth:1160, display:'grid', gridTemplateColumns:'1fr', gap:40, alignItems:'center' }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:20, alignItems:'center', textAlign:'center' }}>
+                <span style={{ display:'inline-flex', alignItems:'center', gap:10, padding:'5px 14px 5px 5px', borderRadius:999, border:'1px solid #2A3A7A', background:'rgba(46,89,244,0.08)', fontSize:15, fontWeight:700 }}>
+                    <span className="mono" style={{ padding:'5px 12px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontSize:12, fontWeight:600, letterSpacing:'.06em' }}>DONE FOR YOU</span>
+                    הדולר הראשון
+                </span>
+                <h1 className="hero-h1" style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize:38, lineHeight:1.1, textWrap:'balance' }}>
+                    מהעסק שלך בישראל, <span style={{ color:'#2E6BFF' }}>לדולר הראשון</span> שלך בארה״ב.
+                </h1>
+                <p style={{ margin:0, maxWidth:560, fontSize:16, lineHeight:1.65, color:'#A9B7DE' }}>
+                    מחקר שוק לעסק שלך, לתחום שלך, לקהל היעד שלך ולהצעה שלך - ארוז בפגישת היתכנות במשרדים שלנו ברעננה, ממנה תצא עם תוכנית פריצה מותאמת אישית.
+                    <span style={{ display:'block', marginTop:12 }}>משם? הבחירה היא שלך - לבצע לבד, או שאנחנו בונים לך את כל הסיסטם, עד הליד האמריקאי הראשון: כשכל התשתית כבר קיימת, ואתה עובד בשוק האמריקאי.</span>
+                </p>
+                <div className="hero-ctas" style={{ display:'flex', flexWrap:'wrap', gap:12, width:'100%' }}>
+                    <a href="#process" style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:10, minHeight:56, padding:'0 26px', borderRadius:14,
+                        fontFamily:'Rubik,Assistant,sans-serif', fontSize:17, fontWeight:700, width:'100%', background:'#2E59F4', color:'#FFFFFF', border:'none', boxShadow:'0 12px 36px rgba(46,89,244,0.42)' }}>
+                        {ICONS.arrowDown}איך זה עובד
+                    </a>
+                    <a href={WHATSAPP_LINK} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:10, minHeight:56, padding:'0 26px', borderRadius:14,
+                        fontFamily:'Rubik,Assistant,sans-serif', fontSize:17, fontWeight:700, width:'100%', background:'transparent', color:'#F4F6FC', border:'1px solid #2E3B66' }}>
+                        <WhatsAppIcon size={20} />שאלה? וואטסאפ לצוות
+                    </a>
+                </div>
+                <ul aria-label="על האקדמיה" style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexWrap:'wrap', gap:'8px 18px', justifyContent:'center', fontSize:14, fontWeight:600, color:'#C9D2EC' }}>
+                    <li style={{ display:'flex', alignItems:'center', gap:5 }}><span style={{ color:'#2E6BFF' }}>★</span>8 שנים בשוק האמריקאי</li>
+                    <li style={{ display:'flex', alignItems:'center', gap:5 }}><span style={{ color:'#2E6BFF' }}>✓</span>הכנסות מנוהלות +$10M</li>
+                    <li style={{ display:'flex', alignItems:'center', gap:5 }}><span style={{ color:'#2E6BFF' }}>✓</span>+100 עסקים מלווים</li>
+                    <li style={{ display:'flex', alignItems:'center', gap:5 }}><span style={{ color:'#2E6BFF' }}>✓</span>+4,000 לקוחות משלמים</li>
+                </ul>
+            </div>
+            <BusinessCard />
+        </div>
+        <style>{`@media(min-width:1024px){.gridbg > div{grid-template-columns:1fr 1fr!important}}`}</style>
+    </section>
+);
+
+const BusinessCard = () => (
+    <div style={{ borderRadius:28, background:'linear-gradient(180deg,#151C33,#10162A)', border:'1px solid #2A3556', padding:'20px 16px 12px', boxShadow:'0 40px 120px rgba(46,89,244,0.18)', display:'flex', flexDirection:'column' }}>
+        <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:12, paddingBottom:18, borderBottom:'1px solid #222B47' }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
+                <span style={{ fontSize:14, fontWeight:700, color:'#A9B7DE' }}>העסק שלך בארה״ב</span>
+                <span className="mono" style={{ fontSize:17, fontWeight:600, color:'#F4F6FC', textAlign:'right' }}>YOUR BUSINESS, LLC</span>
+            </div>
+            <span className="mono" style={{ flex:'none', display:'inline-flex', alignItems:'center', gap:8, padding:'7px 14px', borderRadius:999, border:'1px solid #2E3B66', fontSize:13, fontWeight:600, color:'#C9D2EC' }}>
+                <span className="live" style={{ width:8, height:8, borderRadius:'50%', background:'#4ADE80' }}></span>LIVE
+            </span>
+        </div>
+        <div style={{ display:'flex', flexDirection:'column', gap:10, padding:'18px 0 8px' }}>
+            <div style={{ display:'flex', justifyContent:'space-between', fontSize:14, fontWeight:700 }}>
+                <span>מוכנות להקמה</span><span className="mono" style={{ color:'#9DB8FF' }}>6/6</span>
+            </div>
+            <div style={{ height:8, borderRadius:4, background:'#222B47', overflow:'hidden' }}>
+                <div style={{ width:'100%', height:'100%', borderRadius:4, background:'linear-gradient(270deg,#2E59F4,#7AA6FF)' }}></div>
+            </div>
+        </div>
+        {BUSINESS_CARD_ITEMS.map((item, i) => (
+            <div key={i} style={{ display:'flex', alignItems:'center', gap:14, padding:'12px 0', borderBottom:'1px solid #1C2440' }}>
+                <span style={{ flex:'none', width:42, height:42, borderRadius:12, border:'1px solid #26304D', background:'#0F1426', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    {ICONS[item.icon]}
+                </span>
+                <span style={{ display:'flex', flexDirection:'column', gap:3, minWidth:0 }}>
+                    <span style={{ fontSize:15, fontWeight:700, lineHeight:1.35 }}>{item.title}</span>
+                    {item.sub && <span style={{ fontSize:12, lineHeight:1.45, color:'#8A97BE' }}>{item.sub}</span>}
+                </span>
+                <span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'5px 10px', borderRadius:8, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:12, fontWeight:600 }}>✓ DONE</span>
+            </div>
+        ))}
+        <div style={{ display:'flex', alignItems:'center', gap:14, padding:'14px 0 2px' }}>
+            <span style={{ flex:'none', width:42, height:42, borderRadius:12, border:'1px solid rgba(74,222,128,0.4)', background:'rgba(74,222,128,0.08)', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                {ICONS.newlead}
+            </span>
+            <span style={{ display:'flex', flexDirection:'column', gap:3 }}>
+                <span style={{ fontSize:16, fontWeight:800 }}>הליד האמריקאי הראשון</span>
+                <span style={{ fontSize:12, color:'#8A97BE' }}><span className="mono" style={{ fontFamily:'inherit' }}>NEW LEAD</span> · כבר במערכת שלך</span>
+            </span>
+            <span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'5px 10px', borderRadius:8, background:'rgba(74,222,128,0.14)', color:'#4ADE80', fontSize:12, fontWeight:600 }}>✓ NEW</span>
+        </div>
+    </div>
+);
+
+// ════════════════════════════════════════════════════
+//  SECTION 01 — STUCK
+// ════════════════════════════════════════════════════
+const StuckSection = () => (
+    <section style={{ width:'100%', padding:'76px 20px 0', display:'flex', justifyContent:'center' }}>
+        <div style={{ width:'100%', maxWidth:1160, display:'flex', flexDirection:'column', gap:26 }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:12, maxWidth:820 }}>
+                <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontWeight:700, fontSize:14, letterSpacing:'.04em', color:'#4282FA' }}>01 · פה כנראה נתקעת…</span>
+                <h2 className="section-h2" style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize:28, lineHeight:1.18, textWrap:'balance' }}>
+                    רוב העסקים לא נכשלים בארה״ב בגלל המוצר. <span style={{ color:'#8A97BE' }}>הם נתקעים עוד לפני הלקוח הראשון.</span>
+                </h2>
+            </div>
+            <div className="stuck-grid" style={{ display:'grid', gridTemplateColumns:'1fr', gap:18 }}>
+                <div style={{ borderRadius:22, background:'#16151F', border:'1px solid #3A2A3A', padding:'22px 18px', display:'flex', flexDirection:'column', gap:16 }}>
+                    <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}>
+                        <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:22, fontWeight:800 }}>לבד</span>
+                        <span style={{ alignSelf:'flex-start', display:'inline-flex', alignItems:'center', gap:6, padding:'5px 12px', borderRadius:999, background:'rgba(248,113,113,0.12)', color:'#FCA5A5', fontSize:13, fontWeight:700 }}>חודשים של ניסוי וטעייה</span>
+                    </div>
+                    <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:12 }}>
+                        {['בוחרים מבנה חברה ומדינה, בלי לדעת מה זה עושה למס שלך בישראל','מנסים לפתוח חשבון ולסלוק בדולרים, כבעלים זר (ונחסמים)','מספר אמריקאי ללא אישור רגולטורי (ומקבלים תביעה)','״מעתיקים״ את המוצר לאמריקה בלי להבין שמדובר בתרבות שונה, שוק שונה, ולקוח קצה שונה','בסוף דוחים את הכל, כי זה פשוט מסובך ומציף'].map((t,i) => (
+                            <li key={i} style={{ display:'flex', alignItems:'flex-start', gap:10, fontSize:15, lineHeight:1.55, color:'#DCE3F5' }}>
+                                <span style={{ flex:'none', marginTop:3 }}>{ICONS.x}</span><span>{t}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div style={{ borderRadius:22, background:'#121C3D', border:'1px solid #2E59F4', padding:'22px 18px', display:'flex', flexDirection:'column', gap:16 }}>
+                    <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:22, fontWeight:800 }}>איתנו</span>
+                    <span style={{ marginTop:-8, fontSize:14, fontWeight:700, color:'#9DB8FF' }}>עם הצוות שהפך את אמריקה למגרש המשחקים שלו</span>
+                    <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:12 }}>
+                        {['מחקר שוק מעמיק למוצר ולהצעה, עוד לפני שמשקיעים שקל בהקמה','תשתית מוכנה - מהרמה המשפטית עד לסליקה, חשבונות בנק, ואישורים הכרחיים','תוכנית פריצה מותאמת אישית, מוצגת לך פנים מול פנים במשרדים שלנו ברעננה','כל הספקים, הטפסים והחיבורים שאתה צריך - בלי להתפזר','הליד האמריקאי הראשון, כשכל התשתית כבר עובדת'].map((t,i) => (
+                            <li key={i} style={{ display:'flex', alignItems:'flex-start', gap:10, fontSize:15, lineHeight:1.55, color:'#DCE3F5' }}>
+                                <span style={{ flex:'none', marginTop:3 }}>{ICONS.check}</span><span>{t}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            <div style={{ display:'flex', alignItems:'center', gap:14, maxWidth:760 }}>
+                <img src={TM_BY_ID['ron'].img} alt="רון חיים" style={{ flex:'none', width:52, height:52, borderRadius:'50%', objectFit:'cover' }} loading="lazy" />
+                <span style={{ display:'flex', flexDirection:'column', gap:4 }}>
+                    <span style={{ fontSize:15, lineHeight:1.55, color:'#DCE3F5' }}>"לעשות את זה לבד... זה פשוט בזבוז זמן, ולוקח הרבה יותר זמן וכסף בניסוי וטעייה."</span>
+                    <span style={{ fontSize:14, fontWeight:700, color:'#4282FA' }}>רון חיים</span>
+                </span>
+            </div>
+        </div>
+    </section>
+);
+
+// ════════════════════════════════════════════════════
+//  SECTION 02 — PROCESS
+// ════════════════════════════════════════════════════
+const ProcessSection = () => (
+    <section id="process" style={{ width:'100%', padding:'76px 20px 0', display:'flex', justifyContent:'center' }}>
+        <div style={{ width:'100%', maxWidth:1160, display:'flex', flexDirection:'column', gap:26 }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:12, maxWidth:820 }}>
+                <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontWeight:700, fontSize:14, letterSpacing:'.04em', color:'#4282FA' }}>02 · התהליך</span>
+                <h2 className="section-h2" style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize:28, lineHeight:1.18, textWrap:'balance' }}>הדרך לדולר הראשון, שלב אחרי שלב</h2>
+                <p style={{ margin:0, fontSize:16, lineHeight:1.6, color:'#A9B7DE' }}>תהליך אנושי, לא אוטומטי: אנשים אמיתיים קוראים את השאלון שלך, חוקרים את השוק ונפגשים איתך.</p>
+            </div>
+            <ol className="process-list" style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column' }}>
+                {PROCESS_STEPS.map((s, i) => (
+                    <li key={i} style={{ display:'flex', gap:14 }}>
+                        <span style={{ flex:'none', display:'flex', flexDirection:'column', alignItems:'center' }}>
+                            <span className="mono" style={{ width:40, height:40, borderRadius:'50%', background: s.filled ? '#2E59F4' : '#141A2E', border:'1px solid #2E59F4', color:'#FFFFFF', fontSize:14, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{s.num}</span>
+                            {i < PROCESS_STEPS.length - 1 && <span className="step-connector" style={{ flex:1, width:2, minHeight:24, background:'linear-gradient(#2E59F4,#26304D)' }}></span>}
+                        </span>
+                        <span style={{ display:'flex', flexDirection:'column', gap:6, padding:'6px 0 26px' }}>
+                            <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:19, fontWeight:800 }}>{s.title}</span>
+                            <span style={{ fontSize:15, lineHeight:1.6, color:'#A9B7DE' }}>{s.desc}</span>
+                            <span style={{ alignSelf:'flex-start', display:'inline-flex', alignItems:'center', gap:6, padding:'5px 12px', borderRadius:999,
+                                background: s.tagColor === 'green' ? 'rgba(74,222,128,0.12)' : 'rgba(46,89,244,0.14)',
+                                color: s.tagColor === 'green' ? '#4ADE80' : '#9DB8FF', fontSize:13, fontWeight:700 }}>{s.tag}</span>
+                        </span>
+                    </li>
+                ))}
+            </ol>
+            <BookletCard />
+        </div>
+    </section>
+);
+
+const BookletCard = () => (
+    <div style={{ borderRadius:22, background:'#141A2E', border:'1px solid #26304D', padding:'22px 18px', display:'flex', flexDirection:'column', gap:16 }}>
+        <div className="booklet-grid" style={{ display:'grid', gridTemplateColumns:'1fr', gap:18, alignItems:'center' }}>
+            <img src="assets/brand/booklet.jpg" alt="חוברת US Market Entry Blueprint" style={{ width:'100%', height:'auto', borderRadius:14 }} loading="lazy" />
+            <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
+                <span style={{ alignSelf:'flex-start', display:'inline-flex', alignItems:'center', gap:6, padding:'5px 12px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:13, fontWeight:700 }}>US MARKET ENTRY BLUEPRINT</span>
+                <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:22, fontWeight:800, lineHeight:1.25 }}>מה יש בחוברת שיוצאים איתה מהפגישה</span>
+                <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:12 }}>
+                    {['ניתוח ענף ומתחרים','תמחור בנישה שלך בארה״ב','קהלים וערוצים מותאמים לפריצה שלך','הסיכונים וההתאמות לעסק שלך','מפת הדרכים מא׳ ועד ת׳ בחדירה לשוק האמריקאי'].map((t,i) => (
+                        <li key={i} style={{ display:'flex', alignItems:'flex-start', gap:10, fontSize:15, lineHeight:1.55, color:'#DCE3F5' }}>
+                            <span style={{ flex:'none', marginTop:3 }}>{ICONS.check}</span><span>{t}</span>
+                        </li>
+                    ))}
+                </ul>
+                <span style={{ fontSize:13, color:'#8A97BE' }}>דוגמה מתוך תוכנית אמיתית. הפרטים הוסתרו.</span>
+            </div>
+        </div>
+    </div>
+);
+
+// ════════════════════════════════════════════════════
+//  SECTION 03 — PRODUCT
+// ════════════════════════════════════════════════════
+
+const P03_ITEMS = [
+  { icon:'legal', row:'ישות משפטית מאושרת', sub:'LLC אמריקאית, על שמך ובבעלותך', tile:'ישות משפטית', stageD:'ישות משפטית מאושרת', stageM:'ישות משפטית מאושרת', desc:'חברה אמריקאית רשומה על שמך ובבעלותך המלאה. רואה חשבון בודק איתך את המבנה הנכון, לפני ההקמה.', il:'עוסק או חברה בע״מ', us:'YOUR BUSINESS, LLC' },
+  { icon:'billing', row:'גבייה ובנקאות', sub:'סליקה בדולרים, עד החשבון בישראל', tile:'גבייה ובנקאות', stageD:'גבייה ובנקאות', stageM:'גבייה ובנקאות', desc:'מהמסוף שסולק את הלקוח האמריקאי, דרך חשבון בנק בארה״ב, ועד החשבון הישראלי שלך.', il:'סליקה וחשבון בנק בשקלים', us:'סליקה וחשבון בנק בדולרים' },
+  { icon:'comm', row:'אמצעי תקשורת', sub:'מספרים וחייגנים, כולל כל הרגולציות', tile:'תקשורת ורגולציה', stageD:'אמצעי תקשורת, כולל כל הרגולציות', stageM:'אמצעי תקשורת ורגולציה', desc:'מספר אמריקאי מקומי, חייגן והודעות SMS, עם כל האישורים הרגולטוריים שצריך כדי לדבר עם לקוחות בארה״ב.', il:'מספר ישראלי ווואטסאפ', us:'מספר אמריקאי, חייגן ו-SMS מאושרים' },
+  { icon:'crm', row:'מערכת מכירות וניהול עסק', sub:'CRM באנגלית, עם כל האוטומציות', tile:'מערכת מכירות', stageD:'מערכת מכירות וניהול עסק', stageM:'מערכת מכירות וניהול עסק', desc:'מערכת ניהול שנבנית לעסק שלך, באנגלית מההתחלה: כל ליד במקום אחד, עם כל הכלים והאוטומציות.', il:'מערכת בעברית', us:'CRM באנגלית, עם אוטומציות' },
+  { icon:'web', row:'נוכחות דיגיטלית', sub:'אתר ודפי נחיתה שמדברים אמריקאית', tile:'נוכחות דיגיטלית', stageD:'נוכחות דיגיטלית', stageM:'נוכחות דיגיטלית', desc:'אתר, דפי נחיתה ונכסים שיווקיים שנכתבים לקהל האמריקאי. לא תרגום מעברית, אלא עסק שמדבר אמריקאית.', il:'אתר ודפי נחיתה בעברית', us:'אתר שמדבר אמריקאית' },
+  { icon:'map', row:'מפת שוק', sub:'מתחרים, תמחור וערוצים בנישה שלך', tile:'מפת שוק', stageD:'מפת שוק', stageM:'מפת שוק', desc:'מי המתחרים שלך בארה״ב, כמה גובים בנישה שלך, ובאילו ערוצים כדאי לפרוץ. מתוך מחקר השוק שעשינו לעסק שלך.', il:'מכיר את השוק הישראלי בעל פה', us:'מפה של השוק האמריקאי שלך' },
+  { icon:'team', row:'אנשי מקצוע', sub:'רו״ח ועו״ד אמריקאים, וכל הספקים', tile:'אנשי מקצוע', stageD:'אנשי מקצוע', stageM:'אנשי מקצוע', desc:'רואי חשבון ועורכי דין בארה״ב, וכל הספקים, הטפסים והחיבורים שהעסק צריך. את הקשרים אנחנו מביאים.', il:'רו״ח ועו״ד בישראל', us:'רו״ח ועו״ד בארה״ב, מחוברים לעסק' },
+  { icon:'hire', row:'גיוס והשמה של העובד הראשון', sub:'נציג דובר אנגלית, מאומן לעסק שלך', tile:'העובד הראשון', stageD:'גיוס והשמה של העובד הראשון', stageM:'גיוס העובד הראשון', desc:'מגייסים, מכשירים ומחברים למערכות את העובד הראשון שלך: נציג שמדבר עם הלקוחות שלך באנגלית.', il:'אתה עונה לכל לקוח בעצמך', us:'נציג מאומן שעונה באנגלית' },
+  { icon:'lead', row:'הליד האמריקאי הראשון', sub:'היעד: כשכל התשתית כבר עובדת', tile:'הליד הראשון', stageD:'הליד האמריקאי הראשון', stageM:'הליד האמריקאי הראשון', desc:'התשתית מוכנה לעבודה, והליד האמריקאי הראשון כבר במערכת שלך. משם, אתה מוכר עם הכלים שבנינו.', il:'עסק שעובד בישראל', us:'עסק שעובד גם בארה״ב' }
+];
+
+const p03Ico = (key, size, strokeColor) => {
+  const s = strokeColor || '#7AA6FF';
+  const p = { legal:<path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>,
+    billing:<React.Fragment><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></React.Fragment>,
+    comm:<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>,
+    crm:<React.Fragment><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></React.Fragment>,
+    web:<React.Fragment><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></React.Fragment>,
+    map:<React.Fragment><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></React.Fragment>,
+    team:<React.Fragment><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></React.Fragment>,
+    hire:<React.Fragment><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></React.Fragment>,
+    lead:<React.Fragment><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></React.Fragment>
+  };
+  return <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={s} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{p[key]}</svg>;
+};
+
+const p03Check = (sz) => <svg width={sz} height={sz} viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>;
+const p03Arrow = (sz, sw) => <svg width={sz} height={sz} viewBox="0 0 24 24" fill="none" stroke="#9DB8FF" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>;
+
+const ProductSection = () => {
+  const [sel, setSel] = useState(0);
+  const [seen, setSeen] = useState(1);
+  const [auto, setAuto] = useState(false);
+  const [mob, setMob] = useState(false);
+  const timerRef = useRef(null);
+  const startedRef = useRef(false);
+  const secRef = useRef(null);
+
+  const DUR = 4200;
+  const durS = (DUR / 1000) + 's';
+
+  const stopTimer = () => { if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; } };
+  const startTimer = (fromSel, fromSeen) => {
+    stopTimer();
+    const s = fromSel !== undefined ? fromSel : undefined;
+    timerRef.current = setInterval(() => {
+      setSel(prev => {
+        if (prev >= 7) {
+          stopTimer();
+          setSeen(255);
+          setAuto(false);
+          return 8;
+        }
+        const next = prev + 1;
+        setSeen(sv => sv | (1 << next));
+        return next;
+      });
+    }, DUR);
+  };
+
+  const go = (i) => { stopTimer(); setSel(i); setSeen(sv => i === 8 ? 255 : (sv | (1 << i))); setAuto(false); };
+  const toggleAuto = () => {
+    if (auto) { stopTimer(); setAuto(false); return; }
+    setSel(prev => {
+      if (prev >= 8) { setSeen(1); setAuto(true); startTimer(0, 1); return 0; }
+      setAuto(true); startTimer(prev); return prev;
+    });
+  };
+  const replay = () => { setSel(0); setSeen(1); setAuto(true); startTimer(0, 1); };
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width:1023px)');
+    const h = (e) => setMob(e.matches);
+    setMob(mq.matches);
+    mq.addEventListener('change', h);
+    return () => mq.removeEventListener('change', h);
+  }, []);
+
+  useEffect(() => {
+    const el = secRef.current; if (!el) return;
+    let reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) {}
+    if (reduce) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !startedRef.current) {
+        startedRef.current = true;
+        setAuto(true);
+        startTimer(0, 1);
+      }
+    }, { threshold: 0.35 });
+    obs.observe(el);
+    return () => { stopTimer(); obs.disconnect(); };
+  }, []);
+
+  let count = 0;
+  for (let i = 0; i < 8; i++) { if ((seen >> i) & 1) count++; }
+  const complete = count === 8;
+  const pct = (count * 12.5) + '%';
+  const countLabel = count + '/8';
+
+  const itemCalc = (i) => {
+    const on = sel === i, goal = i === 8, done = goal ? complete : (seen >> i) & 1;
+    if (!mob) {
+      return { on, goal, done,
+        bc: on ? (goal ? 'rgba(74,222,128,.55)' : '#2E59F4') : 'transparent',
+        bg: on ? (goal ? 'rgba(74,222,128,.08)' : 'rgba(46,89,244,.12)') : 'transparent',
+        ibc: on ? (goal ? 'rgba(74,222,128,.7)' : '#2E59F4') : (goal ? 'rgba(74,222,128,.4)' : '#26304D'),
+        ibg: on ? (goal ? 'rgba(74,222,128,.16)' : 'rgba(46,89,244,.18)') : (goal ? 'rgba(74,222,128,.08)' : '#0F1426'),
+        tc: on ? '#FFFFFF' : '#DCE3F5'
+      };
+    }
+    return { on, goal, done,
+      bc: on ? (goal ? 'rgba(74,222,128,.7)' : '#2E59F4') : (goal ? 'rgba(74,222,128,.35)' : '#26304D'),
+      bg: on ? (goal ? 'rgba(74,222,128,.08)' : '#121C3D') : '#10162A',
+      ibc: on ? (goal ? 'rgba(74,222,128,.7)' : '#2E59F4') : (goal ? 'rgba(74,222,128,.4)' : '#26304D'),
+      ibg: on ? (goal ? 'rgba(74,222,128,.16)' : 'rgba(46,89,244,.18)') : (goal ? 'rgba(74,222,128,.08)' : '#0F1426'),
+      tc: on ? '#FFFFFF' : '#DCE3F5'
+    };
+  };
+
+  /* ── IL → US row ── */
+  const IlUsRow = ({ il, us, goal }) => {
+    if (!mob) return (
+      <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto minmax(0,1fr)', alignItems:'stretch', gap:10 }}>
+        <div style={{ boxSizing:'border-box', borderRadius:14, border:'1px solid #26304D', background:'#10162A', padding:'10px 14px', display:'flex', alignItems:'center', gap:10 }}>
+          <span className="mono" style={{ flex:'none', padding:'3px 8px', borderRadius:6, border:'1px solid #2E3B66', fontSize:12, fontWeight:600, color:'#8A97BE' }}>IL</span>
+          <span style={{ fontSize:15, lineHeight:1.35, color:'#A9B7DE' }}>{il}</span>
+        </div>
+        <span aria-hidden="true" style={{ alignSelf:'center', width:32, height:32, borderRadius:'50%', background:'#1A2547', display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Arrow(16, 2.2)}</span>
+        <div style={{ boxSizing:'border-box', borderRadius:14, border:'1px solid #2E59F4', background:'rgba(46,89,244,0.1)', padding:'10px 14px', display:'flex', alignItems:'center', gap:10 }}>
+          <span className="mono" style={{ flex:'none', padding:'3px 8px', borderRadius:6, background:'#2E59F4', fontSize:12, fontWeight:600, color:'#FFFFFF' }}>US</span>
+          {goal ? <span style={{ fontSize:15, fontWeight:700, lineHeight:1.35, color:'#F4F6FC' }}>{us}</span>
+                : <span className="mono" style={{ fontSize:14, fontWeight:600, lineHeight:1.35, color:'#F4F6FC' }}>{us}</span>}
+        </div>
+      </div>
+    );
+    /* mobile */
+    return (
+      <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto minmax(0,1fr)', alignItems:'stretch', gap:6 }}>
+        <div style={{ minHeight:70, boxSizing:'border-box', borderRadius:12, border:'1px solid #26304D', background:'#10162A', padding:'8px 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:4 }}>
+          <span className="mono" style={{ padding:'2px 6px', borderRadius:5, border:'1px solid #2E3B66', fontSize:10, fontWeight:600, color:'#8A97BE' }}>IL</span>
+          <span style={{ fontSize:13, lineHeight:1.35, color:'#A9B7DE' }}>{il}</span>
+        </div>
+        <span aria-hidden="true" style={{ alignSelf:'center', width:24, height:24, borderRadius:'50%', background:'#1A2547', display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Arrow(13, 2.4)}</span>
+        <div style={{ minHeight:70, boxSizing:'border-box', borderRadius:12, border:'1px solid #2E59F4', background:'rgba(46,89,244,0.1)', padding:'8px 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:4 }}>
+          <span className="mono" style={{ padding:'2px 6px', borderRadius:5, background:'#2E59F4', fontSize:10, fontWeight:600, color:'#FFFFFF' }}>US</span>
+          {goal ? <span style={{ fontSize:13, fontWeight:700, lineHeight:1.35, color:'#F4F6FC' }}>{us}</span>
+                : <span className="mono" style={{ fontSize:12, fontWeight:600, lineHeight:1.35, color:'#F4F6FC' }}>{us}</span>}
+        </div>
+      </div>
+    );
+  };
+
+  /* ── Fix us text: items 0 uses mono bold, rest use regular bold ── */
+  const IlUsRowSmart = ({ i }) => {
+    const it = P03_ITEMS[i];
+    const goal = i === 8;
+    if (!mob) return (
+      <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto minmax(0,1fr)', alignItems:'stretch', gap:10 }}>
+        <div style={{ boxSizing:'border-box', borderRadius:14, border:'1px solid #26304D', background:'#10162A', padding:'10px 14px', display:'flex', alignItems:'center', gap:10 }}>
+          <span className="mono" style={{ flex:'none', padding:'3px 8px', borderRadius:6, border:'1px solid #2E3B66', fontSize:12, fontWeight:600, color:'#8A97BE' }}>IL</span>
+          <span style={{ fontSize:15, lineHeight:1.35, color:'#A9B7DE' }}>{it.il}</span>
+        </div>
+        <span aria-hidden="true" style={{ alignSelf:'center', width:32, height:32, borderRadius:'50%', background:'#1A2547', display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Arrow(16, 2.2)}</span>
+        <div style={{ boxSizing:'border-box', borderRadius:14, border:'1px solid #2E59F4', background:'rgba(46,89,244,0.1)', padding:'10px 14px', display:'flex', alignItems:'center', gap:10 }}>
+          <span className="mono" style={{ flex:'none', padding:'3px 8px', borderRadius:6, background:'#2E59F4', fontSize:12, fontWeight:600, color:'#FFFFFF' }}>US</span>
+          {i === 0 ? <span className="mono" style={{ fontSize:14, fontWeight:600, lineHeight:1.35, color:'#F4F6FC' }}>{it.us}</span>
+                   : <span style={{ fontSize:15, fontWeight:700, lineHeight:1.35, color:'#F4F6FC' }}>{it.us}</span>}
+        </div>
+      </div>
+    );
+    return (
+      <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto minmax(0,1fr)', alignItems:'stretch', gap:6 }}>
+        <div style={{ minHeight:70, boxSizing:'border-box', borderRadius:12, border:'1px solid #26304D', background:'#10162A', padding:'8px 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:4 }}>
+          <span className="mono" style={{ padding:'2px 6px', borderRadius:5, border:'1px solid #2E3B66', fontSize:10, fontWeight:600, color:'#8A97BE' }}>IL</span>
+          <span style={{ fontSize:13, lineHeight:1.35, color:'#A9B7DE' }}>{it.il}</span>
+        </div>
+        <span aria-hidden="true" style={{ alignSelf:'center', width:24, height:24, borderRadius:'50%', background:'#1A2547', display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Arrow(13, 2.4)}</span>
+        <div style={{ minHeight:70, boxSizing:'border-box', borderRadius:12, border:'1px solid #2E59F4', background:'rgba(46,89,244,0.1)', padding:'8px 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:4 }}>
+          <span className="mono" style={{ padding:'2px 6px', borderRadius:5, background:'#2E59F4', fontSize:10, fontWeight:600, color:'#FFFFFF' }}>US</span>
+          {i === 0 ? <span className="mono" style={{ fontSize:12, fontWeight:600, lineHeight:1.35, color:'#F4F6FC' }}>{it.us}</span>
+                   : <span style={{ fontSize:13, fontWeight:700, lineHeight:1.35, color:'#F4F6FC' }}>{it.us}</span>}
+        </div>
+      </div>
+    );
+  };
+
+  /* ── Blueprint wrapper ── */
+  const BpD = ({ children }) => (
+    <div className="p03-clone p03-bp" aria-hidden="true" style={{ position:'relative', height:300, boxSizing:'border-box', borderRadius:18, border:'1px solid #26304D', overflow:'hidden' }}>
+      <div className="p03-print" style={{ position:'absolute', inset:0, boxSizing:'border-box', padding:22, display:'flex', alignItems:'center', justifyContent:'center' }}>{children}</div>
+    </div>
+  );
+  const BpM = ({ children, noClone }) => (
+    <div className={noClone ? "p03-clone p03-bp" : "p03-clone p03-bp"} aria-hidden="true" style={{ position:'relative', height:290, boxSizing:'border-box', borderRadius:16, border:'1px solid #26304D', overflow:'hidden' }}>
+      <div className="p03-print" style={{ position:'absolute', inset:0, boxSizing:'border-box', padding:14, display:'flex', alignItems:'center', justifyContent:'center' }}>{children}</div>
+    </div>
+  );
+
+  /* ── Stage header (icon + h3) ── */
+  const StageHead = ({ i }) => {
+    const it = P03_ITEMS[i];
+    const goal = i === 8;
+    const icoSz = mob ? 20 : 24;
+    const boxSz = mob ? 40 : 48;
+    const br = mob ? 12 : 14;
+    const fz = mob ? 20 : 26;
+    const lh = mob ? 1.25 : 1.2;
+    const ibg = goal ? 'rgba(74,222,128,0.12)' : 'rgba(46,89,244,0.14)';
+    const ibd = goal ? '1px solid rgba(74,222,128,0.6)' : '1px solid #2E59F4';
+    const isc = goal ? '#4ADE80' : '#9DB8FF';
+    return (
+      <div style={{ display:'flex', alignItems:'center', gap: mob ? 12 : 14 }}>
+        <span style={{ flex:'none', width:boxSz, height:boxSz, boxSizing:'border-box', borderRadius:br, background:ibg, border:ibd, display:'flex', alignItems:'center', justifyContent:'center' }}>
+          {p03Ico(it.icon, icoSz, isc)}
+        </span>
+        <h3 style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontSize:fz, fontWeight:800, lineHeight:lh }}>{mob ? it.stageM : it.stageD}</h3>
+      </div>
+    );
+  };
+
+  /* ── Description ── */
+  const StageDesc = ({ i }) => {
+    const it = P03_ITEMS[i];
+    return <p style={{ margin:0, minHeight: mob ? 72 : 54, fontSize: mob ? 15 : 17, lineHeight:1.6, color:'#A9B7DE', textWrap: mob ? undefined : 'pretty' }}>{it.desc}</p>;
+  };
+
+  /* ══════════════════════════════════════
+     STAGE MOCKUPS — Desktop & Mobile
+     ══════════════════════════════════════ */
+
+  const renderMockup = () => {
+    /* ── STAGE 0: LEGAL ── */
+    if (sel === 0) return <div className="p03-mod" key={0} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={0}/><StageDesc i={0}/><IlUsRowSmart i={0}/>
+      {!mob ? <BpD>
+        <div style={{ position:'relative', width:430, maxWidth:'100%' }}>
+          <div style={{ position:'absolute', top:10, right:-10, bottom:-10, left:10, borderRadius:10, background:'#C9D2EC', transform:'rotate(3deg)' }}/>
+          <div dir="ltr" style={{ position:'relative', boxSizing:'border-box', borderRadius:10, background:'#EEF2FB', color:'#0E1630', padding:'20px 24px 22px', boxShadow:'0 24px 60px rgba(0,0,0,0.45)', transform:'rotate(-1.5deg)', display:'flex', flexDirection:'column', gap:12 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+              <svg width="42" height="42" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#2E59F4" strokeWidth="2"/><circle cx="22" cy="22" r="15" stroke="#2E59F4" strokeWidth="1" strokeDasharray="2 2.5"/><path d="M22 13.5l2.5 5.4 5.9.7-4.4 4 1.2 5.8L22 26.5l-5.2 2.9 1.2-5.8-4.4-4 5.9-.7z" fill="#2E59F4"/></svg>
+              <div style={{ display:'flex', flexDirection:'column', gap:2 }}>
+                <span className="mono" style={{ fontSize:11, fontWeight:600, letterSpacing:'.1em', color:'#4A5578' }}>STATE FILING</span>
+                <span className="mono" style={{ fontSize:11, fontWeight:500, letterSpacing:'.1em', color:'#4A5578' }}>LIMITED LIABILITY COMPANY</span>
+              </div>
+            </div>
+            <span className="mono" style={{ fontSize:25, fontWeight:600, lineHeight:1.15, color:'#0E1630' }}>YOUR BUSINESS, LLC</span>
+            <div style={{ height:1, background:'#C9D2EC' }}/>
+            <div style={{ display:'grid', gridTemplateColumns:'auto minmax(0,1fr)', gap:'7px 18px', alignItems:'center' }}>
+              <span className="mono" style={{ fontSize:11, color:'#5B678C' }}>OWNER</span><span className="mono" style={{ fontSize:13, fontWeight:600, color:'#0E1630' }}>YOU &middot; 100%</span>
+              <span className="mono" style={{ fontSize:11, color:'#5B678C' }}>EIN</span><span className="mono" style={{ fontSize:13, fontWeight:600, color:'#0E1630' }}>ISSUED &#10003;</span>
+              <span className="mono" style={{ fontSize:11, color:'#5B678C' }}>REGISTERED AGENT</span><span className="mono" style={{ fontSize:13, fontWeight:600, color:'#0E1630' }}>ASSIGNED &#10003;</span>
+              <span className="mono" style={{ fontSize:11, color:'#5B678C' }}>STATUS</span><span className="mono" style={{ fontSize:13, fontWeight:600, color:'#166534' }}>ACTIVE &#10003;</span>
+            </div>
+            <span className="mono p03-stamp" style={{ position:'absolute', right:22, bottom:24, padding:'6px 12px', border:'2.5px solid #2E59F4', borderRadius:8, color:'#2E59F4', fontSize:15, fontWeight:600, letterSpacing:'.12em', transform:'rotate(-10deg)', opacity:.92 }}>APPROVED</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ position:'relative', width:262, maxWidth:'100%' }}>
+          <div style={{ position:'absolute', top:8, right:-8, bottom:-8, left:8, borderRadius:9, background:'#C9D2EC', transform:'rotate(3deg)' }}/>
+          <div dir="ltr" style={{ position:'relative', boxSizing:'border-box', borderRadius:9, background:'#EEF2FB', color:'#0E1630', padding:'15px 16px 16px', boxShadow:'0 18px 44px rgba(0,0,0,0.45)', transform:'rotate(-1.5deg)', display:'flex', flexDirection:'column', gap:9 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:9 }}>
+              <svg width="32" height="32" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#2E59F4" strokeWidth="2"/><circle cx="22" cy="22" r="15" stroke="#2E59F4" strokeWidth="1" strokeDasharray="2 2.5"/><path d="M22 13.5l2.5 5.4 5.9.7-4.4 4 1.2 5.8L22 26.5l-5.2 2.9 1.2-5.8-4.4-4 5.9-.7z" fill="#2E59F4"/></svg>
+              <div style={{ display:'flex', flexDirection:'column', gap:1 }}>
+                <span className="mono" style={{ fontSize:9.5, fontWeight:600, letterSpacing:'.08em', color:'#4A5578' }}>STATE FILING</span>
+                <span className="mono" style={{ fontSize:9.5, fontWeight:500, letterSpacing:'.08em', color:'#4A5578' }}>LIMITED LIABILITY COMPANY</span>
+              </div>
+            </div>
+            <span className="mono" style={{ fontSize:17, fontWeight:600, lineHeight:1.2, color:'#0E1630' }}>YOUR BUSINESS, LLC</span>
+            <div style={{ height:1, background:'#C9D2EC' }}/>
+            <div style={{ display:'grid', gridTemplateColumns:'auto minmax(0,1fr)', gap:'5px 12px', alignItems:'center' }}>
+              <span className="mono" style={{ fontSize:9.5, color:'#5B678C' }}>OWNER</span><span className="mono" style={{ fontSize:11, fontWeight:600, color:'#0E1630' }}>YOU &middot; 100%</span>
+              <span className="mono" style={{ fontSize:9.5, color:'#5B678C' }}>EIN</span><span className="mono" style={{ fontSize:11, fontWeight:600, color:'#0E1630' }}>ISSUED &#10003;</span>
+              <span className="mono" style={{ fontSize:9.5, color:'#5B678C' }}>STATUS</span><span className="mono" style={{ fontSize:11, fontWeight:600, color:'#166534' }}>ACTIVE &#10003;</span>
+            </div>
+            <span className="mono p03-stamp" style={{ position:'absolute', right:14, bottom:16, padding:'4px 9px', border:'2px solid #2E59F4', borderRadius:6, color:'#2E59F4', fontSize:12, fontWeight:600, letterSpacing:'.1em', transform:'rotate(-10deg)', opacity:.92 }}>APPROVED</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 1: BILLING ── */
+    if (sel === 1) return <div className="p03-mod" key={1} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={1}/><StageDesc i={1}/><IlUsRowSmart i={1}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:26 }}>
+          <div style={{ display:'flex', alignItems:'flex-start' }}>
+            {/* node 1 */}
+            <div style={{ flex:'none', width:112, display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center' }}>
+              <span style={{ width:58, height:58, boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+              <span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'לקוח אמריקאי'}</span>
+              <span className="mono" style={{ fontSize:10.5, color:'#8A97BE' }}>CREDIT CARD</span>
+            </div>
+            <div style={{ flex:'1 1 0', minWidth:28, position:'relative', height:2, marginTop:28, backgroundImage:'linear-gradient(90deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'10px 2px' }}><span className="p03-dot"/></div>
+            {/* node 2 */}
+            <div style={{ flex:'none', width:112, display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center' }}>
+              <span style={{ width:58, height:58, boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6v4H9zM9 14h.01M12 14h.01M15 14h.01M9 17.5h.01M12 17.5h.01M15 17.5h.01"/></svg></span>
+              <span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'מסוף סליקה'}</span>
+              <span className="mono" style={{ fontSize:10.5, color:'#8A97BE' }}>USD</span>
+            </div>
+            <div style={{ flex:'1 1 0', minWidth:28, position:'relative', height:2, marginTop:28, backgroundImage:'linear-gradient(90deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'10px 2px' }}><span className="p03-dot" style={{ animationDelay:'.6s' }}/></div>
+            {/* node 3 */}
+            <div style={{ flex:'none', width:112, display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center' }}>
+              <span style={{ width:58, height:58, boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 3l9 5H3z"/></svg></span>
+              <span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'חשבון בנק בארה״ב'}</span>
+              <span className="mono" style={{ fontSize:10.5, color:'#8A97BE' }}>LLC ACCOUNT</span>
+            </div>
+            <div style={{ flex:'1 1 0', minWidth:28, position:'relative', height:2, marginTop:28, backgroundImage:'linear-gradient(90deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'10px 2px' }}><span className="p03-dot" style={{ animationDelay:'1.2s' }}/></div>
+            {/* node 4 */}
+            <div style={{ flex:'none', width:112, display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center' }}>
+              <span style={{ width:58, height:58, boxSizing:'border-box', borderRadius:16, background:'rgba(46,89,244,0.16)', border:'1px solid #2E59F4', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9DB8FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M17 13.5h.01"/></svg></span>
+              <span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#FFFFFF' }}>{'החשבון שלך בישראל'}</span>
+              <span className="mono" style={{ fontSize:10.5, color:'#9DB8FF' }}>{'ILS ₪'}</span>
+            </div>
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:8 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'סליקה בדולרים'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'חשבון בנק על שם ה-LLC'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'מקושר לחשבון הישראלי שלך'}</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', maxWidth:250, display:'flex', flexDirection:'column' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <span style={{ flex:'none', width:44, height:44, boxSizing:'border-box', borderRadius:13, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'לקוח אמריקאי'}</span><span className="mono" style={{ fontSize:10.5, color:'#8A97BE', textAlign:'right' }}>CREDIT CARD</span></span>
+          </div>
+          <div style={{ position:'relative', width:2, height:22, marginInlineStart:21, backgroundImage:'linear-gradient(180deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'2px 8px' }}><span className="p03-vdot"/></div>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <span style={{ flex:'none', width:44, height:44, boxSizing:'border-box', borderRadius:13, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6v4H9zM9 14h.01M12 14h.01M15 14h.01M9 17.5h.01M12 17.5h.01M15 17.5h.01"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'מסוף סליקה'}</span><span className="mono" style={{ fontSize:10.5, color:'#8A97BE', textAlign:'right' }}>USD</span></span>
+          </div>
+          <div style={{ position:'relative', width:2, height:22, marginInlineStart:21, backgroundImage:'linear-gradient(180deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'2px 8px' }}><span className="p03-vdot" style={{ animationDelay:'.6s' }}/></div>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <span style={{ flex:'none', width:44, height:44, boxSizing:'border-box', borderRadius:13, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 3l9 5H3z"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'חשבון בנק בארה״ב'}</span><span className="mono" style={{ fontSize:10.5, color:'#8A97BE', textAlign:'right' }}>LLC ACCOUNT</span></span>
+          </div>
+          <div style={{ position:'relative', width:2, height:22, marginInlineStart:21, backgroundImage:'linear-gradient(180deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'2px 8px' }}><span className="p03-vdot" style={{ animationDelay:'1.2s' }}/></div>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <span style={{ flex:'none', width:44, height:44, boxSizing:'border-box', borderRadius:13, background:'rgba(46,89,244,0.16)', border:'1px solid #2E59F4', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9DB8FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M17 13.5h.01"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#FFFFFF' }}>{'החשבון שלך בישראל'}</span><span className="mono" style={{ fontSize:10.5, color:'#9DB8FF', textAlign:'right' }}>{'ILS ₪'}</span></span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 2: COMM ── */
+    if (sel === 2) return <div className="p03-mod" key={2} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={2}/><StageDesc i={2}/><IlUsRowSmart i={2}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'flex', alignItems:'center', gap:20 }}>
+          <div style={{ flex:'1 1 0', minWidth:0, boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #26304D', padding:'16px 18px', display:'flex', flexDirection:'column', gap:10 }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}><span style={{ fontSize:13, fontWeight:700, color:'#A9B7DE' }}>{'הקו העסקי שלך'}</span><span className="mono" style={{ display:'inline-flex', alignItems:'center', gap:6, fontSize:11, fontWeight:600, color:'#4ADE80' }}><span style={{ width:7, height:7, borderRadius:'50%', background:'#4ADE80' }}/>ACTIVE</span></div>
+            <span className="mono" style={{ fontSize:23, fontWeight:600, color:'#F4F6FC', textAlign:'right' }}>+1 (213) 555-0148</span>
+            <div style={{ display:'flex', alignItems:'center', gap:10, paddingTop:9, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:14, fontWeight:700 }}>{'שיחות'}</span><span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>DIALER</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'3px 8px', borderRadius:7, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:600 }}>{'✓ READY'}</span></div>
+            <div style={{ display:'flex', alignItems:'center', gap:10, paddingTop:9, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:14, fontWeight:700 }}>{'הודעות SMS'}</span><span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>A2P 10DLC</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'3px 8px', borderRadius:7, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:600 }}>{'✓ APPROVED'}</span></div>
+            <div style={{ display:'flex', alignItems:'center', gap:10, paddingTop:9, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:14, fontWeight:700 }}>{'תאימות רגולטורית'}</span><span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>TCPA</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'3px 8px', borderRadius:7, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:600 }}>{'✓ COMPLIANT'}</span></div>
+          </div>
+          <div dir="ltr" style={{ flex:'0 1 250px', minWidth:0, display:'flex', flexDirection:'column', gap:8 }}>
+            <span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>{'SMS · YOUR BUSINESS'}</span>
+            <span style={{ alignSelf:'flex-end', maxWidth:'100%', boxSizing:'border-box', borderRadius:'16px 16px 4px 16px', background:'#2E59F4', color:'#FFFFFF', padding:'10px 13px', fontSize:13.5, lineHeight:1.45 }}>Hi! Thanks for reaching out to Your Business. We'll call you shortly. Reply STOP to opt out.</span>
+            <span style={{ alignSelf:'flex-start', maxWidth:'80%', boxSizing:'border-box', borderRadius:'16px 16px 16px 4px', background:'#1E2742', color:'#DCE3F5', padding:'10px 13px', fontSize:13.5, lineHeight:1.45 }}>Great, thank you!</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div style={{ boxSizing:'border-box', borderRadius:14, background:'#141A2E', border:'1px solid #26304D', padding:'12px 14px', display:'flex', flexDirection:'column', gap:8 }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:8 }}><span style={{ fontSize:12, fontWeight:700, color:'#A9B7DE' }}>{'הקו העסקי שלך'}</span><span className="mono" style={{ display:'inline-flex', alignItems:'center', gap:5, fontSize:10, fontWeight:600, color:'#4ADE80' }}><span style={{ width:6, height:6, borderRadius:'50%', background:'#4ADE80' }}/>ACTIVE</span></div>
+            <span className="mono" style={{ fontSize:19, fontWeight:600, color:'#F4F6FC', textAlign:'right' }}>+1 (213) 555-0148</span>
+            <div style={{ display:'flex', alignItems:'center', gap:8, paddingTop:7, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:13, fontWeight:700 }}>{'שיחות'}</span><span className="mono" style={{ fontSize:10, color:'#8A97BE' }}>DIALER</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'2px 7px', borderRadius:6, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:10, fontWeight:600 }}>{'✓ READY'}</span></div>
+            <div style={{ display:'flex', alignItems:'center', gap:8, paddingTop:7, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:13, fontWeight:700 }}>{'הודעות SMS'}</span><span className="mono" style={{ fontSize:10, color:'#8A97BE' }}>A2P 10DLC</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'2px 7px', borderRadius:6, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:10, fontWeight:600 }}>{'✓ APPROVED'}</span></div>
+            <div style={{ display:'flex', alignItems:'center', gap:8, paddingTop:7, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:13, fontWeight:700 }}>{'רגולציה'}</span><span className="mono" style={{ fontSize:10, color:'#8A97BE' }}>TCPA</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'2px 7px', borderRadius:6, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:10, fontWeight:600 }}>{'✓ COMPLIANT'}</span></div>
+          </div>
+          <div dir="ltr" style={{ display:'flex', flexDirection:'column' }}>
+            <span style={{ alignSelf:'flex-end', maxWidth:'94%', boxSizing:'border-box', borderRadius:'15px 15px 4px 15px', background:'#2E59F4', color:'#FFFFFF', padding:'9px 12px', fontSize:12.5, lineHeight:1.45 }}>Hi! Thanks for reaching out to Your Business. Reply STOP to opt out.</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 3: CRM ── */
+    if (sel === 3) return <div className="p03-mod" key={3} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={3}/><StageDesc i={3}/><IlUsRowSmart i={3}/>
+      {!mob ? <BpD>
+        <div dir="ltr" style={{ width:'100%', display:'flex', flexDirection:'column', gap:12 }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}><span className="mono" style={{ fontSize:12, fontWeight:600, letterSpacing:'.06em', color:'#C9D2EC' }}>PIPELINE</span><span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>{'YOUR BUSINESS · CRM'}</span></div>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(4,minmax(0,1fr))', gap:10 }}>
+            {[{title:'NEW',cards:[{n:'Los Angeles, CA',s:'WEBSITE'},{n:'Dallas, TX',s:'ADS'}]},{title:'CONTACTED',cards:[{n:'Miami, FL',s:'REFERRAL'}]},{title:'BOOKED',cards:[{n:'San Diego, CA',s:'MEETING'}]},{title:'WON',cards:[{n:'Phoenix, AZ',s:'✓ CLOSED',green:true}]}].map((col,ci) => (
+              <div key={ci} style={{ boxSizing:'border-box', minHeight:150, borderRadius:12, background:'#10162A', border:'1px solid #222B47', padding:10, display:'flex', flexDirection:'column', gap:8 }}>
+                <span className="mono" style={{ fontSize:10.5, fontWeight:600, letterSpacing:'.06em', color:'#8A97BE' }}>{col.title}</span>
+                {col.cards.map((c,k) => <div key={k} style={{ boxSizing:'border-box', borderRadius:9, background:'#18213F', border: c.green ? '1px solid rgba(74,222,128,0.4)' : '1px solid #2A3556', padding:'8px 9px', display:'flex', flexDirection:'column', gap:4 }}>
+                  <span style={{ fontSize:12.5, fontWeight:700, color:'#F4F6FC' }}>{c.n}</span>
+                  <span className="mono" style={{ fontSize:10, color: c.green ? '#4ADE80' : '#9DB8FF' }}>{c.s}</span>
+                </div>)}
+              </div>
+            ))}
+          </div>
+          <div dir="rtl" style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'ליד חדש ← הודעה אוטומטית'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'תזכורת לפני כל פגישה'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'הכול באנגלית, מההתחלה'}</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div dir="ltr" style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:8 }}><span className="mono" style={{ fontSize:11, fontWeight:600, letterSpacing:'.06em', color:'#C9D2EC' }}>PIPELINE</span><span className="mono" style={{ fontSize:10, color:'#8A97BE' }}>{'YOUR BUSINESS · CRM'}</span></div>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,minmax(0,1fr))', gap:6 }}>
+            {[{title:'NEW',cards:[{n:'Los Angeles',s:'WEBSITE'},{n:'Dallas',s:'ADS'}]},{title:'BOOKED',cards:[{n:'Miami',s:'MEETING'}]},{title:'WON',cards:[{n:'Phoenix',s:'✓ CLOSED',green:true}]}].map((col,ci) => (
+              <div key={ci} style={{ boxSizing:'border-box', minHeight:124, borderRadius:10, background:'#10162A', border:'1px solid #222B47', padding:7, display:'flex', flexDirection:'column', gap:6 }}>
+                <span className="mono" style={{ fontSize:9.5, fontWeight:600, letterSpacing:'.06em', color:'#8A97BE' }}>{col.title}</span>
+                {col.cards.map((c,k) => <div key={k} style={{ boxSizing:'border-box', borderRadius:8, background:'#18213F', border: c.green ? '1px solid rgba(74,222,128,0.4)' : '1px solid #2A3556', padding:'6px 7px', display:'flex', flexDirection:'column', gap:3 }}>
+                  <span style={{ fontSize:11.5, fontWeight:700, color:'#F4F6FC' }}>{c.n}</span>
+                  <span className="mono" style={{ fontSize:9, color: c.green ? '#4ADE80' : '#9DB8FF' }}>{c.s}</span>
+                </div>)}
+              </div>
+            ))}
+          </div>
+          <div dir="rtl" style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'ליד חדש ← הודעה אוטומטית'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'תזכורת לפני כל פגישה'}</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 4: WEB ── */
+    if (sel === 4) return <div className="p03-mod" key={4} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={4}/><StageDesc i={4}/><IlUsRowSmart i={4}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', alignItems:'center', gap:12 }}>
+          <div dir="ltr" style={{ width:'100%', maxWidth:540, borderRadius:14, overflow:'hidden', background:'#F4F6FC', boxShadow:'0 24px 60px rgba(0,0,0,0.45)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 12px', background:'#DCE3F5' }}><span style={{ flex:'none', display:'flex', gap:6 }}><span style={{ width:9, height:9, borderRadius:'50%', background:'#AEB8D4' }}/><span style={{ width:9, height:9, borderRadius:'50%', background:'#AEB8D4' }}/><span style={{ width:9, height:9, borderRadius:'50%', background:'#AEB8D4' }}/></span><span className="mono" style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'4px 10px', borderRadius:7, background:'#FFFFFF', fontSize:12, color:'#2A3556' }}><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2A3556" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>yourbusiness.com</span><span style={{ flex:'none', width:39 }}/></div>
+            <div style={{ padding:'12px 18px 16px', color:'#0E1630', display:'flex', flexDirection:'column', gap:14 }}>
+              <div style={{ display:'flex', alignItems:'center', gap:14 }}><span className="mono" style={{ fontSize:12, fontWeight:600, letterSpacing:'.06em', color:'#0E1630' }}>YOUR BUSINESS</span><span style={{ marginLeft:'auto', display:'flex', gap:14, fontSize:12, fontWeight:600, color:'#4A5578' }}><span>Services</span><span>About</span><span>Contact</span></span><span style={{ flex:'none', padding:'6px 12px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontSize:12, fontWeight:700 }}>Get a quote</span></div>
+              <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1.25fr) minmax(0,1fr)', gap:18, alignItems:'center' }}>
+                <div style={{ display:'flex', flexDirection:'column', gap:7 }}><span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:22, fontWeight:800, lineHeight:1.15 }}>Quality you can count on.</span><span style={{ fontSize:13, lineHeight:1.45, color:'#4A5578' }}>Serving customers across the U.S.</span><span style={{ alignSelf:'flex-start', marginTop:4, padding:'7px 14px', borderRadius:8, background:'#0E1630', color:'#FFFFFF', fontSize:12, fontWeight:700 }}>Book a call</span></div>
+                <div style={{ position:'relative', height:92, borderRadius:12, background:'#2E59F4', overflow:'hidden' }}><span style={{ position:'absolute', top:14, right:20, width:30, height:30, borderRadius:'50%', background:'#C9D2EC' }}/><span style={{ position:'absolute', left:-24, right:'34%', bottom:-36, height:84, borderRadius:'50%', background:'#1B3592' }}/><span style={{ position:'absolute', left:'38%', right:-24, bottom:-44, height:92, borderRadius:'50%', background:'#4282FA' }}/></div>
+              </div>
+            </div>
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:8 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'אתר'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'דפי נחיתה'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'נכסים שיווקיים'}</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div dir="ltr" style={{ width:'100%', borderRadius:12, overflow:'hidden', background:'#F4F6FC', boxShadow:'0 18px 44px rgba(0,0,0,0.45)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:8, padding:'7px 10px', background:'#DCE3F5' }}><span style={{ flex:'none', display:'flex', gap:4 }}><span style={{ width:7, height:7, borderRadius:'50%', background:'#AEB8D4' }}/><span style={{ width:7, height:7, borderRadius:'50%', background:'#AEB8D4' }}/><span style={{ width:7, height:7, borderRadius:'50%', background:'#AEB8D4' }}/></span><span className="mono" style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:5, padding:'3px 8px', borderRadius:6, background:'#FFFFFF', fontSize:10.5, color:'#2A3556' }}><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2A3556" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>yourbusiness.com</span><span style={{ flex:'none', width:29 }}/></div>
+            <div style={{ padding:'10px 12px 12px', color:'#0E1630', display:'flex', flexDirection:'column', gap:10 }}>
+              <div style={{ display:'flex', alignItems:'center', gap:8 }}><span className="mono" style={{ fontSize:10.5, fontWeight:600, letterSpacing:'.05em', color:'#0E1630' }}>YOUR BUSINESS</span><span style={{ marginLeft:'auto', flex:'none', padding:'4px 9px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontSize:10.5, fontWeight:700 }}>Get a quote</span></div>
+              <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1.3fr) minmax(0,1fr)', gap:10, alignItems:'center' }}>
+                <div style={{ display:'flex', flexDirection:'column', gap:5 }}><span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:16, fontWeight:800, lineHeight:1.15 }}>Quality you can count on.</span><span style={{ fontSize:11, lineHeight:1.4, color:'#4A5578' }}>Serving customers across the U.S.</span><span style={{ alignSelf:'flex-start', marginTop:3, padding:'5px 10px', borderRadius:7, background:'#0E1630', color:'#FFFFFF', fontSize:10.5, fontWeight:700 }}>Book a call</span></div>
+                <div style={{ position:'relative', height:80, borderRadius:10, background:'#2E59F4', overflow:'hidden' }}><span style={{ position:'absolute', top:10, right:12, width:22, height:22, borderRadius:'50%', background:'#C9D2EC' }}/><span style={{ position:'absolute', left:-16, right:'34%', bottom:-26, height:60, borderRadius:'50%', background:'#1B3592' }}/><span style={{ position:'absolute', left:'38%', right:-16, bottom:-32, height:66, borderRadius:'50%', background:'#4282FA' }}/></div>
+              </div>
+            </div>
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:6 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'אתר'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'דפי נחיתה'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'נכסים שיווקיים'}</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 5: MAP ── */
+    if (sel === 5) return <div className="p03-mod" key={5} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={5}/><StageDesc i={5}/><IlUsRowSmart i={5}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'grid', gridTemplateColumns:'minmax(0,1.3fr) minmax(0,1fr)', gap:16, alignItems:'center' }}>
+          <div style={{ position:'relative', boxSizing:'border-box', height:230, borderRadius:14, background:'#10162A', border:'1px solid #222B47', overflow:'hidden' }}>
+            <span style={{ position:'absolute', top:'50%', left:12, right:12, height:1, background:'#2A3556' }}/><span style={{ position:'absolute', left:'50%', top:12, bottom:12, width:1, background:'#2A3556' }}/>
+            <span style={{ position:'absolute', top:10, right:12, fontSize:11, fontWeight:700, color:'#8A97BE' }}>{'יקר ובסיסי'}</span><span style={{ position:'absolute', top:10, left:12, fontSize:11, fontWeight:700, color:'#8A97BE' }}>{'יקר ומקצועי'}</span>
+            <span style={{ position:'absolute', bottom:10, right:12, fontSize:11, fontWeight:700, color:'#8A97BE' }}>{'זול ובסיסי'}</span><span style={{ position:'absolute', bottom:10, left:12, fontSize:11, fontWeight:700, color:'#9DB8FF' }}>{'משתלם ומקצועי'}</span>
+            {[[68,28],[78,36],[84,24],[72,66],[82,74],[42,28]].map(([l,t],k) => <span key={k} style={{ position:'absolute', left:l+'%', top:t+'%', width:10, height:10, margin:'-5px 0 0 -5px', borderRadius:'50%', background:'#4A5578' }}/>)}
+            <span style={{ position:'absolute', left:'64%', top:'39%', fontSize:11, fontWeight:600, color:'#8A97BE' }}>{'מתחרים'}</span>
+            <span style={{ position:'absolute', left:'27%', top:'64%', width:64, height:64, margin:'-32px 0 0 -32px', boxSizing:'border-box', borderRadius:'50%', border:'1.5px dashed #4282FA' }}/>
+            <span style={{ position:'absolute', left:'27%', top:'64%', width:14, height:14, margin:'-7px 0 0 -7px', borderRadius:'50%', background:'#2E59F4', boxShadow:'0 0 0 4px rgba(46,89,244,0.25), 0 0 18px rgba(46,89,244,0.8)' }}/>
+            <span style={{ position:'absolute', left:'27%', top:'64%', margin:'-66px 0 0 -38px', padding:'3px 10px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontSize:12, fontWeight:700, whiteSpace:'nowrap' }}>{'העסק שלך'}</span>
+          </div>
+          <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', gap:9, minWidth:0 }}>
+            <span style={{ fontSize:13, fontWeight:700, color:'#A9B7DE' }}>{'ערוצי הפריצה שלך'}</span>
+            {['מגזינים מקצועיים','שלטי חוצות','כנסים בתחום'].map((t,k) => <div key={k} style={{ display:'flex', alignItems:'center', gap:10, boxSizing:'border-box', borderRadius:12, background:'#141A2E', border:'1px solid #26304D', padding:'9px 12px' }}><span className="mono" style={{ flex:'none', width:24, height:24, borderRadius:'50%', background:'rgba(46,89,244,0.18)', color:'#9DB8FF', fontSize:12, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{k+1}</span><span style={{ fontSize:14, fontWeight:700 }}>{t}</span></div>)}
+            <span style={{ fontSize:12.5, lineHeight:1.5, color:'#8A97BE' }}>{'ולכל ערוץ: כמה הוא עולה, ומתי מפעילים אותו.'}</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div style={{ position:'relative', boxSizing:'border-box', height:150, borderRadius:12, background:'#10162A', border:'1px solid #222B47', overflow:'hidden' }}>
+            <span style={{ position:'absolute', top:'50%', left:10, right:10, height:1, background:'#2A3556' }}/><span style={{ position:'absolute', left:'50%', top:10, bottom:10, width:1, background:'#2A3556' }}/>
+            <span style={{ position:'absolute', top:8, right:10, fontSize:10, fontWeight:700, color:'#8A97BE' }}>{'יקר ובסיסי'}</span><span style={{ position:'absolute', top:8, left:10, fontSize:10, fontWeight:700, color:'#8A97BE' }}>{'יקר ומקצועי'}</span>
+            <span style={{ position:'absolute', bottom:8, right:10, fontSize:10, fontWeight:700, color:'#8A97BE' }}>{'זול ובסיסי'}</span><span style={{ position:'absolute', bottom:8, left:10, fontSize:10, fontWeight:700, color:'#9DB8FF' }}>{'משתלם ומקצועי'}</span>
+            {[[68,30],[78,38],[86,26],[72,68],[82,76],[44,30]].map(([l,t],k) => <span key={k} style={{ position:'absolute', left:l+'%', top:t+'%', width:9, height:9, margin:'-4.5px 0 0 -4.5px', borderRadius:'50%', background:'#4A5578' }}/>)}
+            <span style={{ position:'absolute', left:'27%', top:'62%', width:50, height:50, margin:'-25px 0 0 -25px', boxSizing:'border-box', borderRadius:'50%', border:'1.5px dashed #4282FA' }}/>
+            <span style={{ position:'absolute', left:'27%', top:'62%', width:12, height:12, margin:'-6px 0 0 -6px', borderRadius:'50%', background:'#2E59F4', boxShadow:'0 0 0 4px rgba(46,89,244,0.25), 0 0 16px rgba(46,89,244,0.8)' }}/>
+            <span style={{ position:'absolute', left:'27%', top:'62%', margin:'-54px 0 0 -34px', padding:'2px 9px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontSize:11, fontWeight:700, whiteSpace:'nowrap' }}>{'העסק שלך'}</span>
+          </div>
+          <span style={{ fontSize:12, fontWeight:700, color:'#A9B7DE' }}>{'ערוצי הפריצה שלך'}</span>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            {['מגזינים מקצועיים','שלטי חוצות','כנסים בתחום'].map((t,k) => <span key={k} style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'4px 10px 4px 6px', borderRadius:999, background:'#141A2E', border:'1px solid #26304D', fontSize:12, fontWeight:700 }}><span className="mono" style={{ width:18, height:18, borderRadius:'50%', background:'rgba(46,89,244,0.18)', color:'#9DB8FF', fontSize:10, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{k+1}</span>{t}</span>)}
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 6: TEAM ── */
+    if (sel === 6) return <div className="p03-mod" key={6} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={6}/><StageDesc i={6}/><IlUsRowSmart i={6}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', maxWidth:500, display:'flex', flexDirection:'column', gap:10 }}>
+          <span style={{ fontSize:13, fontWeight:700, color:'#A9B7DE' }}>{'הצוות המקצועי שלך בארה״ב'}</span>
+          {[{title:'רואה חשבון אמריקאי', sub:'CPA · TAX & BOOKKEEPING', ico:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18.5h.01M12 18.5h4"/></svg>},{title:'עורך דין אמריקאי', sub:'ATTORNEY · CONTRACTS', ico:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v18M7 21h10M4 7h16M7 7l-3 7a3 3 0 0 0 6 0zM17 7l-3 7a3 3 0 0 0 6 0z"/></svg>},{title:'ספקים, טפסים וחיבורים', sub:'VENDORS · FORMS · SETUP', ico:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>}].map((r,k) => <div key={k} style={{ display:'flex', alignItems:'center', gap:14, boxSizing:'border-box', borderRadius:14, background:'#141A2E', border:'1px solid #26304D', padding:'11px 14px' }}><span style={{ flex:'none', width:42, height:42, boxSizing:'border-box', borderRadius:'50%', background:'#0F1426', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}>{r.ico}</span><span style={{ display:'flex', flexDirection:'column', gap:2, minWidth:0 }}><span style={{ fontSize:15, fontWeight:700 }}>{r.title}</span><span className="mono" style={{ fontSize:11, color:'#8A97BE', textAlign:'right' }}>{r.sub}</span></span><span style={{ marginInlineStart:'auto', flex:'none', padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:12, fontWeight:700 }}>{'✓ מחובר'}</span></div>)}
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:8 }}>
+          <span style={{ fontSize:12, fontWeight:700, color:'#A9B7DE' }}>{'הצוות המקצועי שלך בארה״ב'}</span>
+          {[{title:'רואה חשבון אמריקאי', sub:'CPA · TAX', ico:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18.5h.01M12 18.5h4"/></svg>},{title:'עורך דין אמריקאי', sub:'ATTORNEY', ico:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v18M7 21h10M4 7h16M7 7l-3 7a3 3 0 0 0 6 0zM17 7l-3 7a3 3 0 0 0 6 0z"/></svg>},{title:'ספקים, טפסים וחיבורים', sub:'VENDORS · FORMS', ico:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>}].map((r,k) => <div key={k} style={{ display:'flex', alignItems:'center', gap:10, boxSizing:'border-box', borderRadius:12, background:'#141A2E', border:'1px solid #26304D', padding:'9px 11px' }}><span style={{ flex:'none', width:36, height:36, boxSizing:'border-box', borderRadius:'50%', background:'#0F1426', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}>{r.ico}</span><span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:13.5, fontWeight:700, lineHeight:1.3 }}>{r.title}</span><span className="mono" style={{ fontSize:9.5, color:'#8A97BE', textAlign:'right' }}>{r.sub}</span></span><span style={{ marginInlineStart:'auto', flex:'none', padding:'3px 8px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:700 }}>{'✓ מחובר'}</span></div>)}
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 7: HIRE ── */
+    if (sel === 7) return <div className="p03-mod" key={7} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={7}/><StageDesc i={7}/><IlUsRowSmart i={7}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'flex', alignItems:'center', gap:20 }}>
+          <div style={{ flex:'0 0 232px', boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #26304D', padding:'18px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:10, textAlign:'center' }}>
+            <span style={{ width:62, height:62, boxSizing:'border-box', borderRadius:'50%', background:'#18213F', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+            <span className="mono" style={{ fontSize:12, fontWeight:600, color:'#F4F6FC' }}>CUSTOMER SUCCESS REP</span>
+            <span style={{ fontSize:13, lineHeight:1.4, color:'#A9B7DE' }}>{'דובר אנגלית · מאומן לעסק שלך'}</span>
+            <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:6 }}>
+              {['✓ גיוס','✓ הכשרה','✓ חיבור למערכות'].map((t,k) => <span key={k} style={{ padding:'4px 9px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:12, fontWeight:700 }}>{t}</span>)}
+            </div>
+          </div>
+          <div dir="ltr" style={{ flex:'1 1 0', minWidth:0, display:'flex', flexDirection:'column', gap:8 }}>
+            <span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>{'LIVE CHAT · YOURBUSINESS.COM'}</span>
+            <span style={{ alignSelf:'flex-start', maxWidth:'85%', boxSizing:'border-box', borderRadius:'16px 16px 16px 4px', background:'#1E2742', color:'#DCE3F5', padding:'9px 13px', fontSize:13.5, lineHeight:1.45 }}>Hi! Can I get a quote for next week?</span>
+            <span style={{ alignSelf:'flex-end', maxWidth:'85%', boxSizing:'border-box', borderRadius:'16px 16px 4px 16px', background:'#2E59F4', color:'#FFFFFF', padding:'9px 13px', fontSize:13.5, lineHeight:1.45 }}>Absolutely! I can set that up for you right now.</span>
+            <span style={{ alignSelf:'flex-start', maxWidth:'85%', boxSizing:'border-box', borderRadius:'16px 16px 16px 4px', background:'#1E2742', color:'#DCE3F5', padding:'9px 13px', fontSize:13.5, lineHeight:1.45 }}>Perfect, thank you!</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:12, boxSizing:'border-box', borderRadius:14, background:'#141A2E', border:'1px solid #26304D', padding:12 }}>
+            <span style={{ flex:'none', width:46, height:46, boxSizing:'border-box', borderRadius:'50%', background:'#18213F', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:3, minWidth:0 }}><span className="mono" style={{ fontSize:11, fontWeight:600, color:'#F4F6FC', textAlign:'right' }}>CUSTOMER SUCCESS REP</span><span style={{ fontSize:12.5, color:'#A9B7DE' }}>{'דובר אנגלית · מאומן לעסק שלך'}</span></span>
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            {['✓ גיוס','✓ הכשרה','✓ חיבור למערכות'].map((t,k) => <span key={k} style={{ padding:'4px 9px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11.5, fontWeight:700 }}>{t}</span>)}
+          </div>
+          <div dir="ltr" style={{ display:'flex', flexDirection:'column', gap:6 }}>
+            <span style={{ alignSelf:'flex-start', maxWidth:'85%', boxSizing:'border-box', borderRadius:'14px 14px 14px 4px', background:'#1E2742', color:'#DCE3F5', padding:'8px 11px', fontSize:12.5, lineHeight:1.4 }}>Hi! Can I get a quote?</span>
+            <span style={{ alignSelf:'flex-end', maxWidth:'85%', boxSizing:'border-box', borderRadius:'14px 14px 4px 14px', background:'#2E59F4', color:'#FFFFFF', padding:'8px 11px', fontSize:12.5, lineHeight:1.4 }}>Absolutely! I can set that up right now.</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 8: LEAD / LIVE ── */
+    if (sel === 8) {
+      const cSize = mob ? 30 : 38;
+      const cIcoSz = mob ? 14 : 17;
+      const cSw = mob ? '1.9' : '1.8';
+      const icoArr = [
+        <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>,
+        <React.Fragment><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></React.Fragment>,
+        <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>,
+        <React.Fragment><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></React.Fragment>,
+        <React.Fragment><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></React.Fragment>,
+        <React.Fragment><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></React.Fragment>,
+        <React.Fragment><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></React.Fragment>,
+        <React.Fragment><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></React.Fragment>
+      ];
+      return <div className="p03-mod" key={8} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+        <StageHead i={8}/><StageDesc i={8}/><IlUsRowSmart i={8}/>
+        <div className="p03-clone p03-bp" style={{ position:'relative', height: mob ? 290 : 300, boxSizing:'border-box', borderRadius: mob ? 16 : 18, border:'1px solid #26304D', overflow:'hidden' }}>
+          <div className="p03-print" style={{ position:'absolute', inset:0, boxSizing:'border-box', padding: mob ? 14 : 22, display:'flex', alignItems:'center', justifyContent:'center' }}>
+            <div style={{ width:'100%', display:'flex', flexDirection:'column', alignItems:'center', gap: mob ? 12 : 16 }}>
+              <div className="p03-pop" style={{ width:'100%', maxWidth: mob ? undefined : 440, boxSizing:'border-box', borderRadius: mob ? 16 : 18, background:'#141A2E', border:'1px solid rgba(74,222,128,0.45)', boxShadow: mob ? '0 16px 44px rgba(74,222,128,0.12)' : '0 20px 60px rgba(74,222,128,0.12)', padding: mob ? 12 : '14px 16px', display:'flex', alignItems:'center', gap: mob ? 10 : 12 }}>
+                <span style={{ flex:'none', width: mob ? 40 : 44, height: mob ? 40 : 44, boxSizing:'border-box', borderRadius: mob ? 11 : 12, background:'rgba(74,222,128,0.12)', border:'1px solid rgba(74,222,128,0.4)', display:'flex', alignItems:'center', justifyContent:'center' }}><svg aria-hidden="true" width={mob ? 20 : 22} height={mob ? 20 : 22} viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+                <span style={{ display:'flex', flexDirection:'column', gap: mob ? 2 : 3, minWidth:0 }}>
+                  <span style={{ display:'flex', alignItems:'center', gap: mob ? 7 : 8 }}><span className="mono" style={{ fontSize: mob ? 11 : 12, fontWeight:600, color:'#4ADE80' }}>NEW LEAD</span><span className="mono" style={{ fontSize: mob ? 10 : 11, color:'#8A97BE' }}>JUST NOW</span></span>
+                  <span style={{ fontSize: mob ? 14 : 15, fontWeight:700, color:'#F4F6FC' }}>{'פנייה חדשה מלוס אנג׳לס'}</span>
+                  <span style={{ fontSize: mob ? 12 : 13, color:'#A9B7DE' }}>{'דרך האתר · כבר במערכת שלך'}</span>
+                </span>
+                <span className="live" aria-hidden="true" style={{ marginInlineStart:'auto', flex:'none', width: mob ? 9 : 10, height: mob ? 9 : 10, borderRadius:'50%', background:'#4ADE80' }}/>
+              </div>
+              <div aria-hidden="true" style={{ display:'flex', flexWrap: mob ? undefined : 'wrap', justifyContent:'center', gap: mob ? 5 : 8 }}>
+                {icoArr.map((ic, k) => <span key={k} style={{ width:cSize, height:cSize, boxSizing:'border-box', borderRadius:'50%', border:'1px solid rgba(74,222,128,0.35)', background:'rgba(74,222,128,0.06)', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width={cIcoSz} height={cIcoSz} viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth={cSw} strokeLinecap="round" strokeLinejoin="round">{ic}</svg></span>)}
+              </div>
+              <span style={{ fontSize: mob ? 14 : 15, fontWeight:700, color:'#DCE3F5' }}><span className="mono">8/8</span>{' · התשתית מוכנה לעבודה'}</span>
+              <button type="button" className="p03-again" onClick={replay} style={{ minHeight:44, boxSizing:'border-box', display:'inline-flex', alignItems:'center', gap:8, padding: mob ? '0 16px' : '0 18px', borderRadius:999, border:'1px solid #2E3B66', background:'transparent', color:'#C9D2EC', fontFamily:"Assistant,'Segoe UI',Arial,sans-serif", fontSize: mob ? 13.5 : 14, fontWeight:700, cursor:'pointer' }}>
+                <svg aria-hidden="true" width={mob ? 15 : 16} height={mob ? 15 : 16} viewBox="0 0 24 24" fill="none" stroke="#9DB8FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                {'לצפייה מההתחלה'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>;
+    }
+    return null;
+  };
+
+  /* ══════════════════════════════════════
+     RENDER
+     ══════════════════════════════════════ */
+  return (
+    <section ref={secRef} id="product" style={{ width:'100%', boxSizing:'border-box', padding: mob ? '64px 20px 72px' : '96px 40px 112px', display:'flex', justifyContent:'center' }}>
+      <div style={{ width:'100%', maxWidth:1160, display:'flex', flexDirection:'column', gap: mob ? 26 : 36 }}>
+        {/* header */}
+        <div style={{ display:'flex', flexDirection:'column', gap:12, maxWidth:820 }}>
+          <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontWeight:700, fontSize:14, letterSpacing:'.04em', color:'#4282FA' }}>{'03 · המוצר בקצה'}</span>
+          <h2 style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize: mob ? 28 : 42, lineHeight:1.18, textWrap:'balance' }}>
+            {'אתה מביא את העסק הקיים - '}<span style={{ color:'#2E6BFF' }}>{'אנחנו משכפלים אותו למגרש של הגדולים.'}</span>
+          </h2>
+          <p style={{ margin:0, fontSize: mob ? 16 : 20, lineHeight:1.6, color:'#A9B7DE' }}>{'לא קורס ולא סדנה. העסק שלך, כמו שהוא - מוכן ומותאם לשוק האמריקאי.'}</p>
+        </div>
+
+        {/* main layout */}
+        <div style={!mob ? { display:'flex', flexWrap:'wrap', alignItems:'stretch', gap:24 } : { display:'flex', flexDirection:'column', gap:12 }}>
+
+          {/* ── LIST CARD (desktop = rows, mobile = grid) ── */}
+          <div style={!mob ? { flex:'1 1 420px', minWidth:0, boxSizing:'border-box', borderRadius:24, background:'#141A2E', border:'1px solid #26304D', padding:14, display:'flex', flexDirection:'column', gap:4 }
+                           : { boxSizing:'border-box', borderRadius:22, background:'#141A2E', border:'1px solid #26304D', padding:12, display:'flex', flexDirection:'column', gap:10 }}>
+            {/* card header */}
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap: mob ? 10 : 12, padding: mob ? '2px 4px 0' : '4px 8px 10px' }}>
+              <span style={{ display:'flex', flexDirection:'column', gap: mob ? 2 : 3 }}>
+                <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize: mob ? 16 : 17, fontWeight:700 }}>{'8 רכיבים שבונים לך'}</span>
+                <span style={{ fontSize: mob ? 12.5 : 13, color:'#8A97BE' }}>{'לחץ על רכיב כדי לראות מה בדיוק מקבלים'}</span>
+              </span>
+              <button type="button" className="p03-tbtn" onClick={toggleAuto} aria-label={auto ? 'עצירת המעבר האוטומטי' : 'הפעלת המעבר האוטומטי'} style={{ flex:'none', width:44, height:44, boxSizing:'border-box', padding:0, borderRadius:'50%', border:'1px solid #2E3B66', background:'transparent', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                {auto ? <svg aria-hidden="true" width={mob?17:18} height={mob?17:18} viewBox="0 0 24 24" fill="none" stroke="#C9D2EC" strokeWidth="2.2" strokeLinecap="round"><path d="M9 5v14M15 5v14"/></svg>
+                       : <svg aria-hidden="true" width={mob?17:18} height={mob?17:18} viewBox="0 0 24 24" fill="#C9D2EC"><path d="M8 5v14l11-7z"/></svg>}
+              </button>
+            </div>
+
+            {!mob ? (
+              /* ── DESKTOP ROWS ── */
+              <React.Fragment>
+                {P03_ITEMS.slice(0, 8).map((it, i) => {
+                  const c = itemCalc(i);
+                  return <button key={i} type="button" className="p03-row" aria-pressed={c.on ? 'true' : 'false'} onClick={() => go(i)} style={{ position:'relative', overflow:'hidden', width:'100%', minHeight:62, boxSizing:'border-box', display:'flex', alignItems:'center', gap:12, padding:'9px 10px', borderRadius:14, border:'1px solid '+c.bc, background:c.bg, color:'#F4F6FC', fontFamily:"Assistant,'Segoe UI',Arial,sans-serif", textAlign:'start', cursor:'pointer' }}>
+                    <span style={{ flex:'none', width:40, height:40, boxSizing:'border-box', borderRadius:12, border:'1px solid '+c.ibc, background:c.ibg, display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Ico(it.icon, 20, it.icon==='lead'?'#4ADE80':'#7AA6FF')}</span>
+                    <span style={{ display:'flex', flexDirection:'column', gap:2, minWidth:0 }}>
+                      <span style={{ fontSize:16, fontWeight:700, lineHeight:1.3, color:c.tc }}>{it.row}</span>
+                      <span style={{ fontSize:13, lineHeight:1.4, color:'#8A97BE' }}>{it.sub}</span>
+                    </span>
+                    <span style={{ marginInlineStart:'auto', flex:'none', display:'flex', alignItems:'center' }}>
+                      {c.done ? <span className="mono" style={{ padding:'4px 9px', borderRadius:8, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:600 }}>{'✓ DONE'}</span>
+                              : <span aria-hidden="true" style={{ display:'block', width:16, height:16, boxSizing:'border-box', borderRadius:'50%', border:'1.5px dashed #3A4566' }}/>}
+                    </span>
+                    {c.on && auto && <span className="p03-rowtimer" aria-hidden="true" style={{ position:'absolute', left:12, right:12, bottom:0, height:2, borderRadius:2, background:'#4282FA', animationDuration:durS }}/>}
+                  </button>;
+                })}
+                <div aria-hidden="true" style={{ height:1, background:'#222B47', margin:'6px 10px' }}/>
+                {(() => {
+                  const c = itemCalc(8);
+                  return <button type="button" className="p03-row" aria-pressed={c.on ? 'true' : 'false'} onClick={() => go(8)} style={{ position:'relative', overflow:'hidden', width:'100%', minHeight:62, boxSizing:'border-box', display:'flex', alignItems:'center', gap:12, padding:'9px 10px', borderRadius:14, border:'1px solid '+c.bc, background:c.bg, color:'#F4F6FC', fontFamily:"Assistant,'Segoe UI',Arial,sans-serif", textAlign:'start', cursor:'pointer' }}>
+                    <span style={{ flex:'none', width:40, height:40, boxSizing:'border-box', borderRadius:12, border:'1px solid '+c.ibc, background:c.ibg, display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Ico('lead', 20, '#4ADE80')}</span>
+                    <span style={{ display:'flex', flexDirection:'column', gap:2, minWidth:0 }}>
+                      <span style={{ fontSize:16, fontWeight:800, lineHeight:1.3, color:c.tc }}>{P03_ITEMS[8].row}</span>
+                      <span style={{ fontSize:13, lineHeight:1.4, color:'#8A97BE' }}>{P03_ITEMS[8].sub}</span>
+                    </span>
+                    <span style={{ marginInlineStart:'auto', flex:'none', display:'flex', alignItems:'center' }}>
+                      {complete ? <span className="mono" style={{ padding:'4px 9px', borderRadius:8, background:'rgba(74,222,128,0.14)', color:'#4ADE80', fontSize:11, fontWeight:600 }}>{'✓ NEW'}</span>
+                                : <span className="mono" style={{ padding:'4px 9px', borderRadius:8, border:'1px solid #26304D', color:'#8A97BE', fontSize:11, fontWeight:600 }}>{countLabel}</span>}
+                    </span>
+                  </button>;
+                })()}
+              </React.Fragment>
+            ) : (
+              /* ── MOBILE GRID ── */
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(3,minmax(0,1fr))', gap:8 }}>
+                {P03_ITEMS.map((it, i) => {
+                  const c = itemCalc(i);
+                  const goal = i === 8;
+                  return <button key={i} type="button" className="p03-tile9" aria-pressed={c.on ? 'true' : 'false'} onClick={() => go(i)} style={{ position:'relative', overflow:'hidden', minHeight:92, boxSizing:'border-box', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:7, padding:'10px 4px 9px', borderRadius:14, border:'1px solid '+c.bc, background:c.bg, color:'#F4F6FC', fontFamily:"Assistant,'Segoe UI',Arial,sans-serif", textAlign:'center', cursor:'pointer' }}>
+                    <span style={{ width:34, height:34, boxSizing:'border-box', borderRadius:10, border:'1px solid '+c.ibc, background:c.ibg, display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Ico(it.icon, 18, it.icon==='lead'?'#4ADE80':'#7AA6FF')}</span>
+                    <span style={{ fontSize:12.5, fontWeight: goal ? 800 : 700, lineHeight:1.25, color:c.tc }}>{it.tile}</span>
+                    <span style={{ position:'absolute', top:6, left:6, display:'flex' }}>
+                      {!!c.done && !goal && <span className="mono" aria-hidden="true" style={{ width:18, height:18, borderRadius:'50%', background:'rgba(46,89,244,0.25)', color:'#9DB8FF', fontSize:10, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{'✓'}</span>}
+                      {goal && complete && <span className="mono" aria-hidden="true" style={{ width:18, height:18, borderRadius:'50%', background:'rgba(74,222,128,0.2)', color:'#4ADE80', fontSize:10, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{'✓'}</span>}
+                      {goal && !complete && <span className="mono" style={{ padding:'1px 4px', fontSize:9.5, fontWeight:600, color:'#8A97BE' }}>{countLabel}</span>}
+                    </span>
+                    {c.on && auto && <span className="p03-rowtimer" aria-hidden="true" style={{ position:'absolute', left:10, right:10, bottom:0, height:2, borderRadius:2, background:'#4282FA', animationDuration:durS }}/>}
+                  </button>;
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* ── STAGE PANEL ── */}
+          <div style={!mob ? { flex:'999 1 560px', minWidth:0, boxSizing:'border-box', borderRadius:28, background:'linear-gradient(180deg,#151C33,#10162A)', border:'1px solid #2A3556', padding:'24px 26px 26px', boxShadow:'0 40px 120px rgba(46,89,244,0.14)', display:'flex', flexDirection:'column', gap:20 }
+                           : { boxSizing:'border-box', borderRadius:24, background:'linear-gradient(180deg,#151C33,#10162A)', border:'1px solid #2A3556', padding:16, boxShadow:'0 30px 80px rgba(46,89,244,0.14)', display:'flex', flexDirection:'column', gap:16 }}>
+            {/* stage header */}
+            <div style={{ display:'flex', flexDirection:'column', gap: mob ? 10 : 12, paddingBottom: mob ? 14 : 18, borderBottom:'1px solid #222B47' }}>
+              <div style={{ display:'flex', alignItems: mob ? 'center' : 'flex-start', justifyContent:'space-between', gap: mob ? 10 : 12 }}>
+                <div style={{ display:'flex', flexDirection:'column', gap: mob ? 3 : 4 }}>
+                  <span style={{ fontSize: mob ? 12.5 : 14, fontWeight:700, color:'#A9B7DE' }}>{'העסק שלך בארה״ב'}</span>
+                  <span className="mono" style={{ fontSize: mob ? 16 : 20, fontWeight:600, color:'#F4F6FC', textAlign:'right' }}>YOUR BUSINESS, LLC</span>
+                </div>
+                <span style={{ flex:'none', display:'flex' }}>
+                  {!complete ? <span style={{ display:'inline-flex', alignItems:'center', gap: mob ? 6 : 8, padding: mob ? '6px 11px' : '7px 14px', borderRadius:999, border:'1px solid #2E3B66', fontSize: mob ? 12 : 13, fontWeight:700, color:'#C9D2EC' }}><span className="mono" style={{ color:'#9DB8FF' }}>{countLabel}</span><span>{'מוכנים'}</span></span>
+                             : <span className="mono" style={{ display:'inline-flex', alignItems:'center', gap: mob ? 7 : 8, padding: mob ? '6px 11px' : '7px 14px', borderRadius:999, border:'1px solid rgba(74,222,128,0.45)', fontSize: mob ? 12 : 13, fontWeight:600, color:'#4ADE80' }}><span className="live" style={{ width: mob ? 7 : 8, height: mob ? 7 : 8, borderRadius:'50%', background:'#4ADE80' }}/><span>LIVE</span></span>}
+                </span>
+              </div>
+              <div style={{ height: mob ? 7 : 8, borderRadius:4, background:'#222B47', overflow:'hidden' }}>
+                <div style={{ width:pct, height:'100%', borderRadius:4, background:'linear-gradient(270deg,#2E59F4,#7AA6FF)', transition:'width .5s ease' }}/>
+              </div>
+            </div>
+            {/* stage content */}
+            {renderMockup()}
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ════════════════════════════════════════════════════
+//  SECTION 04 — PROOF (Testimonials + Numbers Speak)
+// ════════════════════════════════════════════════════
+const TestimonialsSection = () => {
+    const fmt = (sec) => Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0');
+    const chapAt = (sec) => { let k=0; for(let i=0;i<TM_CHAPTERS.length;i++) if(TM_CHAPTERS[i].ch.t<=sec) k=i; return k; };
+    const [activeChap, setActiveChap] = useState(0);
+    const [qFlip, setQFlip] = useState(false);
+    const [vidPlaying, setVidPlaying] = useState(false);
+    const [curTime, setCurTime] = useState(5);
+    const [isMobile, setIsMobile] = useState(typeof window!=='undefined' && window.innerWidth < 640);
+    useEffect(() => { const h = () => setIsMobile(window.innerWidth < 640); window.addEventListener('resize', h); return () => window.removeEventListener('resize', h); }, []);
+    const playerRef = useRef(null);
+    const pollRef = useRef(null);
+    const reduceMotion = useRef(typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches);
+    useEffect(() => {
+        if (window.YT && window.YT.Player) return;
+        if (document.querySelector('script[src*="youtube.com/iframe_api"]')) return;
+        const tag = document.createElement('script'); tag.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(tag);
+    }, []);
+    const initPlayer = useRef(false);
+    useEffect(() => {
+        if (initPlayer.current) return;
+        const tryInit = () => {
+            if (!window.YT || !window.YT.Player) return;
+            initPlayer.current = true; clearInterval(waitId);
+            const el = document.getElementById('fd-yt-target');
+            if (!el) return;
+            playerRef.current = new YT.Player('fd-yt-target', {
+                videoId: FEATURED_VIDEO_ID,
+                playerVars: { rel:0, modestbranding:1, playsinline:1, showinfo:0, enablejsapi:1 },
+                events: { onStateChange: (e) => {
+                    const p = e.data === YT.PlayerState.PLAYING; setVidPlaying(p);
+                    if (p && !pollRef.current) { pollRef.current = setInterval(() => { if (!playerRef.current||!playerRef.current.getCurrentTime) return; const t=Math.floor(playerRef.current.getCurrentTime()); setCurTime(t); const k=chapAt(t); setActiveChap(prev => { if(prev!==k){setQFlip(f=>!f);return k;} return prev; }); }, 250); }
+                    if (!p && pollRef.current) { clearInterval(pollRef.current); pollRef.current=null; }
+                }}
+            });
+        };
+        const waitId = setInterval(tryInit, 200); tryInit();
+        return () => { clearInterval(waitId); if(pollRef.current) clearInterval(pollRef.current); };
+    }, []);
+    const jumpTo = (k) => {
+        const c = TM_CHAPTERS[k];
+        if (playerRef.current && playerRef.current.seekTo) { playerRef.current.seekTo(c.ch.t, true); playerRef.current.playVideo(); }
+        setActiveChap(k); setCurTime(c.ch.t); setQFlip(f=>!f);
+    };
+    const chap = TM_CHAPTERS[activeChap];
+    return (
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', alignItems:'center', padding:isMobile?'0 16px':'0 24px', gap:0 }}>
+            <div style={{ position:'relative', width:'100%', maxWidth:1040, marginTop:isMobile?28:44 }}>
+                <div style={{ position:'relative', aspectRatio:'16/9', borderRadius:isMobile?18:26, overflow:'hidden', background:'#070A14', border:'1px solid #26304D', boxShadow:'0 40px 120px rgba(46,89,244,0.20),0 24px 60px rgba(0,0,0,0.5)' }}>
+                    <div id="fd-yt-target" style={{ position:'absolute', inset:0, width:'100%', height:'100%' }}/>
+                    {!vidPlaying && <img src={TM_VIDEO_POSTER} alt="" style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover' }}/>}
+                    <div style={{ position:'absolute', top:isMobile?12:24, right:isMobile?14:28, display:'flex', flexDirection:'column', gap:isMobile?1:3, zIndex:2 }}>
+                        <span style={{ fontFamily:'Rubik,sans-serif', fontSize:isMobile?14:19, fontWeight:700, color:'#F4F6FC' }}>הלקוחות שלנו, במילים שלהם</span>
+                        <span style={{ fontSize:isMobile?11:13, color:'#A9B7DE' }}>סרטון ההמלצות של אקדמיית הדולר · 3:22</span>
+                    </div>
+                    {!vidPlaying && (
+                        <button type="button" onClick={()=>{ if(playerRef.current&&playerRef.current.playVideo) playerRef.current.playVideo(); }}
+                            aria-label="הפעלת סרטון ההמלצות" className="tm-ring"
+                            style={{ position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', width:isMobile?64:100, height:isMobile?64:100,
+                                borderRadius:'50%', border:'none', background:'#2E59F4', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', boxShadow:'0 16px 40px rgba(0,0,0,0.5)', zIndex:3 }}>
+                            <svg width="34" height="34" viewBox="0 0 24 24" fill="#FFFFFF" style={{ marginLeft:5 }}><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+                        </button>
+                    )}
+                    <div style={{ position:'absolute', right:isMobile?14:28, left:isMobile?14:28, bottom:isMobile?30:54, direction:'ltr', zIndex:2 }}>
+                        <div style={{ position:'relative', height:4, borderRadius:2, background:'rgba(244,246,252,0.22)' }}>
+                            <div style={{ position:'absolute', left:0, top:0, bottom:0, width:((curTime/TM_VIDEO_DURATION)*100).toFixed(2)+'%', borderRadius:2, background:'#2E59F4' }}/>
+                            {TM_CHAPTERS.map((c,i) => (
+                                <span key={i} style={{ position:'absolute', top:'50%', left:((c.ch.t/TM_VIDEO_DURATION)*100).toFixed(2)+'%',
+                                    width:12, height:12, margin:'-6px 0 0 -6px', borderRadius:'50%',
+                                    background: i===activeChap?'#FFFFFF':(c.ch.t<=curTime?'#2E59F4':'#A9B7DE'), border:'2px solid #0A0D18' }}/>
+                            ))}
+                        </div>
+                        <div style={{ marginTop:8, display:'flex', justifyContent:'space-between', fontSize:12, fontWeight:600, color:'#A9B7DE' }}>
+                            <span>{fmt(curTime)}</span><span>3:22</span>
+                        </div>
+                    </div>
+                </div>
+                <div style={{ position:'relative', marginTop:isMobile?-18:-34, display:'flex', justifyContent:isMobile?'space-evenly':'center', alignItems:'flex-start', gap:isMobile?0:20, direction:'ltr', padding:isMobile?'0 4px':0 }}>
+                    {TM_CHAPTERS.map((c,i) => (
+                        <button key={i} type="button" onClick={()=>jumpTo(i)} aria-label={'צפייה מ-'+fmt(c.ch.t)}
+                            style={{ flex:'none', width:isMobile?44:72, display:'flex', flexDirection:'column', alignItems:'center', gap:isMobile?4:8, padding:0, border:'none', background:'none', cursor:'pointer', fontFamily:'Assistant,sans-serif' }}>
+                            <img src={c.img} alt={c.name} className="tm-ava" loading="lazy" style={{
+                                width: i===activeChap?(isMobile?40:64):(isMobile?34:50), height: i===activeChap?(isMobile?40:64):(isMobile?34:50),
+                                borderRadius:'50%', objectFit:'cover', border:(isMobile?'2px':'3px')+' solid '+(i===activeChap?'#2E59F4':'#26304D'),
+                                boxShadow: i===activeChap?'0 0 0 4px rgba(46,89,244,0.22),0 8px 24px rgba(46,89,244,0.35)':'none' }}/>
+                            <span style={{ fontSize:isMobile?10:13, fontWeight:700, color: i===activeChap?'#F4F6FC':'#8A97BE' }}>{fmt(c.ch.t)}</span>
+                        </button>
+                    ))}
+                </div>
+            </div>
+            <div style={{ marginTop:isMobile?28:36, width:'100%', maxWidth:840, minHeight:isMobile?0:196, display:'flex', flexDirection:'column', alignItems:'center', gap:18, textAlign:'center' }}>
+                {!qFlip ? (
+                    <div key="qA" className="tm-swap" style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:12 }}>
+                        <span style={{ fontSize:14, fontWeight:700, color:'#4282FA' }}>{chap.ch.topic}</span>
+                        <p style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontSize:isMobile?20:30, fontWeight:700, lineHeight:isMobile?1.5:1.42, color:'#F4F6FC', textWrap:'balance' }}>"{chap.quotes[chap.ch.q]}"</p>
+                    </div>
+                ) : (
+                    <div key="qB" className="tm-swap" style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:12 }}>
+                        <span style={{ fontSize:14, fontWeight:700, color:'#4282FA' }}>{chap.ch.topic}</span>
+                        <p style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontSize:isMobile?20:30, fontWeight:700, lineHeight:isMobile?1.5:1.42, color:'#F4F6FC', textWrap:'balance' }}>"{chap.quotes[chap.ch.q]}"</p>
+                    </div>
+                )}
+                <span style={{ fontSize:15, fontWeight:700, color:'#F4F6FC' }}>{chap.name}</span>
+                <button type="button" onClick={()=>jumpTo(activeChap)} style={{ display:'inline-flex', alignItems:'center', gap:10, minHeight:46, padding:'0 22px', borderRadius:999, border:'none', background:'#2E59F4', color:'#FFFFFF', fontFamily:'Assistant,sans-serif', fontSize:15, fontWeight:700, cursor:'pointer' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+                    צפייה מ-{fmt(chap.ch.t)}
+                </button>
+            </div>
+            <section style={{ marginTop:isMobile?60:88, width:'100%', maxWidth:1080, display:'flex', flexDirection:'column', gap:isMobile?16:22 }}>
+                <h3 style={{ margin:0, fontFamily:'Rubik,sans-serif', fontWeight:800, fontSize:isMobile?22:28, color:'#F4F6FC' }}>במילים שלהם</h3>
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:10 }}>
+                    {TM_PROOF_CARDS.map((k,i) => (
+                        <button key={i} type="button" onClick={()=>jumpTo(k.ch)} className="tm-card"
+                            style={{ minHeight:150, display:'flex', flexDirection:'column', justifyContent:'space-between', gap:10, padding:14, borderRadius:16,
+                                background: k.ch===activeChap?'rgba(46,89,244,0.14)':'#141A2E', border:'1px solid '+(k.ch===activeChap?'#2E59F4':'#26304D'),
+                                color:'#F4F6FC', fontFamily:'Assistant,sans-serif', textAlign:'start', cursor:'pointer' }}>
+                            <span style={{ display:'flex', flexDirection:'column', gap:6 }}>
+                                <span style={{ fontFamily:'Rubik,sans-serif', fontSize:22, fontWeight:800, lineHeight:1.12 }}>{k.head}</span>
+                                <span style={{ fontSize:12, lineHeight:1.4, color:'#A9B7DE' }}>{k.desc}</span>
+                            </span>
+                            <span style={{ display:'flex', alignItems:'center', gap:8 }}>
+                                <img src={TM_BY_ID[k.client].img} alt={TM_BY_ID[k.client].name} style={{ width:28, height:28, borderRadius:'50%', objectFit:'cover', border:'1px solid #26304D' }} loading="lazy"/>
+                                <span style={{ display:'flex', flexDirection:'column' }}>
+                                    <span style={{ fontSize:11, fontWeight:700, color:'#F4F6FC' }}>{TM_BY_ID[k.client].name}</span>
+                                    <span style={{ fontSize:11, fontWeight:700, color:'#4282FA' }}>צפייה מ-{fmt(TM_CHAPTERS[k.ch].ch.t)}</span>
+                                </span>
+                            </span>
+                        </button>
+                    ))}
+                </div>
+            </section>
+        </div>
+    );
+};
+
+const NumbersSpeak = () => {
+    const money = (n) => '$'+n.toLocaleString('en-US');
+    const [isMobile, setIsMobile] = useState(typeof window!=='undefined' && window.innerWidth < 1024);
+    useEffect(() => { const h = () => setIsMobile(window.innerWidth < 1024); window.addEventListener('resize', h); return () => window.removeEventListener('resize', h); }, []);
+    const [sIdx, setSIdx] = useState(0);
+    const [sTimer, setSTimer] = useState(0);
+    const [sPaused, setSPaused] = useState(false);
+    const [sFlip, setSFlip] = useState(false);
+    const [shownAmt, setShownAmt] = useState(TM_STRIPE_ITEMS[0].amount);
+    const [mWin, setMWin] = useState(0);
+    const [inView, setInView] = useState(false);
+    const [nsModal, setNsModal] = useState(null);
+    const numRef = useRef(null);
+    const tickRef = useRef(null);
+    const rafRef = useRef(null);
+    const reduceMotion = useRef(typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches);
+    const shownAmtRef = useRef(shownAmt); shownAmtRef.current = shownAmt;
+    const mWinRef = useRef(mWin); mWinRef.current = mWin;
+    const sIdxRef = useRef(sIdx); sIdxRef.current = sIdx;
+    const n = TM_STRIPE_ITEMS.length;
+    const curItem = TM_STRIPE_ITEMS[sIdx];
+    const goStripe = (i) => {
+        const target = TM_STRIPE_ITEMS[i].amount;
+        const w = mWinRef.current;
+        const newWin = (i<w||i>=w+4) ? Math.max(0,Math.min(i,n-4)) : w;
+        setSIdx(i); setSTimer(0); setSFlip(f=>!f); setMWin(newWin);
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+        if (reduceMotion.current) { setShownAmt(target); return; }
+        const from = shownAmtRef.current; const start = performance.now();
+        const step = (now) => { const p = Math.min(1,(now-start)/700); const e = 1-Math.pow(1-p,3); setShownAmt(Math.round(from+(target-from)*e)); if (p<1) rafRef.current=requestAnimationFrame(step); };
+        rafRef.current = requestAnimationFrame(step);
+    };
+    const goStripeRef = useRef(goStripe); goStripeRef.current = goStripe;
+    useEffect(() => { const el = numRef.current; if (!el) return; const obs = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold:0.15 }); obs.observe(el); return () => obs.disconnect(); }, []);
+    useEffect(() => {
+        if (!inView || sPaused || reduceMotion.current) { if(tickRef.current) clearInterval(tickRef.current); tickRef.current=null; return; }
+        tickRef.current = setInterval(() => { setSTimer(prev => { const next = prev + 100; if (next >= 5000) { const ni = (sIdxRef.current+1) % n; goStripeRef.current(ni); return 0; } return next; }); }, 100);
+        return () => { if(tickRef.current) clearInterval(tickRef.current); };
+    }, [inView, sPaused]);
+    useEffect(() => () => { if(rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
+    return (
+        <section ref={numRef} style={{ width:'100%', maxWidth:1080, display:'flex', flexDirection:'column', alignItems:'center', gap:isMobile?20:28, padding:'0 16px' }}
+            onMouseEnter={()=>setSPaused(true)} onMouseLeave={()=>setSPaused(false)}>
+            <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center' }}>
+                <h3 style={{ margin:0, fontFamily:'Rubik,sans-serif', fontWeight:800, fontSize:isMobile?28:38, color:'#F4F6FC' }}>המספרים מדברים</h3>
+                <p style={{ margin:0, fontSize:17, color:'#A9B7DE' }}>בחרו עסק מהרשימה, או תנו לזה לרוץ.</p>
+            </div>
+            <div style={{ width:'100%', display:'flex', alignItems:'stretch', gap:24 }}>
+                {!isMobile && (
+                    <div className="styled-scrollbar" style={{ flex:'0 0 350px', maxHeight:660, overflowY:'auto', padding:8, borderRadius:24, background:'#0F1426', border:'1px solid #1E2742', display:'flex', flexDirection:'column', gap:4 }}>
+                        {TM_STRIPE_ITEMS.map((it,i) => (
+                            <button key={i} type="button" onClick={()=>goStripe(i)} style={{ flex:'none', width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between', gap:12,
+                                padding:'12px 14px', borderRadius:14, background:i===sIdx?'#141A2E':'transparent', border:'1px solid '+(i===sIdx?'#2E59F4':'transparent'),
+                                color:'#F4F6FC', fontFamily:'Assistant,sans-serif', textAlign:'start', cursor:'pointer' }}>
+                                <span style={{ display:'flex', flexDirection:'column', gap:5, minWidth:0 }}>
+                                    <span style={{ fontSize:15, fontWeight:700, lineHeight:1.3 }}>{it.name}</span>
+                                    <span style={{ fontSize:12, color:'#8A97BE' }}>{TM_STRIPE_CATS[it.cat]}</span>
+                                </span>
+                                <span style={{ flex:'none', direction:'ltr', fontFamily:'Rubik,sans-serif', fontSize:15, fontWeight:800 }}>{money(it.amount)}</span>
+                            </button>
+                        ))}
+                    </div>
+                )}
+                <div style={{ flex:'1 1 0', minWidth:0, padding:isMobile?16:26, borderRadius:isMobile?20:24, background:'#141A2E', border:'1px solid #26304D', display:'flex', flexDirection:'column', gap:18 }}>
+                    <div style={{ display:'flex', gap:4 }}>
+                        {TM_STRIPE_ITEMS.map((_,i) => (
+                            <span key={i} style={{ flex:'1 1 0', height:4, borderRadius:2, background:'#1E2742', overflow:'hidden' }}>
+                                <span className="tm-seg-fill" style={{ display:'block', height:'100%', width: i<sIdx?'100%':(i===sIdx?Math.min(100,(sTimer/5000)*100).toFixed(1)+'%':'0%'), background:'#2E59F4' }}/>
+                            </span>
+                        ))}
+                    </div>
+                    <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:16 }}>
+                        <div style={{ display:'flex', flexDirection:'column', gap:4 }}>
+                            <span style={{ fontSize:13, fontWeight:700, color:'#4282FA' }}>{TM_STRIPE_CATS[curItem.cat]}</span>
+                            <span style={{ fontFamily:'Rubik,sans-serif', fontSize:isMobile?19:26, fontWeight:800, lineHeight:1.25 }}>{curItem.name}</span>
+                        </div>
+                    </div>
+                    <button type="button" onClick={()=>{setSPaused(true);setNsModal(curItem);}} style={{ cursor:'pointer', border:'none', background:'none', padding:0, width:'100%' }}>
+                        {!sFlip ? (
+                            <div key={'sA-'+sIdx} className="tm-pop" style={{ borderRadius:16, overflow:'hidden', background:'#FFFFFF', boxShadow:'0 22px 60px rgba(0,0,0,0.45)' }}>
+                                <img src={curItem.img} alt={'צילום מסך: '+curItem.name} style={{ width:'100%', aspectRatio:'1200/516', objectFit:'cover' }} loading="lazy"/>
+                            </div>
+                        ) : (
+                            <div key={'sB-'+sIdx} className="tm-pop" style={{ borderRadius:16, overflow:'hidden', background:'#FFFFFF', boxShadow:'0 22px 60px rgba(0,0,0,0.45)' }}>
+                                <img src={curItem.img} alt={'צילום מסך: '+curItem.name} style={{ width:'100%', aspectRatio:'1200/516', objectFit:'cover' }} loading="lazy"/>
+                            </div>
+                        )}
+                    </button>
+                    <span style={{ marginTop:-8, fontSize:12, color:'#8A97BE' }}>צילום מסך מחשבון Stripe של הלקוח · {curItem.month} · <span style={{ color:'#4282FA', cursor:'pointer' }} onClick={()=>{setSPaused(true);setNsModal(curItem);}}>לחצו להגדלה</span></span>
+                    <div style={{ display:'flex', flexWrap:'wrap', alignItems:'center', justifyContent:'space-between', gap:16 }}>
+                        <div style={{ display:'flex', flexWrap:'wrap', alignItems:'baseline', gap:14 }}>
+                            <span style={{ direction:'ltr', fontFamily:'Rubik,sans-serif', fontSize:isMobile?36:50, fontWeight:800, lineHeight:1, fontVariantNumeric:'tabular-nums' }}>{money(shownAmt)}</span>
+                            <span style={{ direction:'ltr', padding:'4px 10px', borderRadius:999, background:'rgba(74,222,128,0.14)', color:'#4ADE80', fontSize:14, fontWeight:700 }}>{curItem.pct}</span>
+                            <span style={{ fontSize:14, color:'#A9B7DE' }}>מחזור סליקה ב{curItem.month}</span>
+                        </div>
+                        <div style={{ display:'flex', gap:10 }}>
+                            <button type="button" onClick={()=>goStripe((sIdx+n-1)%n)} aria-label="הקודם" style={{ width:46, height:46, borderRadius:'50%', border:'1px solid #26304D', background:'transparent', color:'#F4F6FC', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                            <button type="button" onClick={()=>setSPaused(p=>!p)} aria-label={sPaused?'המשך':'עצירה'} style={{ width:46, height:46, borderRadius:'50%', border:'1px solid #26304D', background:'transparent', color:'#F4F6FC', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                                {!sPaused ? <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+                                : <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>}
+                            </button>
+                            <button type="button" onClick={()=>goStripe((sIdx+1)%n)} aria-label="הבא" style={{ width:46, height:46, borderRadius:'50%', border:'1px solid #26304D', background:'transparent', color:'#F4F6FC', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {isMobile && (
+                <div style={{ width:'100%', padding:8, borderRadius:18, background:'#0F1426', border:'1px solid #1E2742', display:'flex', flexDirection:'column', gap:4 }}>
+                    {TM_STRIPE_ITEMS.slice(mWin, mWin+4).map((it,i) => {
+                        const ri = mWin+i;
+                        return (
+                            <button key={ri} type="button" onClick={()=>goStripe(ri)} style={{ flex:'none', width:'100%', display:'flex', alignItems:'center', justifyContent:'space-between', gap:12,
+                                padding:'12px 14px', borderRadius:14, background:ri===sIdx?'#141A2E':'transparent', border:'1px solid '+(ri===sIdx?'#2E59F4':'transparent'),
+                                color:'#F4F6FC', fontFamily:'Assistant,sans-serif', textAlign:'start', cursor:'pointer' }}>
+                                <span style={{ display:'flex', flexDirection:'column', gap:5, minWidth:0 }}>
+                                    <span style={{ fontSize:15, fontWeight:700, lineHeight:1.3 }}>{it.name}</span>
+                                    <span style={{ fontSize:12, color:'#8A97BE' }}>{TM_STRIPE_CATS[it.cat]}</span>
+                                </span>
+                                <span style={{ flex:'none', direction:'ltr', fontFamily:'Rubik,sans-serif', fontSize:15, fontWeight:800 }}>{money(it.amount)}</span>
+                            </button>
+                        );
+                    })}
+                    <div style={{ display:'flex', justifyContent:'center', gap:10, padding:'6px 0 2px' }}>
+                        <button type="button" onClick={()=>setMWin(w=>Math.max(0,w-4))} aria-label="הקודמים" style={{ width:44, height:44, borderRadius:'50%', border:'1px solid #26304D', background:'transparent', color:'#F4F6FC', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', opacity:mWin<=0?0.35:1 }}>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                        </button>
+                        <button type="button" onClick={()=>setMWin(w=>Math.min(n-4,w+4))} aria-label="הבאים" style={{ width:44, height:44, borderRadius:'50%', border:'1px solid #26304D', background:'transparent', color:'#F4F6FC', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer', opacity:mWin>=n-4?0.35:1 }}>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            )}
+            <p style={{ margin:0, textAlign:'center', fontSize:12, color:'#8A97BE' }}>צילומי מסך מחשבונות Stripe של לקוחות. התוצאות משתנות מעסק לעסק.</p>
+            {nsModal && (
+                <div style={{ width:'100%', marginTop:8, borderRadius:20, background:'#141A2E', border:'1px solid #2E59F4', padding:'16px 16px 20px', position:'relative' }}>
+                    <button type="button" onClick={()=>{setNsModal(null);setSPaused(false);}} style={{ position:'absolute', top:12, left:12, width:32, height:32, borderRadius:'50%', background:'rgba(255,255,255,0.1)', border:'none', color:'#fff', fontSize:16, cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', zIndex:1 }}>✕</button>
+                    <div style={{ textAlign:'right', marginBottom:10 }}><div style={{ fontSize:15, fontWeight:700 }}>{nsModal.name}</div><div style={{ fontSize:13, color:'#A9B7DE' }}>{money(nsModal.amount)} · {nsModal.month}</div></div>
+                    <img src={nsModal.img} alt={'צילום מסך: '+nsModal.name} style={{ width:'100%', borderRadius:12, background:'#fff', border:'1px solid #26304D' }}/>
+                    <p style={{ textAlign:'center', fontSize:11, color:'#6B7BA0', marginTop:8, marginBottom:0 }}>צילום המסך המקורי מחשבון Stripe של הלקוח.</p>
+                </div>
+            )}
+        </section>
+    );
+};
+
+const ProofSection = () => (
+    <section id="proof" style={{ width:'100%', padding:'76px 0 0', display:'flex', flexDirection:'column', alignItems:'center', gap:8 }}>
+        <div style={{ width:'100%', maxWidth:1160, padding:'0 20px' }}>
+            <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontWeight:700, fontSize:14, letterSpacing:'.04em', color:'#4282FA' }}>04 · סיפורי הצלחה</span>
+        </div>
+        <h2 className="section-h2" style={{ margin:'12px 0 0', padding:'0 20px', fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize:28, lineHeight:1.18, textWrap:'balance', textAlign:'center' }}>
+            והיזמים שכבר פרצו איתנו לשוק הגדול בעולם?
+        </h2>
+        <TestimonialsSection />
+        <div style={{ marginTop:48 }}></div>
+        <NumbersSpeak />
+    </section>
+);
+
+// ════════════════════════════════════════════════════
+//  SECTION 05 — ABOUT
+// ════════════════════════════════════════════════════
+const AboutSection = () => (
+    <section id="about" style={{ width:'100%', padding:'76px 20px 0', display:'flex', justifyContent:'center' }}>
+        <div style={{ width:'100%', maxWidth:1160, display:'flex', flexDirection:'column', gap:26 }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
+                <div style={{ display:'flex', flexDirection:'column', gap:12, maxWidth:820 }}>
+                    <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontWeight:700, fontSize:14, letterSpacing:'.04em', color:'#4282FA' }}>05 · מי אנחנו</span>
+                    <h2 className="section-h2" style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize:28, lineHeight:1.18, textWrap:'balance' }}>
+                        אמריקה בשבילנו היא מזמן לא חלום, ואפילו כבר לא מציאות. <span style={{ color:'#2E6BFF' }}>היא מגרש המשחקים שלנו כבר קרוב לעשור.</span>
+                    </h2>
+                </div>
+                <figure className="about-figure" style={{ margin:0, borderRadius:24, background:'#141A2E', border:'1px solid #26304D', overflow:'hidden', display:'flex', flexDirection:'column' }}>
+                    <img src="assets/founders/founders-together.jpg" alt="שחר פלץ ושמואל מרדכי מול פסל החירות" style={{ width:'100%', aspectRatio:'4/5', objectFit:'cover' }} loading="lazy"/>
+                    <figcaption style={{ padding:'18px 18px 20px', display:'flex', flexDirection:'column', gap:10 }}>
+                        <span style={{ fontSize:14, fontWeight:700, color:'#9DB8FF' }}>שחר פלץ ושמואל מרדכי · המייסדים</span>
+                        <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:18, fontWeight:700, lineHeight:1.5 }}>
+                            "לכל אחד יש את הפורטה שלו. יש מי שהכוח שלו הוא מכירות, ויש מי שזה ניהול עובדים או פיננסים. הפורטה שלנו היא לקחת עסק ולפרוץ איתו לארה״ב. <span style={{ color:'#2E6BFF' }}>זה כוח העל שלנו.</span>"
+                        </span>
+                    </figcaption>
+                </figure>
+                <p style={{ margin:0, fontSize:15, lineHeight:1.75, color:'#C9D2EC' }}>אנחנו שחר פלץ ושמואל מרדכי, המייסדים של אקדמיית הדולר. מהמשרד שלנו ברעננה, אנחנו מנהלים את העסקים האמריקאיים שלנו, ועזרנו למעל 100 יזמים לפרוץ עם העסק שלהם למגרש של הגדולים.</p>
+                <p style={{ margin:0, fontSize:15, lineHeight:1.75, color:'#C9D2EC' }}>ראינו מקרוב כמעט כל טעות שאפשר לעשות בדרך. בגלל זה כל תהליך אצלנו מתחיל במחקר ובפגישה, לא בהבטחה.</p>
+                <div className="about-stats" style={{ display:'grid', gridTemplateColumns:'repeat(2,minmax(0,1fr))', gap:10 }}>
+                    {[{n:'8',l:'שנים בשוק האמריקאי'},{n:'+100',l:'עסקים מלווים'},{n:'+$10M',l:'הכנסות מנוהלות'},{n:'+4,000',l:'לקוחות משלמים'}].map((s,i) => (
+                        <div key={i} style={{ borderRadius:18, background:'#10162A', border:'1px solid #222B47', padding:16, display:'flex', flexDirection:'column', gap:4 }}>
+                            <span style={{ fontFamily:'Rubik,sans-serif', fontSize:26, fontWeight:800, textAlign:'right' }}>{s.n}</span>
+                            <span style={{ fontSize:13, color:'#A9B7DE' }}>{s.l}</span>
+                        </div>
+                    ))}
+                </div>
+                <div style={{ display:'flex', alignItems:'center', gap:14, borderRadius:18, background:'#10162A', border:'1px solid #222B47', padding:'14px 16px' }}>
+                    <img src={TM_BY_ID['kobi'].img} alt="קובי רבינוביץ" style={{ flex:'none', width:48, height:48, borderRadius:'50%', objectFit:'cover' }} loading="lazy"/>
+                    <span style={{ display:'flex', flexDirection:'column', gap:3 }}>
+                        <span style={{ fontSize:15, fontWeight:700 }}>מעבר להקמה: לפעמים אנחנו נכנסים כשותפים</span>
+                        <span style={{ fontSize:14, lineHeight:1.5, color:'#A9B7DE' }}>בעסקים שאנחנו מאמינים בהם, אנחנו לא עוצרים בתשתית. קובי רבינוביץ הגיע אלינו כבעל עסק ויזם שרצה לפרוץ לשוק האמריקאי, והיום הוא שותף שלנו ב-RemodeLeads.</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+);
+
+// ════════════════════════════════════════════════════
+//  SECTION 06 — VSL
+// ════════════════════════════════════════════════════
+const VslSection = () => {
+    const [playing, setPlaying] = useState(false);
+    return (
+        <section id="vsl" style={{ width:'100%', padding:'76px 20px 0', display:'flex', justifyContent:'center' }}>
+            <div style={{ width:'100%', maxWidth:1160, display:'flex', flexDirection:'column', gap:26 }}>
+                <div style={{ display:'flex', flexDirection:'column', gap:12, maxWidth:820 }}>
+                    <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontWeight:700, fontSize:14, letterSpacing:'.04em', color:'#4282FA' }}>06 · הדרכת הפריצה לשוק האמריקאי</span>
+                    <h2 className="section-h2" style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize:28, lineHeight:1.18, textWrap:'balance' }}>רוצה את כל ההסבר לפני הפגישה?</h2>
+                    <p style={{ margin:0, fontSize:16, lineHeight:1.6, color:'#A9B7DE' }}>בהדרכה שהכנו לבעלי עסקים שבודקים את השוק האמריקאי, אנחנו עוברים על הכול: מה מחכה שם, איפה נתקעים, ואיך נראה התהליך שלנו.</p>
+                </div>
+                <div style={{ alignSelf:'center', position:'relative', width:'100%', maxWidth:960, aspectRatio:'16/9', borderRadius:18, overflow:'hidden', border:'1px solid #26304D',
+                    background:'radial-gradient(120% 120% at 70% 15%,#1C2C66 0%,#0F1426 55%,#0A0D18 100%)', boxShadow:'0 30px 90px rgba(46,89,244,0.2)' }}>
+                    {playing ? (
+                        <iframe src={`https://www.youtube.com/embed/${VSL_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`} allow="autoplay;encrypted-media" allowFullScreen style={{ position:'absolute', inset:0, width:'100%', height:'100%', border:'none' }}/>
+                    ) : (
+                        <>
+                            <div style={{ position:'absolute', top:12, right:12, display:'flex', alignItems:'center', gap:10 }}>
+                                <span style={{ width:30, height:30, borderRadius:'50%', background:'#141A2E', border:'1px solid #26304D', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                                    <img src="assets/brand/symbol.png" alt="" style={{ width:'55%', height:'auto' }}/>
+                                </span>
+                                <span style={{ display:'flex', flexDirection:'column', gap:1 }}>
+                                    <span style={{ fontSize:13, fontWeight:700 }}>המגרש של הגדולים</span>
+                                    <span style={{ fontSize:11, color:'#A9B7DE' }}>אקדמיית הדולר</span>
+                                </span>
+                            </div>
+                            <button type="button" onClick={()=>setPlaying(true)} aria-label="צפייה בהדרכה"
+                                style={{ position:'absolute', inset:0, margin:'auto', width:64, height:64, borderRadius:'50%', border:'none', background:'#2E59F4',
+                                    boxShadow:'0 16px 50px rgba(46,89,244,0.55)', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                                {ICONS.play}
+                            </button>
+                            <span style={{ position:'absolute', bottom:10, left:12, fontSize:12, fontWeight:600, color:'#C9D2EC' }}>הדרכת הפריצה לשוק האמריקאי</span>
+                        </>
+                    )}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+// ════════════════════════════════════════════════════
+//  SECTION 07 — FIT
+// ════════════════════════════════════════════════════
+const FitSection = () => (
+    <section id="fit" style={{ width:'100%', padding:'76px 20px 0', display:'flex', justifyContent:'center' }}>
+        <div style={{ width:'100%', maxWidth:1160, display:'flex', flexDirection:'column', gap:26 }}>
+            <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+                <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontWeight:700, fontSize:14, letterSpacing:'.04em', color:'#4282FA' }}>07 · למי זה מתאים</span>
+                <h2 className="section-h2" style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize:28, lineHeight:1.18, textWrap:'balance' }}>לא כל עסק מתאים. וזה בסדר.</h2>
+            </div>
+            <div className="fit-grid" style={{ display:'grid', gridTemplateColumns:'1fr', gap:18 }}>
+                <div style={{ borderRadius:22, background:'#121C3D', border:'1px solid #2E59F4', padding:'22px 18px', display:'flex', flexDirection:'column', gap:16 }}>
+                    <span style={{ fontFamily:'Rubik,sans-serif', fontSize:22, fontWeight:800 }}>מתאים לך אם</span>
+                    <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:12 }}>
+                        {['יש לך עסק שעובד בארץ: איקומרס, SaaS, סוכנות, נותני שירות, AI ואוטומציות','אתה רוצה לשכפל אותו לשוק הגדול בעולם, ולהרוויח בדולרים','יש לך מוצר או רעיון חזק, ואתה לא רוצה לבזבז אותו על שוק קטן','אתה מוכן להשקיע בהקמה, ולמכור בעצמך'].map((t,i) => (
+                            <li key={i} style={{ display:'flex', alignItems:'flex-start', gap:10, fontSize:15, lineHeight:1.55, color:'#DCE3F5' }}><span style={{ flex:'none', marginTop:3 }}>{ICONS.check}</span><span>{t}</span></li>
+                        ))}
+                    </ul>
+                </div>
+                <div style={{ borderRadius:22, background:'#16151F', border:'1px solid #3A2A3A', padding:'22px 18px', display:'flex', flexDirection:'column', gap:16 }}>
+                    <span style={{ fontFamily:'Rubik,sans-serif', fontSize:22, fontWeight:800 }}>לא מתאים אם</span>
+                    <ul style={{ margin:0, padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:12 }}>
+                        {['אתה מחפש הכנסה פסיבית','אין לך תקציב להקמה ולשיווק','אתה מחפש מישהו שימכור במקומך'].map((t,i) => (
+                            <li key={i} style={{ display:'flex', alignItems:'flex-start', gap:10, fontSize:15, lineHeight:1.55, color:'#DCE3F5' }}><span style={{ flex:'none', marginTop:3 }}>{ICONS.x}</span><span>{t}</span></li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+);
+
+// ════════════════════════════════════════════════════
+//  SECTION 08 — FAQ
+// ════════════════════════════════════════════════════
+const FaqSection = () => {
+    const [open, setOpen] = useState(0);
+    return (
+        <section id="faq" style={{ width:'100%', padding:'76px 20px 0', display:'flex', justifyContent:'center' }}>
+            <div style={{ width:'100%', maxWidth:1160, display:'flex', flexDirection:'column', gap:26 }}>
+                <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+                    <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontWeight:700, fontSize:14, letterSpacing:'.04em', color:'#4282FA' }}>08 · שאלות</span>
+                    <h2 className="section-h2" style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize:28, lineHeight:1.18 }}>שאלות נפוצות</h2>
+                </div>
+                <div style={{ display:'flex', flexDirection:'column', gap:10, maxWidth:860, width:'100%' }}>
+                    {FAQ_DATA.map((f, i) => (
+                        <div key={i} style={{ borderRadius:18, background:'#141A2E', border:'1px solid '+(i===open?'#3A4E8C':'#26304D'), transition:'border-color 0.2s ease' }}>
+                            <button type="button" onClick={()=>setOpen(i===open?-1:i)} aria-expanded={String(i===open)}
+                                style={{ width:'100%', minHeight:60, display:'flex', alignItems:'center', justifyContent:'space-between', gap:14, padding:'16px 20px',
+                                    background:'transparent', border:'none', color:'#F4F6FC', fontFamily:'Assistant,sans-serif', fontSize:15, fontWeight:700, textAlign:'start', cursor:'pointer' }}>
+                                <span>{f[0]}</span>
+                                <span style={{ flex:'none', width:30, height:30, borderRadius:'50%', background:'#1E2742', color:'#9DB8FF', display:'flex', alignItems:'center', justifyContent:'center', fontSize:18, fontWeight:700 }}>
+                                    {i===open ? '−' : '+'}
+                                </span>
+                            </button>
+                            {i===open && <p style={{ margin:0, padding:'0 20px 18px', fontSize:15, lineHeight:1.65, color:'#A9B7DE' }}>{f[1]}</p>}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
+// ════════════════════════════════════════════════════
+//  CTA SECTION
+// ════════════════════════════════════════════════════
+const CtaSection = () => (
+    <section id="contact" style={{ width:'100%', padding:'76px 20px 0', display:'flex', justifyContent:'center' }}>
+        <div style={{ width:'100%', maxWidth:1160, borderRadius:32, padding:'36px 22px',
+            background:'radial-gradient(120% 140% at 50% 0%,#2E59F4 0%,#1B3592 45%,#111A3D 100%)',
+            display:'flex', flexDirection:'column', alignItems:'center', gap:18, textAlign:'center' }}>
+            <img src="assets/brand/symbol.png" alt="" style={{ width:48, height:'auto' }}/>
+            <h2 className="section-h2" style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize:28, lineHeight:1.2, textWrap:'balance' }}>הדולר הראשון שלך מתחיל בפגישה אחת.</h2>
+            <p style={{ margin:0, maxWidth:620, fontSize:16, lineHeight:1.6, color:'#DCE3F5' }}>מחקר שוק, פגישת אפיון פנים מול פנים ותוכנית פריצה לעסק שלך. משם, אתה מחליט.</p>
+            <ol style={{ margin:'6px 0 0', padding:0, listStyle:'none', display:'flex', flexWrap:'wrap', justifyContent:'center', gap:'10px 24px', fontSize:15, fontWeight:600, color:'#DCE3F5' }}>
+                {['בוחרים זמן ביומן','גיל מהצוות שלנו מתקשר אליך','מתאמים יחד את הצעד הבא'].map((t,i) => (
+                    <li key={i} style={{ display:'flex', alignItems:'center', gap:8 }}>
+                        <span className="mono" style={{ width:26, height:26, borderRadius:'50%', background:'rgba(255,255,255,0.16)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:12 }}>{i+1}</span>{t}
+                    </li>
+                ))}
+            </ol>
+            <div className="cta-buttons" style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:12, width:'100%' }}>
+                <a href={INTRO_CALL} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:10, minHeight:58, padding:'0 30px', borderRadius:14, background:'#FFFFFF', color:'#0A0D18', fontFamily:'Rubik,Assistant,sans-serif', fontSize:17, fontWeight:800, width:'100%' }}>
+                    לתיאום שיחת אינטרו עם גיל
+                </a>
+                <a href={WHATSAPP_LINK} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', gap:10, minHeight:58, padding:'0 26px', borderRadius:14, border:'1px solid rgba(255,255,255,0.4)', color:'#FFFFFF', fontFamily:'Rubik,Assistant,sans-serif', fontSize:17, fontWeight:700, width:'100%' }}>
+                    <WhatsAppIcon size={22} />וואטסאפ לצוות
+                </a>
+            </div>
+            <a href={MAPS_LINK} target="_blank" rel="noopener" style={{ display:'inline-flex', alignItems:'center', gap:8, fontSize:15, fontWeight:600, color:'#DCE3F5' }}>
+                {ICONS.pin}התעשייה 15, רעננה
+            </a>
+        </div>
+    </section>
+);
+
+// ════════════════════════════════════════════════════
+//  FOOTER
+// ════════════════════════════════════════════════════
+const Footer = () => (
+    <footer style={{ width:'100%', padding:'44px 20px 40px', display:'flex', justifyContent:'center' }}>
+        <div style={{ width:'100%', maxWidth:1160, display:'flex', flexDirection:'column', alignItems:'center', gap:14, textAlign:'center', borderTop:'1px solid #1A2240', paddingTop:28 }}>
+            <img src="assets/brand/wordmark.png" alt="Dollar Academy" style={{ height:18, width:'auto', opacity:0.8 }}/>
+            <span style={{ fontSize:13, lineHeight:1.6, color:'#6F7CA3', maxWidth:640 }}>התוצאות משתנות מעסק לעסק. אנחנו מתחייבים לתשתית מוכנה לעבודה ועד הליד האמריקאי הראשון, לא לתוצאות מכירה. מיסוי ומבנה החברה נבדקים מול רואה חשבון.</span>
+            <span style={{ fontSize:12, color:'#4F5B80' }}>© 2026 אקדמיית הדולר</span>
+        </div>
+    </footer>
+);
+
+// ════════════════════════════════════════════════════
+//  MOBILE STICKY BAR
+// ════════════════════════════════════════════════════
+const StickyBar = () => (
+    <>
+        <div className="mobile-sticky-bar" style={{ position:'sticky', bottom:0, zIndex:20, width:'100%', padding:'12px 16px calc(12px + env(safe-area-inset-bottom, 0px))',
+            background:'rgba(10,13,24,0.94)', borderTop:'1px solid #26304D', backdropFilter:'blur(12px)', WebkitBackdropFilter:'blur(12px)',
+            display:'flex', alignItems:'center', gap:12 }}>
+            <span style={{ display:'flex', flexDirection:'column', gap:2, minWidth:0 }}>
+                <span style={{ fontSize:14, fontWeight:700 }}>שיחת אינטרו עם גיל</span>
+                <span style={{ fontSize:12, color:'#A9B7DE' }}>מהצוות של אקדמיית הדולר</span>
+            </span>
+            <a href={INTRO_CALL} target="_blank" rel="noopener" style={{ marginInlineStart:'auto', flex:'none', display:'inline-flex', alignItems:'center', minHeight:48, padding:'0 18px', borderRadius:12, background:'#2E59F4', color:'#FFFFFF', fontFamily:'Rubik,Assistant,sans-serif', fontSize:15, fontWeight:700, boxShadow:'0 10px 30px rgba(46,89,244,0.4)' }}>
+                לקביעת שיחת אינטרו
+            </a>
+        </div>
+        <style>{`@media(min-width:768px){.mobile-sticky-bar{display:none!important}}`}</style>
+    </>
+);
+
+// ════════════════════════════════════════════════════
+//  APP
+// ════════════════════════════════════════════════════
+const App = () => (
+    <div dir="rtl" style={{ width:'100%', background:'#0A0D18', color:'#F4F6FC', fontFamily:"Assistant,'Segoe UI',Arial,sans-serif", overflowX:'clip' }}>
+        <Header />
+        <Hero />
+        <StuckSection />
+        <ProcessSection />
+        <ProductSection />
+        <ProofSection />
+        <AboutSection />
+        <VslSection />
+        <FitSection />
+        <FaqSection />
+        <CtaSection />
+        <Footer />
+        <StickyBar />
+    </div>
+);
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

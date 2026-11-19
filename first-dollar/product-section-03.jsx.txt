@@ -1,0 +1,726 @@
+// ════════════════════════════════════════════════════
+//  SECTION 03 — PRODUCT
+// ════════════════════════════════════════════════════
+
+const P03_ITEMS = [
+  { icon:'legal', row:'ישות משפטית מאושרת', sub:'LLC אמריקאית, על שמך ובבעלותך', tile:'ישות משפטית', stageD:'ישות משפטית מאושרת', stageM:'ישות משפטית מאושרת', desc:'חברה אמריקאית רשומה על שמך ובבעלותך המלאה. רואה חשבון בודק איתך את המבנה הנכון, לפני ההקמה.', il:'עוסק או חברה בע״מ', us:'YOUR BUSINESS, LLC' },
+  { icon:'billing', row:'גבייה ובנקאות', sub:'סליקה בדולרים, עד החשבון בישראל', tile:'גבייה ובנקאות', stageD:'גבייה ובנקאות', stageM:'גבייה ובנקאות', desc:'מהמסוף שסולק את הלקוח האמריקאי, דרך חשבון בנק בארה״ב, ועד החשבון הישראלי שלך.', il:'סליקה וחשבון בנק בשקלים', us:'סליקה וחשבון בנק בדולרים' },
+  { icon:'comm', row:'אמצעי תקשורת', sub:'מספרים וחייגנים, כולל כל הרגולציות', tile:'תקשורת ורגולציה', stageD:'אמצעי תקשורת, כולל כל הרגולציות', stageM:'אמצעי תקשורת ורגולציה', desc:'מספר אמריקאי מקומי, חייגן והודעות SMS, עם כל האישורים הרגולטוריים שצריך כדי לדבר עם לקוחות בארה״ב.', il:'מספר ישראלי ווואטסאפ', us:'מספר אמריקאי, חייגן ו-SMS מאושרים' },
+  { icon:'crm', row:'מערכת מכירות וניהול עסק', sub:'CRM באנגלית, עם כל האוטומציות', tile:'מערכת מכירות', stageD:'מערכת מכירות וניהול עסק', stageM:'מערכת מכירות וניהול עסק', desc:'מערכת ניהול שנבנית לעסק שלך, באנגלית מההתחלה: כל ליד במקום אחד, עם כל הכלים והאוטומציות.', il:'מערכת בעברית', us:'CRM באנגלית, עם אוטומציות' },
+  { icon:'web', row:'נוכחות דיגיטלית', sub:'אתר ודפי נחיתה שמדברים אמריקאית', tile:'נוכחות דיגיטלית', stageD:'נוכחות דיגיטלית', stageM:'נוכחות דיגיטלית', desc:'אתר, דפי נחיתה ונכסים שיווקיים שנכתבים לקהל האמריקאי. לא תרגום מעברית, אלא עסק שמדבר אמריקאית.', il:'אתר ודפי נחיתה בעברית', us:'אתר שמדבר אמריקאית' },
+  { icon:'map', row:'מפת שוק', sub:'מתחרים, תמחור וערוצים בנישה שלך', tile:'מפת שוק', stageD:'מפת שוק', stageM:'מפת שוק', desc:'מי המתחרים שלך בארה״ב, כמה גובים בנישה שלך, ובאילו ערוצים כדאי לפרוץ. מתוך מחקר השוק שעשינו לעסק שלך.', il:'מכיר את השוק הישראלי בעל פה', us:'מפה של השוק האמריקאי שלך' },
+  { icon:'team', row:'אנשי מקצוע', sub:'רו״ח ועו״ד אמריקאים, וכל הספקים', tile:'אנשי מקצוע', stageD:'אנשי מקצוע', stageM:'אנשי מקצוע', desc:'רואי חשבון ועורכי דין בארה״ב, וכל הספקים, הטפסים והחיבורים שהעסק צריך. את הקשרים אנחנו מביאים.', il:'רו״ח ועו״ד בישראל', us:'רו״ח ועו״ד בארה״ב, מחוברים לעסק' },
+  { icon:'hire', row:'גיוס והשמה של העובד הראשון', sub:'נציג דובר אנגלית, מאומן לעסק שלך', tile:'העובד הראשון', stageD:'גיוס והשמה של העובד הראשון', stageM:'גיוס העובד הראשון', desc:'מגייסים, מכשירים ומחברים למערכות את העובד הראשון שלך: נציג שמדבר עם הלקוחות שלך באנגלית.', il:'אתה עונה לכל לקוח בעצמך', us:'נציג מאומן שעונה באנגלית' },
+  { icon:'lead', row:'הליד האמריקאי הראשון', sub:'היעד: כשכל התשתית כבר עובדת', tile:'הליד הראשון', stageD:'הליד האמריקאי הראשון', stageM:'הליד האמריקאי הראשון', desc:'התשתית מוכנה לעבודה, והליד האמריקאי הראשון כבר במערכת שלך. משם, אתה מוכר עם הכלים שבנינו.', il:'עסק שעובד בישראל', us:'עסק שעובד גם בארה״ב' }
+];
+
+const p03Ico = (key, size, strokeColor) => {
+  const s = strokeColor || '#7AA6FF';
+  const p = { legal:<path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>,
+    billing:<React.Fragment><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></React.Fragment>,
+    comm:<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>,
+    crm:<React.Fragment><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></React.Fragment>,
+    web:<React.Fragment><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></React.Fragment>,
+    map:<React.Fragment><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></React.Fragment>,
+    team:<React.Fragment><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></React.Fragment>,
+    hire:<React.Fragment><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></React.Fragment>,
+    lead:<React.Fragment><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></React.Fragment>
+  };
+  return <svg aria-hidden="true" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={s} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{p[key]}</svg>;
+};
+
+const p03Check = (sz) => <svg width={sz} height={sz} viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>;
+const p03Arrow = (sz, sw) => <svg width={sz} height={sz} viewBox="0 0 24 24" fill="none" stroke="#9DB8FF" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>;
+
+const ProductSection = () => {
+  const [sel, setSel] = useState(0);
+  const [seen, setSeen] = useState(1);
+  const [auto, setAuto] = useState(false);
+  const [mob, setMob] = useState(false);
+  const timerRef = useRef(null);
+  const startedRef = useRef(false);
+  const secRef = useRef(null);
+
+  const DUR = 4200;
+  const durS = (DUR / 1000) + 's';
+
+  const stopTimer = () => { if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; } };
+  const startTimer = (fromSel, fromSeen) => {
+    stopTimer();
+    const s = fromSel !== undefined ? fromSel : undefined;
+    timerRef.current = setInterval(() => {
+      setSel(prev => {
+        if (prev >= 7) {
+          stopTimer();
+          setSeen(255);
+          setAuto(false);
+          return 8;
+        }
+        const next = prev + 1;
+        setSeen(sv => sv | (1 << next));
+        return next;
+      });
+    }, DUR);
+  };
+
+  const go = (i) => { stopTimer(); setSel(i); setSeen(sv => i === 8 ? 255 : (sv | (1 << i))); setAuto(false); };
+  const toggleAuto = () => {
+    if (auto) { stopTimer(); setAuto(false); return; }
+    setSel(prev => {
+      if (prev >= 8) { setSeen(1); setAuto(true); startTimer(0, 1); return 0; }
+      setAuto(true); startTimer(prev); return prev;
+    });
+  };
+  const replay = () => { setSel(0); setSeen(1); setAuto(true); startTimer(0, 1); };
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width:1023px)');
+    const h = (e) => setMob(e.matches);
+    setMob(mq.matches);
+    mq.addEventListener('change', h);
+    return () => mq.removeEventListener('change', h);
+  }, []);
+
+  useEffect(() => {
+    const el = secRef.current; if (!el) return;
+    let reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e) {}
+    if (reduce) return;
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !startedRef.current) {
+        startedRef.current = true;
+        setAuto(true);
+        startTimer(0, 1);
+      }
+    }, { threshold: 0.35 });
+    obs.observe(el);
+    return () => { stopTimer(); obs.disconnect(); };
+  }, []);
+
+  let count = 0;
+  for (let i = 0; i < 8; i++) { if ((seen >> i) & 1) count++; }
+  const complete = count === 8;
+  const pct = (count * 12.5) + '%';
+  const countLabel = count + '/8';
+
+  const itemCalc = (i) => {
+    const on = sel === i, goal = i === 8, done = goal ? complete : (seen >> i) & 1;
+    if (!mob) {
+      return { on, goal, done,
+        bc: on ? (goal ? 'rgba(74,222,128,.55)' : '#2E59F4') : 'transparent',
+        bg: on ? (goal ? 'rgba(74,222,128,.08)' : 'rgba(46,89,244,.12)') : 'transparent',
+        ibc: on ? (goal ? 'rgba(74,222,128,.7)' : '#2E59F4') : (goal ? 'rgba(74,222,128,.4)' : '#26304D'),
+        ibg: on ? (goal ? 'rgba(74,222,128,.16)' : 'rgba(46,89,244,.18)') : (goal ? 'rgba(74,222,128,.08)' : '#0F1426'),
+        tc: on ? '#FFFFFF' : '#DCE3F5'
+      };
+    }
+    return { on, goal, done,
+      bc: on ? (goal ? 'rgba(74,222,128,.7)' : '#2E59F4') : (goal ? 'rgba(74,222,128,.35)' : '#26304D'),
+      bg: on ? (goal ? 'rgba(74,222,128,.08)' : '#121C3D') : '#10162A',
+      ibc: on ? (goal ? 'rgba(74,222,128,.7)' : '#2E59F4') : (goal ? 'rgba(74,222,128,.4)' : '#26304D'),
+      ibg: on ? (goal ? 'rgba(74,222,128,.16)' : 'rgba(46,89,244,.18)') : (goal ? 'rgba(74,222,128,.08)' : '#0F1426'),
+      tc: on ? '#FFFFFF' : '#DCE3F5'
+    };
+  };
+
+  /* ── IL → US row ── */
+  const IlUsRow = ({ il, us, goal }) => {
+    if (!mob) return (
+      <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto minmax(0,1fr)', alignItems:'stretch', gap:10 }}>
+        <div style={{ boxSizing:'border-box', borderRadius:14, border:'1px solid #26304D', background:'#10162A', padding:'10px 14px', display:'flex', alignItems:'center', gap:10 }}>
+          <span className="mono" style={{ flex:'none', padding:'3px 8px', borderRadius:6, border:'1px solid #2E3B66', fontSize:12, fontWeight:600, color:'#8A97BE' }}>IL</span>
+          <span style={{ fontSize:15, lineHeight:1.35, color:'#A9B7DE' }}>{il}</span>
+        </div>
+        <span aria-hidden="true" style={{ alignSelf:'center', width:32, height:32, borderRadius:'50%', background:'#1A2547', display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Arrow(16, 2.2)}</span>
+        <div style={{ boxSizing:'border-box', borderRadius:14, border:'1px solid #2E59F4', background:'rgba(46,89,244,0.1)', padding:'10px 14px', display:'flex', alignItems:'center', gap:10 }}>
+          <span className="mono" style={{ flex:'none', padding:'3px 8px', borderRadius:6, background:'#2E59F4', fontSize:12, fontWeight:600, color:'#FFFFFF' }}>US</span>
+          {goal ? <span style={{ fontSize:15, fontWeight:700, lineHeight:1.35, color:'#F4F6FC' }}>{us}</span>
+                : <span className="mono" style={{ fontSize:14, fontWeight:600, lineHeight:1.35, color:'#F4F6FC' }}>{us}</span>}
+        </div>
+      </div>
+    );
+    /* mobile */
+    return (
+      <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto minmax(0,1fr)', alignItems:'stretch', gap:6 }}>
+        <div style={{ minHeight:70, boxSizing:'border-box', borderRadius:12, border:'1px solid #26304D', background:'#10162A', padding:'8px 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:4 }}>
+          <span className="mono" style={{ padding:'2px 6px', borderRadius:5, border:'1px solid #2E3B66', fontSize:10, fontWeight:600, color:'#8A97BE' }}>IL</span>
+          <span style={{ fontSize:13, lineHeight:1.35, color:'#A9B7DE' }}>{il}</span>
+        </div>
+        <span aria-hidden="true" style={{ alignSelf:'center', width:24, height:24, borderRadius:'50%', background:'#1A2547', display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Arrow(13, 2.4)}</span>
+        <div style={{ minHeight:70, boxSizing:'border-box', borderRadius:12, border:'1px solid #2E59F4', background:'rgba(46,89,244,0.1)', padding:'8px 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:4 }}>
+          <span className="mono" style={{ padding:'2px 6px', borderRadius:5, background:'#2E59F4', fontSize:10, fontWeight:600, color:'#FFFFFF' }}>US</span>
+          {goal ? <span style={{ fontSize:13, fontWeight:700, lineHeight:1.35, color:'#F4F6FC' }}>{us}</span>
+                : <span className="mono" style={{ fontSize:12, fontWeight:600, lineHeight:1.35, color:'#F4F6FC' }}>{us}</span>}
+        </div>
+      </div>
+    );
+  };
+
+  /* ── Fix us text: items 0 uses mono bold, rest use regular bold ── */
+  const IlUsRowSmart = ({ i }) => {
+    const it = P03_ITEMS[i];
+    const goal = i === 8;
+    if (!mob) return (
+      <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto minmax(0,1fr)', alignItems:'stretch', gap:10 }}>
+        <div style={{ boxSizing:'border-box', borderRadius:14, border:'1px solid #26304D', background:'#10162A', padding:'10px 14px', display:'flex', alignItems:'center', gap:10 }}>
+          <span className="mono" style={{ flex:'none', padding:'3px 8px', borderRadius:6, border:'1px solid #2E3B66', fontSize:12, fontWeight:600, color:'#8A97BE' }}>IL</span>
+          <span style={{ fontSize:15, lineHeight:1.35, color:'#A9B7DE' }}>{it.il}</span>
+        </div>
+        <span aria-hidden="true" style={{ alignSelf:'center', width:32, height:32, borderRadius:'50%', background:'#1A2547', display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Arrow(16, 2.2)}</span>
+        <div style={{ boxSizing:'border-box', borderRadius:14, border:'1px solid #2E59F4', background:'rgba(46,89,244,0.1)', padding:'10px 14px', display:'flex', alignItems:'center', gap:10 }}>
+          <span className="mono" style={{ flex:'none', padding:'3px 8px', borderRadius:6, background:'#2E59F4', fontSize:12, fontWeight:600, color:'#FFFFFF' }}>US</span>
+          {i === 0 ? <span className="mono" style={{ fontSize:14, fontWeight:600, lineHeight:1.35, color:'#F4F6FC' }}>{it.us}</span>
+                   : <span style={{ fontSize:15, fontWeight:700, lineHeight:1.35, color:'#F4F6FC' }}>{it.us}</span>}
+        </div>
+      </div>
+    );
+    return (
+      <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1fr) auto minmax(0,1fr)', alignItems:'stretch', gap:6 }}>
+        <div style={{ minHeight:70, boxSizing:'border-box', borderRadius:12, border:'1px solid #26304D', background:'#10162A', padding:'8px 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:4 }}>
+          <span className="mono" style={{ padding:'2px 6px', borderRadius:5, border:'1px solid #2E3B66', fontSize:10, fontWeight:600, color:'#8A97BE' }}>IL</span>
+          <span style={{ fontSize:13, lineHeight:1.35, color:'#A9B7DE' }}>{it.il}</span>
+        </div>
+        <span aria-hidden="true" style={{ alignSelf:'center', width:24, height:24, borderRadius:'50%', background:'#1A2547', display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Arrow(13, 2.4)}</span>
+        <div style={{ minHeight:70, boxSizing:'border-box', borderRadius:12, border:'1px solid #2E59F4', background:'rgba(46,89,244,0.1)', padding:'8px 10px', display:'flex', flexDirection:'column', alignItems:'flex-start', gap:4 }}>
+          <span className="mono" style={{ padding:'2px 6px', borderRadius:5, background:'#2E59F4', fontSize:10, fontWeight:600, color:'#FFFFFF' }}>US</span>
+          {i === 0 ? <span className="mono" style={{ fontSize:12, fontWeight:600, lineHeight:1.35, color:'#F4F6FC' }}>{it.us}</span>
+                   : <span style={{ fontSize:13, fontWeight:700, lineHeight:1.35, color:'#F4F6FC' }}>{it.us}</span>}
+        </div>
+      </div>
+    );
+  };
+
+  /* ── Blueprint wrapper ── */
+  const BpD = ({ children }) => (
+    <div className="p03-clone p03-bp" aria-hidden="true" style={{ position:'relative', height:300, boxSizing:'border-box', borderRadius:18, border:'1px solid #26304D', overflow:'hidden' }}>
+      <div className="p03-print" style={{ position:'absolute', inset:0, boxSizing:'border-box', padding:22, display:'flex', alignItems:'center', justifyContent:'center' }}>{children}</div>
+    </div>
+  );
+  const BpM = ({ children, noClone }) => (
+    <div className={noClone ? "p03-clone p03-bp" : "p03-clone p03-bp"} aria-hidden="true" style={{ position:'relative', height:290, boxSizing:'border-box', borderRadius:16, border:'1px solid #26304D', overflow:'hidden' }}>
+      <div className="p03-print" style={{ position:'absolute', inset:0, boxSizing:'border-box', padding:14, display:'flex', alignItems:'center', justifyContent:'center' }}>{children}</div>
+    </div>
+  );
+
+  /* ── Stage header (icon + h3) ── */
+  const StageHead = ({ i }) => {
+    const it = P03_ITEMS[i];
+    const goal = i === 8;
+    const icoSz = mob ? 20 : 24;
+    const boxSz = mob ? 40 : 48;
+    const br = mob ? 12 : 14;
+    const fz = mob ? 20 : 26;
+    const lh = mob ? 1.25 : 1.2;
+    const ibg = goal ? 'rgba(74,222,128,0.12)' : 'rgba(46,89,244,0.14)';
+    const ibd = goal ? '1px solid rgba(74,222,128,0.6)' : '1px solid #2E59F4';
+    const isc = goal ? '#4ADE80' : '#9DB8FF';
+    return (
+      <div style={{ display:'flex', alignItems:'center', gap: mob ? 12 : 14 }}>
+        <span style={{ flex:'none', width:boxSz, height:boxSz, boxSizing:'border-box', borderRadius:br, background:ibg, border:ibd, display:'flex', alignItems:'center', justifyContent:'center' }}>
+          {p03Ico(it.icon, icoSz, isc)}
+        </span>
+        <h3 style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontSize:fz, fontWeight:800, lineHeight:lh }}>{mob ? it.stageM : it.stageD}</h3>
+      </div>
+    );
+  };
+
+  /* ── Description ── */
+  const StageDesc = ({ i }) => {
+    const it = P03_ITEMS[i];
+    return <p style={{ margin:0, minHeight: mob ? 72 : 54, fontSize: mob ? 15 : 17, lineHeight:1.6, color:'#A9B7DE', textWrap: mob ? undefined : 'pretty' }}>{it.desc}</p>;
+  };
+
+  /* ══════════════════════════════════════
+     STAGE MOCKUPS — Desktop & Mobile
+     ══════════════════════════════════════ */
+
+  const renderMockup = () => {
+    /* ── STAGE 0: LEGAL ── */
+    if (sel === 0) return <div className="p03-mod" key={0} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={0}/><StageDesc i={0}/><IlUsRowSmart i={0}/>
+      {!mob ? <BpD>
+        <div style={{ position:'relative', width:430, maxWidth:'100%' }}>
+          <div style={{ position:'absolute', top:10, right:-10, bottom:-10, left:10, borderRadius:10, background:'#C9D2EC', transform:'rotate(3deg)' }}/>
+          <div dir="ltr" style={{ position:'relative', boxSizing:'border-box', borderRadius:10, background:'#EEF2FB', color:'#0E1630', padding:'20px 24px 22px', boxShadow:'0 24px 60px rgba(0,0,0,0.45)', transform:'rotate(-1.5deg)', display:'flex', flexDirection:'column', gap:12 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+              <svg width="42" height="42" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#2E59F4" strokeWidth="2"/><circle cx="22" cy="22" r="15" stroke="#2E59F4" strokeWidth="1" strokeDasharray="2 2.5"/><path d="M22 13.5l2.5 5.4 5.9.7-4.4 4 1.2 5.8L22 26.5l-5.2 2.9 1.2-5.8-4.4-4 5.9-.7z" fill="#2E59F4"/></svg>
+              <div style={{ display:'flex', flexDirection:'column', gap:2 }}>
+                <span className="mono" style={{ fontSize:11, fontWeight:600, letterSpacing:'.1em', color:'#4A5578' }}>STATE FILING</span>
+                <span className="mono" style={{ fontSize:11, fontWeight:500, letterSpacing:'.1em', color:'#4A5578' }}>LIMITED LIABILITY COMPANY</span>
+              </div>
+            </div>
+            <span className="mono" style={{ fontSize:25, fontWeight:600, lineHeight:1.15, color:'#0E1630' }}>YOUR BUSINESS, LLC</span>
+            <div style={{ height:1, background:'#C9D2EC' }}/>
+            <div style={{ display:'grid', gridTemplateColumns:'auto minmax(0,1fr)', gap:'7px 18px', alignItems:'center' }}>
+              <span className="mono" style={{ fontSize:11, color:'#5B678C' }}>OWNER</span><span className="mono" style={{ fontSize:13, fontWeight:600, color:'#0E1630' }}>YOU &middot; 100%</span>
+              <span className="mono" style={{ fontSize:11, color:'#5B678C' }}>EIN</span><span className="mono" style={{ fontSize:13, fontWeight:600, color:'#0E1630' }}>ISSUED &#10003;</span>
+              <span className="mono" style={{ fontSize:11, color:'#5B678C' }}>REGISTERED AGENT</span><span className="mono" style={{ fontSize:13, fontWeight:600, color:'#0E1630' }}>ASSIGNED &#10003;</span>
+              <span className="mono" style={{ fontSize:11, color:'#5B678C' }}>STATUS</span><span className="mono" style={{ fontSize:13, fontWeight:600, color:'#166534' }}>ACTIVE &#10003;</span>
+            </div>
+            <span className="mono p03-stamp" style={{ position:'absolute', right:22, bottom:24, padding:'6px 12px', border:'2.5px solid #2E59F4', borderRadius:8, color:'#2E59F4', fontSize:15, fontWeight:600, letterSpacing:'.12em', transform:'rotate(-10deg)', opacity:.92 }}>APPROVED</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ position:'relative', width:262, maxWidth:'100%' }}>
+          <div style={{ position:'absolute', top:8, right:-8, bottom:-8, left:8, borderRadius:9, background:'#C9D2EC', transform:'rotate(3deg)' }}/>
+          <div dir="ltr" style={{ position:'relative', boxSizing:'border-box', borderRadius:9, background:'#EEF2FB', color:'#0E1630', padding:'15px 16px 16px', boxShadow:'0 18px 44px rgba(0,0,0,0.45)', transform:'rotate(-1.5deg)', display:'flex', flexDirection:'column', gap:9 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:9 }}>
+              <svg width="32" height="32" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="20" stroke="#2E59F4" strokeWidth="2"/><circle cx="22" cy="22" r="15" stroke="#2E59F4" strokeWidth="1" strokeDasharray="2 2.5"/><path d="M22 13.5l2.5 5.4 5.9.7-4.4 4 1.2 5.8L22 26.5l-5.2 2.9 1.2-5.8-4.4-4 5.9-.7z" fill="#2E59F4"/></svg>
+              <div style={{ display:'flex', flexDirection:'column', gap:1 }}>
+                <span className="mono" style={{ fontSize:9.5, fontWeight:600, letterSpacing:'.08em', color:'#4A5578' }}>STATE FILING</span>
+                <span className="mono" style={{ fontSize:9.5, fontWeight:500, letterSpacing:'.08em', color:'#4A5578' }}>LIMITED LIABILITY COMPANY</span>
+              </div>
+            </div>
+            <span className="mono" style={{ fontSize:17, fontWeight:600, lineHeight:1.2, color:'#0E1630' }}>YOUR BUSINESS, LLC</span>
+            <div style={{ height:1, background:'#C9D2EC' }}/>
+            <div style={{ display:'grid', gridTemplateColumns:'auto minmax(0,1fr)', gap:'5px 12px', alignItems:'center' }}>
+              <span className="mono" style={{ fontSize:9.5, color:'#5B678C' }}>OWNER</span><span className="mono" style={{ fontSize:11, fontWeight:600, color:'#0E1630' }}>YOU &middot; 100%</span>
+              <span className="mono" style={{ fontSize:9.5, color:'#5B678C' }}>EIN</span><span className="mono" style={{ fontSize:11, fontWeight:600, color:'#0E1630' }}>ISSUED &#10003;</span>
+              <span className="mono" style={{ fontSize:9.5, color:'#5B678C' }}>STATUS</span><span className="mono" style={{ fontSize:11, fontWeight:600, color:'#166534' }}>ACTIVE &#10003;</span>
+            </div>
+            <span className="mono p03-stamp" style={{ position:'absolute', right:14, bottom:16, padding:'4px 9px', border:'2px solid #2E59F4', borderRadius:6, color:'#2E59F4', fontSize:12, fontWeight:600, letterSpacing:'.1em', transform:'rotate(-10deg)', opacity:.92 }}>APPROVED</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 1: BILLING ── */
+    if (sel === 1) return <div className="p03-mod" key={1} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={1}/><StageDesc i={1}/><IlUsRowSmart i={1}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:26 }}>
+          <div style={{ display:'flex', alignItems:'flex-start' }}>
+            {/* node 1 */}
+            <div style={{ flex:'none', width:112, display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center' }}>
+              <span style={{ width:58, height:58, boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+              <span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'לקוח אמריקאי'}</span>
+              <span className="mono" style={{ fontSize:10.5, color:'#8A97BE' }}>CREDIT CARD</span>
+            </div>
+            <div style={{ flex:'1 1 0', minWidth:28, position:'relative', height:2, marginTop:28, backgroundImage:'linear-gradient(90deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'10px 2px' }}><span className="p03-dot"/></div>
+            {/* node 2 */}
+            <div style={{ flex:'none', width:112, display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center' }}>
+              <span style={{ width:58, height:58, boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6v4H9zM9 14h.01M12 14h.01M15 14h.01M9 17.5h.01M12 17.5h.01M15 17.5h.01"/></svg></span>
+              <span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'מסוף סליקה'}</span>
+              <span className="mono" style={{ fontSize:10.5, color:'#8A97BE' }}>USD</span>
+            </div>
+            <div style={{ flex:'1 1 0', minWidth:28, position:'relative', height:2, marginTop:28, backgroundImage:'linear-gradient(90deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'10px 2px' }}><span className="p03-dot" style={{ animationDelay:'.6s' }}/></div>
+            {/* node 3 */}
+            <div style={{ flex:'none', width:112, display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center' }}>
+              <span style={{ width:58, height:58, boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 3l9 5H3z"/></svg></span>
+              <span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'חשבון בנק בארה״ב'}</span>
+              <span className="mono" style={{ fontSize:10.5, color:'#8A97BE' }}>LLC ACCOUNT</span>
+            </div>
+            <div style={{ flex:'1 1 0', minWidth:28, position:'relative', height:2, marginTop:28, backgroundImage:'linear-gradient(90deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'10px 2px' }}><span className="p03-dot" style={{ animationDelay:'1.2s' }}/></div>
+            {/* node 4 */}
+            <div style={{ flex:'none', width:112, display:'flex', flexDirection:'column', alignItems:'center', gap:8, textAlign:'center' }}>
+              <span style={{ width:58, height:58, boxSizing:'border-box', borderRadius:16, background:'rgba(46,89,244,0.16)', border:'1px solid #2E59F4', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9DB8FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M17 13.5h.01"/></svg></span>
+              <span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#FFFFFF' }}>{'החשבון שלך בישראל'}</span>
+              <span className="mono" style={{ fontSize:10.5, color:'#9DB8FF' }}>{'ILS ₪'}</span>
+            </div>
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:8 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'סליקה בדולרים'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'חשבון בנק על שם ה-LLC'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'מקושר לחשבון הישראלי שלך'}</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', maxWidth:250, display:'flex', flexDirection:'column' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <span style={{ flex:'none', width:44, height:44, boxSizing:'border-box', borderRadius:13, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'לקוח אמריקאי'}</span><span className="mono" style={{ fontSize:10.5, color:'#8A97BE', textAlign:'right' }}>CREDIT CARD</span></span>
+          </div>
+          <div style={{ position:'relative', width:2, height:22, marginInlineStart:21, backgroundImage:'linear-gradient(180deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'2px 8px' }}><span className="p03-vdot"/></div>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <span style={{ flex:'none', width:44, height:44, boxSizing:'border-box', borderRadius:13, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6v4H9zM9 14h.01M12 14h.01M15 14h.01M9 17.5h.01M12 17.5h.01M15 17.5h.01"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'מסוף סליקה'}</span><span className="mono" style={{ fontSize:10.5, color:'#8A97BE', textAlign:'right' }}>USD</span></span>
+          </div>
+          <div style={{ position:'relative', width:2, height:22, marginInlineStart:21, backgroundImage:'linear-gradient(180deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'2px 8px' }}><span className="p03-vdot" style={{ animationDelay:'.6s' }}/></div>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <span style={{ flex:'none', width:44, height:44, boxSizing:'border-box', borderRadius:13, background:'#141A2E', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18M6 18v-7M10 18v-7M14 18v-7M18 18v-7M12 3l9 5H3z"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#F4F6FC' }}>{'חשבון בנק בארה״ב'}</span><span className="mono" style={{ fontSize:10.5, color:'#8A97BE', textAlign:'right' }}>LLC ACCOUNT</span></span>
+          </div>
+          <div style={{ position:'relative', width:2, height:22, marginInlineStart:21, backgroundImage:'linear-gradient(180deg,#3A4E8C 50%,transparent 50%)', backgroundSize:'2px 8px' }}><span className="p03-vdot" style={{ animationDelay:'1.2s' }}/></div>
+          <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+            <span style={{ flex:'none', width:44, height:44, boxSizing:'border-box', borderRadius:13, background:'rgba(46,89,244,0.16)', border:'1px solid #2E59F4', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9DB8FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M17 13.5h.01"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:14, fontWeight:700, lineHeight:1.3, color:'#FFFFFF' }}>{'החשבון שלך בישראל'}</span><span className="mono" style={{ fontSize:10.5, color:'#9DB8FF', textAlign:'right' }}>{'ILS ₪'}</span></span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 2: COMM ── */
+    if (sel === 2) return <div className="p03-mod" key={2} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={2}/><StageDesc i={2}/><IlUsRowSmart i={2}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'flex', alignItems:'center', gap:20 }}>
+          <div style={{ flex:'1 1 0', minWidth:0, boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #26304D', padding:'16px 18px', display:'flex', flexDirection:'column', gap:10 }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}><span style={{ fontSize:13, fontWeight:700, color:'#A9B7DE' }}>{'הקו העסקי שלך'}</span><span className="mono" style={{ display:'inline-flex', alignItems:'center', gap:6, fontSize:11, fontWeight:600, color:'#4ADE80' }}><span style={{ width:7, height:7, borderRadius:'50%', background:'#4ADE80' }}/>ACTIVE</span></div>
+            <span className="mono" style={{ fontSize:23, fontWeight:600, color:'#F4F6FC', textAlign:'right' }}>+1 (213) 555-0148</span>
+            <div style={{ display:'flex', alignItems:'center', gap:10, paddingTop:9, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:14, fontWeight:700 }}>{'שיחות'}</span><span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>DIALER</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'3px 8px', borderRadius:7, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:600 }}>{'✓ READY'}</span></div>
+            <div style={{ display:'flex', alignItems:'center', gap:10, paddingTop:9, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:14, fontWeight:700 }}>{'הודעות SMS'}</span><span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>A2P 10DLC</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'3px 8px', borderRadius:7, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:600 }}>{'✓ APPROVED'}</span></div>
+            <div style={{ display:'flex', alignItems:'center', gap:10, paddingTop:9, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:14, fontWeight:700 }}>{'תאימות רגולטורית'}</span><span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>TCPA</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'3px 8px', borderRadius:7, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:600 }}>{'✓ COMPLIANT'}</span></div>
+          </div>
+          <div dir="ltr" style={{ flex:'0 1 250px', minWidth:0, display:'flex', flexDirection:'column', gap:8 }}>
+            <span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>{'SMS · YOUR BUSINESS'}</span>
+            <span style={{ alignSelf:'flex-end', maxWidth:'100%', boxSizing:'border-box', borderRadius:'16px 16px 4px 16px', background:'#2E59F4', color:'#FFFFFF', padding:'10px 13px', fontSize:13.5, lineHeight:1.45 }}>Hi! Thanks for reaching out to Your Business. We'll call you shortly. Reply STOP to opt out.</span>
+            <span style={{ alignSelf:'flex-start', maxWidth:'80%', boxSizing:'border-box', borderRadius:'16px 16px 16px 4px', background:'#1E2742', color:'#DCE3F5', padding:'10px 13px', fontSize:13.5, lineHeight:1.45 }}>Great, thank you!</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div style={{ boxSizing:'border-box', borderRadius:14, background:'#141A2E', border:'1px solid #26304D', padding:'12px 14px', display:'flex', flexDirection:'column', gap:8 }}>
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:8 }}><span style={{ fontSize:12, fontWeight:700, color:'#A9B7DE' }}>{'הקו העסקי שלך'}</span><span className="mono" style={{ display:'inline-flex', alignItems:'center', gap:5, fontSize:10, fontWeight:600, color:'#4ADE80' }}><span style={{ width:6, height:6, borderRadius:'50%', background:'#4ADE80' }}/>ACTIVE</span></div>
+            <span className="mono" style={{ fontSize:19, fontWeight:600, color:'#F4F6FC', textAlign:'right' }}>+1 (213) 555-0148</span>
+            <div style={{ display:'flex', alignItems:'center', gap:8, paddingTop:7, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:13, fontWeight:700 }}>{'שיחות'}</span><span className="mono" style={{ fontSize:10, color:'#8A97BE' }}>DIALER</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'2px 7px', borderRadius:6, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:10, fontWeight:600 }}>{'✓ READY'}</span></div>
+            <div style={{ display:'flex', alignItems:'center', gap:8, paddingTop:7, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:13, fontWeight:700 }}>{'הודעות SMS'}</span><span className="mono" style={{ fontSize:10, color:'#8A97BE' }}>A2P 10DLC</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'2px 7px', borderRadius:6, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:10, fontWeight:600 }}>{'✓ APPROVED'}</span></div>
+            <div style={{ display:'flex', alignItems:'center', gap:8, paddingTop:7, borderTop:'1px solid #1C2440' }}><span style={{ fontSize:13, fontWeight:700 }}>{'רגולציה'}</span><span className="mono" style={{ fontSize:10, color:'#8A97BE' }}>TCPA</span><span className="mono" style={{ marginInlineStart:'auto', flex:'none', padding:'2px 7px', borderRadius:6, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:10, fontWeight:600 }}>{'✓ COMPLIANT'}</span></div>
+          </div>
+          <div dir="ltr" style={{ display:'flex', flexDirection:'column' }}>
+            <span style={{ alignSelf:'flex-end', maxWidth:'94%', boxSizing:'border-box', borderRadius:'15px 15px 4px 15px', background:'#2E59F4', color:'#FFFFFF', padding:'9px 12px', fontSize:12.5, lineHeight:1.45 }}>Hi! Thanks for reaching out to Your Business. Reply STOP to opt out.</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 3: CRM ── */
+    if (sel === 3) return <div className="p03-mod" key={3} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={3}/><StageDesc i={3}/><IlUsRowSmart i={3}/>
+      {!mob ? <BpD>
+        <div dir="ltr" style={{ width:'100%', display:'flex', flexDirection:'column', gap:12 }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:10 }}><span className="mono" style={{ fontSize:12, fontWeight:600, letterSpacing:'.06em', color:'#C9D2EC' }}>PIPELINE</span><span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>{'YOUR BUSINESS · CRM'}</span></div>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(4,minmax(0,1fr))', gap:10 }}>
+            {[{title:'NEW',cards:[{n:'Los Angeles, CA',s:'WEBSITE'},{n:'Dallas, TX',s:'ADS'}]},{title:'CONTACTED',cards:[{n:'Miami, FL',s:'REFERRAL'}]},{title:'BOOKED',cards:[{n:'San Diego, CA',s:'MEETING'}]},{title:'WON',cards:[{n:'Phoenix, AZ',s:'✓ CLOSED',green:true}]}].map((col,ci) => (
+              <div key={ci} style={{ boxSizing:'border-box', minHeight:150, borderRadius:12, background:'#10162A', border:'1px solid #222B47', padding:10, display:'flex', flexDirection:'column', gap:8 }}>
+                <span className="mono" style={{ fontSize:10.5, fontWeight:600, letterSpacing:'.06em', color:'#8A97BE' }}>{col.title}</span>
+                {col.cards.map((c,k) => <div key={k} style={{ boxSizing:'border-box', borderRadius:9, background:'#18213F', border: c.green ? '1px solid rgba(74,222,128,0.4)' : '1px solid #2A3556', padding:'8px 9px', display:'flex', flexDirection:'column', gap:4 }}>
+                  <span style={{ fontSize:12.5, fontWeight:700, color:'#F4F6FC' }}>{c.n}</span>
+                  <span className="mono" style={{ fontSize:10, color: c.green ? '#4ADE80' : '#9DB8FF' }}>{c.s}</span>
+                </div>)}
+              </div>
+            ))}
+          </div>
+          <div dir="rtl" style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'ליד חדש ← הודעה אוטומטית'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'תזכורת לפני כל פגישה'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'הכול באנגלית, מההתחלה'}</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div dir="ltr" style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:8 }}><span className="mono" style={{ fontSize:11, fontWeight:600, letterSpacing:'.06em', color:'#C9D2EC' }}>PIPELINE</span><span className="mono" style={{ fontSize:10, color:'#8A97BE' }}>{'YOUR BUSINESS · CRM'}</span></div>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(3,minmax(0,1fr))', gap:6 }}>
+            {[{title:'NEW',cards:[{n:'Los Angeles',s:'WEBSITE'},{n:'Dallas',s:'ADS'}]},{title:'BOOKED',cards:[{n:'Miami',s:'MEETING'}]},{title:'WON',cards:[{n:'Phoenix',s:'✓ CLOSED',green:true}]}].map((col,ci) => (
+              <div key={ci} style={{ boxSizing:'border-box', minHeight:124, borderRadius:10, background:'#10162A', border:'1px solid #222B47', padding:7, display:'flex', flexDirection:'column', gap:6 }}>
+                <span className="mono" style={{ fontSize:9.5, fontWeight:600, letterSpacing:'.06em', color:'#8A97BE' }}>{col.title}</span>
+                {col.cards.map((c,k) => <div key={k} style={{ boxSizing:'border-box', borderRadius:8, background:'#18213F', border: c.green ? '1px solid rgba(74,222,128,0.4)' : '1px solid #2A3556', padding:'6px 7px', display:'flex', flexDirection:'column', gap:3 }}>
+                  <span style={{ fontSize:11.5, fontWeight:700, color:'#F4F6FC' }}>{c.n}</span>
+                  <span className="mono" style={{ fontSize:9, color: c.green ? '#4ADE80' : '#9DB8FF' }}>{c.s}</span>
+                </div>)}
+              </div>
+            ))}
+          </div>
+          <div dir="rtl" style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'ליד חדש ← הודעה אוטומטית'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'תזכורת לפני כל פגישה'}</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 4: WEB ── */
+    if (sel === 4) return <div className="p03-mod" key={4} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={4}/><StageDesc i={4}/><IlUsRowSmart i={4}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', alignItems:'center', gap:12 }}>
+          <div dir="ltr" style={{ width:'100%', maxWidth:540, borderRadius:14, overflow:'hidden', background:'#F4F6FC', boxShadow:'0 24px 60px rgba(0,0,0,0.45)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:12, padding:'8px 12px', background:'#DCE3F5' }}><span style={{ flex:'none', display:'flex', gap:6 }}><span style={{ width:9, height:9, borderRadius:'50%', background:'#AEB8D4' }}/><span style={{ width:9, height:9, borderRadius:'50%', background:'#AEB8D4' }}/><span style={{ width:9, height:9, borderRadius:'50%', background:'#AEB8D4' }}/></span><span className="mono" style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:6, padding:'4px 10px', borderRadius:7, background:'#FFFFFF', fontSize:12, color:'#2A3556' }}><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2A3556" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>yourbusiness.com</span><span style={{ flex:'none', width:39 }}/></div>
+            <div style={{ padding:'12px 18px 16px', color:'#0E1630', display:'flex', flexDirection:'column', gap:14 }}>
+              <div style={{ display:'flex', alignItems:'center', gap:14 }}><span className="mono" style={{ fontSize:12, fontWeight:600, letterSpacing:'.06em', color:'#0E1630' }}>YOUR BUSINESS</span><span style={{ marginLeft:'auto', display:'flex', gap:14, fontSize:12, fontWeight:600, color:'#4A5578' }}><span>Services</span><span>About</span><span>Contact</span></span><span style={{ flex:'none', padding:'6px 12px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontSize:12, fontWeight:700 }}>Get a quote</span></div>
+              <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1.25fr) minmax(0,1fr)', gap:18, alignItems:'center' }}>
+                <div style={{ display:'flex', flexDirection:'column', gap:7 }}><span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:22, fontWeight:800, lineHeight:1.15 }}>Quality you can count on.</span><span style={{ fontSize:13, lineHeight:1.45, color:'#4A5578' }}>Serving customers across the U.S.</span><span style={{ alignSelf:'flex-start', marginTop:4, padding:'7px 14px', borderRadius:8, background:'#0E1630', color:'#FFFFFF', fontSize:12, fontWeight:700 }}>Book a call</span></div>
+                <div style={{ position:'relative', height:92, borderRadius:12, background:'#2E59F4', overflow:'hidden' }}><span style={{ position:'absolute', top:14, right:20, width:30, height:30, borderRadius:'50%', background:'#C9D2EC' }}/><span style={{ position:'absolute', left:-24, right:'34%', bottom:-36, height:84, borderRadius:'50%', background:'#1B3592' }}/><span style={{ position:'absolute', left:'38%', right:-24, bottom:-44, height:92, borderRadius:'50%', background:'#4282FA' }}/></div>
+              </div>
+            </div>
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:8 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'אתר'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'דפי נחיתה'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'6px 12px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:13, fontWeight:600 }}>{p03Check(14)}{'נכסים שיווקיים'}</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div dir="ltr" style={{ width:'100%', borderRadius:12, overflow:'hidden', background:'#F4F6FC', boxShadow:'0 18px 44px rgba(0,0,0,0.45)' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:8, padding:'7px 10px', background:'#DCE3F5' }}><span style={{ flex:'none', display:'flex', gap:4 }}><span style={{ width:7, height:7, borderRadius:'50%', background:'#AEB8D4' }}/><span style={{ width:7, height:7, borderRadius:'50%', background:'#AEB8D4' }}/><span style={{ width:7, height:7, borderRadius:'50%', background:'#AEB8D4' }}/></span><span className="mono" style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', gap:5, padding:'3px 8px', borderRadius:6, background:'#FFFFFF', fontSize:10.5, color:'#2A3556' }}><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2A3556" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>yourbusiness.com</span><span style={{ flex:'none', width:29 }}/></div>
+            <div style={{ padding:'10px 12px 12px', color:'#0E1630', display:'flex', flexDirection:'column', gap:10 }}>
+              <div style={{ display:'flex', alignItems:'center', gap:8 }}><span className="mono" style={{ fontSize:10.5, fontWeight:600, letterSpacing:'.05em', color:'#0E1630' }}>YOUR BUSINESS</span><span style={{ marginLeft:'auto', flex:'none', padding:'4px 9px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontSize:10.5, fontWeight:700 }}>Get a quote</span></div>
+              <div style={{ display:'grid', gridTemplateColumns:'minmax(0,1.3fr) minmax(0,1fr)', gap:10, alignItems:'center' }}>
+                <div style={{ display:'flex', flexDirection:'column', gap:5 }}><span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:16, fontWeight:800, lineHeight:1.15 }}>Quality you can count on.</span><span style={{ fontSize:11, lineHeight:1.4, color:'#4A5578' }}>Serving customers across the U.S.</span><span style={{ alignSelf:'flex-start', marginTop:3, padding:'5px 10px', borderRadius:7, background:'#0E1630', color:'#FFFFFF', fontSize:10.5, fontWeight:700 }}>Book a call</span></div>
+                <div style={{ position:'relative', height:80, borderRadius:10, background:'#2E59F4', overflow:'hidden' }}><span style={{ position:'absolute', top:10, right:12, width:22, height:22, borderRadius:'50%', background:'#C9D2EC' }}/><span style={{ position:'absolute', left:-16, right:'34%', bottom:-26, height:60, borderRadius:'50%', background:'#1B3592' }}/><span style={{ position:'absolute', left:'38%', right:-16, bottom:-32, height:66, borderRadius:'50%', background:'#4282FA' }}/></div>
+              </div>
+            </div>
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:6 }}>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'אתר'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'דפי נחיתה'}</span>
+            <span style={{ display:'inline-flex', alignItems:'center', gap:5, padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.12)', color:'#C9D2EC', fontSize:12, fontWeight:600 }}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5"/></svg>{'נכסים שיווקיים'}</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 5: MAP ── */
+    if (sel === 5) return <div className="p03-mod" key={5} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={5}/><StageDesc i={5}/><IlUsRowSmart i={5}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'grid', gridTemplateColumns:'minmax(0,1.3fr) minmax(0,1fr)', gap:16, alignItems:'center' }}>
+          <div style={{ position:'relative', boxSizing:'border-box', height:230, borderRadius:14, background:'#10162A', border:'1px solid #222B47', overflow:'hidden' }}>
+            <span style={{ position:'absolute', top:'50%', left:12, right:12, height:1, background:'#2A3556' }}/><span style={{ position:'absolute', left:'50%', top:12, bottom:12, width:1, background:'#2A3556' }}/>
+            <span style={{ position:'absolute', top:10, right:12, fontSize:11, fontWeight:700, color:'#8A97BE' }}>{'יקר ובסיסי'}</span><span style={{ position:'absolute', top:10, left:12, fontSize:11, fontWeight:700, color:'#8A97BE' }}>{'יקר ומקצועי'}</span>
+            <span style={{ position:'absolute', bottom:10, right:12, fontSize:11, fontWeight:700, color:'#8A97BE' }}>{'זול ובסיסי'}</span><span style={{ position:'absolute', bottom:10, left:12, fontSize:11, fontWeight:700, color:'#9DB8FF' }}>{'משתלם ומקצועי'}</span>
+            {[[68,28],[78,36],[84,24],[72,66],[82,74],[42,28]].map(([l,t],k) => <span key={k} style={{ position:'absolute', left:l+'%', top:t+'%', width:10, height:10, margin:'-5px 0 0 -5px', borderRadius:'50%', background:'#4A5578' }}/>)}
+            <span style={{ position:'absolute', left:'64%', top:'39%', fontSize:11, fontWeight:600, color:'#8A97BE' }}>{'מתחרים'}</span>
+            <span style={{ position:'absolute', left:'27%', top:'64%', width:64, height:64, margin:'-32px 0 0 -32px', boxSizing:'border-box', borderRadius:'50%', border:'1.5px dashed #4282FA' }}/>
+            <span style={{ position:'absolute', left:'27%', top:'64%', width:14, height:14, margin:'-7px 0 0 -7px', borderRadius:'50%', background:'#2E59F4', boxShadow:'0 0 0 4px rgba(46,89,244,0.25), 0 0 18px rgba(46,89,244,0.8)' }}/>
+            <span style={{ position:'absolute', left:'27%', top:'64%', margin:'-66px 0 0 -38px', padding:'3px 10px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontSize:12, fontWeight:700, whiteSpace:'nowrap' }}>{'העסק שלך'}</span>
+          </div>
+          <div style={{ display:'flex', flexDirection:'column', justifyContent:'center', gap:9, minWidth:0 }}>
+            <span style={{ fontSize:13, fontWeight:700, color:'#A9B7DE' }}>{'ערוצי הפריצה שלך'}</span>
+            {['מגזינים מקצועיים','שלטי חוצות','כנסים בתחום'].map((t,k) => <div key={k} style={{ display:'flex', alignItems:'center', gap:10, boxSizing:'border-box', borderRadius:12, background:'#141A2E', border:'1px solid #26304D', padding:'9px 12px' }}><span className="mono" style={{ flex:'none', width:24, height:24, borderRadius:'50%', background:'rgba(46,89,244,0.18)', color:'#9DB8FF', fontSize:12, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{k+1}</span><span style={{ fontSize:14, fontWeight:700 }}>{t}</span></div>)}
+            <span style={{ fontSize:12.5, lineHeight:1.5, color:'#8A97BE' }}>{'ולכל ערוץ: כמה הוא עולה, ומתי מפעילים אותו.'}</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div style={{ position:'relative', boxSizing:'border-box', height:150, borderRadius:12, background:'#10162A', border:'1px solid #222B47', overflow:'hidden' }}>
+            <span style={{ position:'absolute', top:'50%', left:10, right:10, height:1, background:'#2A3556' }}/><span style={{ position:'absolute', left:'50%', top:10, bottom:10, width:1, background:'#2A3556' }}/>
+            <span style={{ position:'absolute', top:8, right:10, fontSize:10, fontWeight:700, color:'#8A97BE' }}>{'יקר ובסיסי'}</span><span style={{ position:'absolute', top:8, left:10, fontSize:10, fontWeight:700, color:'#8A97BE' }}>{'יקר ומקצועי'}</span>
+            <span style={{ position:'absolute', bottom:8, right:10, fontSize:10, fontWeight:700, color:'#8A97BE' }}>{'זול ובסיסי'}</span><span style={{ position:'absolute', bottom:8, left:10, fontSize:10, fontWeight:700, color:'#9DB8FF' }}>{'משתלם ומקצועי'}</span>
+            {[[68,30],[78,38],[86,26],[72,68],[82,76],[44,30]].map(([l,t],k) => <span key={k} style={{ position:'absolute', left:l+'%', top:t+'%', width:9, height:9, margin:'-4.5px 0 0 -4.5px', borderRadius:'50%', background:'#4A5578' }}/>)}
+            <span style={{ position:'absolute', left:'27%', top:'62%', width:50, height:50, margin:'-25px 0 0 -25px', boxSizing:'border-box', borderRadius:'50%', border:'1.5px dashed #4282FA' }}/>
+            <span style={{ position:'absolute', left:'27%', top:'62%', width:12, height:12, margin:'-6px 0 0 -6px', borderRadius:'50%', background:'#2E59F4', boxShadow:'0 0 0 4px rgba(46,89,244,0.25), 0 0 16px rgba(46,89,244,0.8)' }}/>
+            <span style={{ position:'absolute', left:'27%', top:'62%', margin:'-54px 0 0 -34px', padding:'2px 9px', borderRadius:999, background:'#2E59F4', color:'#FFFFFF', fontSize:11, fontWeight:700, whiteSpace:'nowrap' }}>{'העסק שלך'}</span>
+          </div>
+          <span style={{ fontSize:12, fontWeight:700, color:'#A9B7DE' }}>{'ערוצי הפריצה שלך'}</span>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            {['מגזינים מקצועיים','שלטי חוצות','כנסים בתחום'].map((t,k) => <span key={k} style={{ display:'inline-flex', alignItems:'center', gap:6, padding:'4px 10px 4px 6px', borderRadius:999, background:'#141A2E', border:'1px solid #26304D', fontSize:12, fontWeight:700 }}><span className="mono" style={{ width:18, height:18, borderRadius:'50%', background:'rgba(46,89,244,0.18)', color:'#9DB8FF', fontSize:10, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{k+1}</span>{t}</span>)}
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 6: TEAM ── */
+    if (sel === 6) return <div className="p03-mod" key={6} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={6}/><StageDesc i={6}/><IlUsRowSmart i={6}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', maxWidth:500, display:'flex', flexDirection:'column', gap:10 }}>
+          <span style={{ fontSize:13, fontWeight:700, color:'#A9B7DE' }}>{'הצוות המקצועי שלך בארה״ב'}</span>
+          {[{title:'רואה חשבון אמריקאי', sub:'CPA · TAX & BOOKKEEPING', ico:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18.5h.01M12 18.5h4"/></svg>},{title:'עורך דין אמריקאי', sub:'ATTORNEY · CONTRACTS', ico:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v18M7 21h10M4 7h16M7 7l-3 7a3 3 0 0 0 6 0zM17 7l-3 7a3 3 0 0 0 6 0z"/></svg>},{title:'ספקים, טפסים וחיבורים', sub:'VENDORS · FORMS · SETUP', ico:<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>}].map((r,k) => <div key={k} style={{ display:'flex', alignItems:'center', gap:14, boxSizing:'border-box', borderRadius:14, background:'#141A2E', border:'1px solid #26304D', padding:'11px 14px' }}><span style={{ flex:'none', width:42, height:42, boxSizing:'border-box', borderRadius:'50%', background:'#0F1426', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}>{r.ico}</span><span style={{ display:'flex', flexDirection:'column', gap:2, minWidth:0 }}><span style={{ fontSize:15, fontWeight:700 }}>{r.title}</span><span className="mono" style={{ fontSize:11, color:'#8A97BE', textAlign:'right' }}>{r.sub}</span></span><span style={{ marginInlineStart:'auto', flex:'none', padding:'5px 10px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:12, fontWeight:700 }}>{'✓ מחובר'}</span></div>)}
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:8 }}>
+          <span style={{ fontSize:12, fontWeight:700, color:'#A9B7DE' }}>{'הצוות המקצועי שלך בארה״ב'}</span>
+          {[{title:'רואה חשבון אמריקאי', sub:'CPA · TAX', ico:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18.5h.01M12 18.5h4"/></svg>},{title:'עורך דין אמריקאי', sub:'ATTORNEY', ico:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v18M7 21h10M4 7h16M7 7l-3 7a3 3 0 0 0 6 0zM17 7l-3 7a3 3 0 0 0 6 0z"/></svg>},{title:'ספקים, טפסים וחיבורים', sub:'VENDORS · FORMS', ico:<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg>}].map((r,k) => <div key={k} style={{ display:'flex', alignItems:'center', gap:10, boxSizing:'border-box', borderRadius:12, background:'#141A2E', border:'1px solid #26304D', padding:'9px 11px' }}><span style={{ flex:'none', width:36, height:36, boxSizing:'border-box', borderRadius:'50%', background:'#0F1426', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}>{r.ico}</span><span style={{ display:'flex', flexDirection:'column', gap:1, minWidth:0 }}><span style={{ fontSize:13.5, fontWeight:700, lineHeight:1.3 }}>{r.title}</span><span className="mono" style={{ fontSize:9.5, color:'#8A97BE', textAlign:'right' }}>{r.sub}</span></span><span style={{ marginInlineStart:'auto', flex:'none', padding:'3px 8px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:700 }}>{'✓ מחובר'}</span></div>)}
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 7: HIRE ── */
+    if (sel === 7) return <div className="p03-mod" key={7} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+      <StageHead i={7}/><StageDesc i={7}/><IlUsRowSmart i={7}/>
+      {!mob ? <BpD>
+        <div style={{ width:'100%', display:'flex', alignItems:'center', gap:20 }}>
+          <div style={{ flex:'0 0 232px', boxSizing:'border-box', borderRadius:16, background:'#141A2E', border:'1px solid #26304D', padding:'18px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:10, textAlign:'center' }}>
+            <span style={{ width:62, height:62, boxSizing:'border-box', borderRadius:'50%', background:'#18213F', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+            <span className="mono" style={{ fontSize:12, fontWeight:600, color:'#F4F6FC' }}>CUSTOMER SUCCESS REP</span>
+            <span style={{ fontSize:13, lineHeight:1.4, color:'#A9B7DE' }}>{'דובר אנגלית · מאומן לעסק שלך'}</span>
+            <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'center', gap:6 }}>
+              {['✓ גיוס','✓ הכשרה','✓ חיבור למערכות'].map((t,k) => <span key={k} style={{ padding:'4px 9px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:12, fontWeight:700 }}>{t}</span>)}
+            </div>
+          </div>
+          <div dir="ltr" style={{ flex:'1 1 0', minWidth:0, display:'flex', flexDirection:'column', gap:8 }}>
+            <span className="mono" style={{ fontSize:11, color:'#8A97BE' }}>{'LIVE CHAT · YOURBUSINESS.COM'}</span>
+            <span style={{ alignSelf:'flex-start', maxWidth:'85%', boxSizing:'border-box', borderRadius:'16px 16px 16px 4px', background:'#1E2742', color:'#DCE3F5', padding:'9px 13px', fontSize:13.5, lineHeight:1.45 }}>Hi! Can I get a quote for next week?</span>
+            <span style={{ alignSelf:'flex-end', maxWidth:'85%', boxSizing:'border-box', borderRadius:'16px 16px 4px 16px', background:'#2E59F4', color:'#FFFFFF', padding:'9px 13px', fontSize:13.5, lineHeight:1.45 }}>Absolutely! I can set that up for you right now.</span>
+            <span style={{ alignSelf:'flex-start', maxWidth:'85%', boxSizing:'border-box', borderRadius:'16px 16px 16px 4px', background:'#1E2742', color:'#DCE3F5', padding:'9px 13px', fontSize:13.5, lineHeight:1.45 }}>Perfect, thank you!</span>
+          </div>
+        </div>
+      </BpD> : <BpM>
+        <div style={{ width:'100%', display:'flex', flexDirection:'column', gap:10 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:12, boxSizing:'border-box', borderRadius:14, background:'#141A2E', border:'1px solid #26304D', padding:12 }}>
+            <span style={{ flex:'none', width:46, height:46, boxSizing:'border-box', borderRadius:'50%', background:'#18213F', border:'1px solid #2E3B66', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AA6FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></span>
+            <span style={{ display:'flex', flexDirection:'column', gap:3, minWidth:0 }}><span className="mono" style={{ fontSize:11, fontWeight:600, color:'#F4F6FC', textAlign:'right' }}>CUSTOMER SUCCESS REP</span><span style={{ fontSize:12.5, color:'#A9B7DE' }}>{'דובר אנגלית · מאומן לעסק שלך'}</span></span>
+          </div>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            {['✓ גיוס','✓ הכשרה','✓ חיבור למערכות'].map((t,k) => <span key={k} style={{ padding:'4px 9px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11.5, fontWeight:700 }}>{t}</span>)}
+          </div>
+          <div dir="ltr" style={{ display:'flex', flexDirection:'column', gap:6 }}>
+            <span style={{ alignSelf:'flex-start', maxWidth:'85%', boxSizing:'border-box', borderRadius:'14px 14px 14px 4px', background:'#1E2742', color:'#DCE3F5', padding:'8px 11px', fontSize:12.5, lineHeight:1.4 }}>Hi! Can I get a quote?</span>
+            <span style={{ alignSelf:'flex-end', maxWidth:'85%', boxSizing:'border-box', borderRadius:'14px 14px 4px 14px', background:'#2E59F4', color:'#FFFFFF', padding:'8px 11px', fontSize:12.5, lineHeight:1.4 }}>Absolutely! I can set that up right now.</span>
+          </div>
+        </div>
+      </BpM>}
+    </div>;
+
+    /* ── STAGE 8: LEAD / LIVE ── */
+    if (sel === 8) {
+      const cSize = mob ? 30 : 38;
+      const cIcoSz = mob ? 14 : 17;
+      const cSw = mob ? '1.9' : '1.8';
+      const icoArr = [
+        <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>,
+        <React.Fragment><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></React.Fragment>,
+        <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>,
+        <React.Fragment><path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></React.Fragment>,
+        <React.Fragment><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></React.Fragment>,
+        <React.Fragment><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/></React.Fragment>,
+        <React.Fragment><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></React.Fragment>,
+        <React.Fragment><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></React.Fragment>
+      ];
+      return <div className="p03-mod" key={8} style={{ display:'flex', flexDirection:'column', gap: mob ? 12 : 16 }}>
+        <StageHead i={8}/><StageDesc i={8}/><IlUsRowSmart i={8}/>
+        <div className="p03-clone p03-bp" style={{ position:'relative', height: mob ? 290 : 300, boxSizing:'border-box', borderRadius: mob ? 16 : 18, border:'1px solid #26304D', overflow:'hidden' }}>
+          <div className="p03-print" style={{ position:'absolute', inset:0, boxSizing:'border-box', padding: mob ? 14 : 22, display:'flex', alignItems:'center', justifyContent:'center' }}>
+            <div style={{ width:'100%', display:'flex', flexDirection:'column', alignItems:'center', gap: mob ? 12 : 16 }}>
+              <div className="p03-pop" style={{ width:'100%', maxWidth: mob ? undefined : 440, boxSizing:'border-box', borderRadius: mob ? 16 : 18, background:'#141A2E', border:'1px solid rgba(74,222,128,0.45)', boxShadow: mob ? '0 16px 44px rgba(74,222,128,0.12)' : '0 20px 60px rgba(74,222,128,0.12)', padding: mob ? 12 : '14px 16px', display:'flex', alignItems:'center', gap: mob ? 10 : 12 }}>
+                <span style={{ flex:'none', width: mob ? 40 : 44, height: mob ? 40 : 44, boxSizing:'border-box', borderRadius: mob ? 11 : 12, background:'rgba(74,222,128,0.12)', border:'1px solid rgba(74,222,128,0.4)', display:'flex', alignItems:'center', justifyContent:'center' }}><svg aria-hidden="true" width={mob ? 20 : 22} height={mob ? 20 : 22} viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+                <span style={{ display:'flex', flexDirection:'column', gap: mob ? 2 : 3, minWidth:0 }}>
+                  <span style={{ display:'flex', alignItems:'center', gap: mob ? 7 : 8 }}><span className="mono" style={{ fontSize: mob ? 11 : 12, fontWeight:600, color:'#4ADE80' }}>NEW LEAD</span><span className="mono" style={{ fontSize: mob ? 10 : 11, color:'#8A97BE' }}>JUST NOW</span></span>
+                  <span style={{ fontSize: mob ? 14 : 15, fontWeight:700, color:'#F4F6FC' }}>{'פנייה חדשה מלוס אנג׳לס'}</span>
+                  <span style={{ fontSize: mob ? 12 : 13, color:'#A9B7DE' }}>{'דרך האתר · כבר במערכת שלך'}</span>
+                </span>
+                <span className="live" aria-hidden="true" style={{ marginInlineStart:'auto', flex:'none', width: mob ? 9 : 10, height: mob ? 9 : 10, borderRadius:'50%', background:'#4ADE80' }}/>
+              </div>
+              <div aria-hidden="true" style={{ display:'flex', flexWrap: mob ? undefined : 'wrap', justifyContent:'center', gap: mob ? 5 : 8 }}>
+                {icoArr.map((ic, k) => <span key={k} style={{ width:cSize, height:cSize, boxSizing:'border-box', borderRadius:'50%', border:'1px solid rgba(74,222,128,0.35)', background:'rgba(74,222,128,0.06)', display:'flex', alignItems:'center', justifyContent:'center' }}><svg width={cIcoSz} height={cIcoSz} viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth={cSw} strokeLinecap="round" strokeLinejoin="round">{ic}</svg></span>)}
+              </div>
+              <span style={{ fontSize: mob ? 14 : 15, fontWeight:700, color:'#DCE3F5' }}><span className="mono">8/8</span>{' · התשתית מוכנה לעבודה'}</span>
+              <button type="button" className="p03-again" onClick={replay} style={{ minHeight:44, boxSizing:'border-box', display:'inline-flex', alignItems:'center', gap:8, padding: mob ? '0 16px' : '0 18px', borderRadius:999, border:'1px solid #2E3B66', background:'transparent', color:'#C9D2EC', fontFamily:"Assistant,'Segoe UI',Arial,sans-serif", fontSize: mob ? 13.5 : 14, fontWeight:700, cursor:'pointer' }}>
+                <svg aria-hidden="true" width={mob ? 15 : 16} height={mob ? 15 : 16} viewBox="0 0 24 24" fill="none" stroke="#9DB8FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                {'לצפייה מההתחלה'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>;
+    }
+    return null;
+  };
+
+  /* ══════════════════════════════════════
+     RENDER
+     ══════════════════════════════════════ */
+  return (
+    <section ref={secRef} id="product" style={{ width:'100%', boxSizing:'border-box', padding: mob ? '64px 20px 72px' : '96px 40px 112px', display:'flex', justifyContent:'center' }}>
+      <div style={{ width:'100%', maxWidth:1160, display:'flex', flexDirection:'column', gap: mob ? 26 : 36 }}>
+        {/* header */}
+        <div style={{ display:'flex', flexDirection:'column', gap:12, maxWidth:820 }}>
+          <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontWeight:700, fontSize:14, letterSpacing:'.04em', color:'#4282FA' }}>{'03 · המוצר בקצה'}</span>
+          <h2 style={{ margin:0, fontFamily:'Rubik,Assistant,sans-serif', fontWeight:800, fontSize: mob ? 28 : 42, lineHeight:1.18, textWrap:'balance' }}>
+            {'אתה מביא את העסק הקיים - '}<span style={{ color:'#2E6BFF' }}>{'אנחנו משכפלים אותו למגרש של הגדולים.'}</span>
+          </h2>
+          <p style={{ margin:0, fontSize: mob ? 16 : 20, lineHeight:1.6, color:'#A9B7DE' }}>{'לא קורס ולא סדנה. העסק שלך, כמו שהוא - מוכן ומותאם לשוק האמריקאי.'}</p>
+        </div>
+
+        {/* main layout */}
+        <div style={!mob ? { display:'flex', flexWrap:'wrap', alignItems:'stretch', gap:24 } : { display:'flex', flexDirection:'column', gap:12 }}>
+
+          {/* ── LIST CARD (desktop = rows, mobile = grid) ── */}
+          <div style={!mob ? { flex:'1 1 420px', minWidth:0, boxSizing:'border-box', borderRadius:24, background:'#141A2E', border:'1px solid #26304D', padding:14, display:'flex', flexDirection:'column', gap:4 }
+                           : { boxSizing:'border-box', borderRadius:22, background:'#141A2E', border:'1px solid #26304D', padding:12, display:'flex', flexDirection:'column', gap:10 }}>
+            {/* card header */}
+            <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap: mob ? 10 : 12, padding: mob ? '2px 4px 0' : '4px 8px 10px' }}>
+              <span style={{ display:'flex', flexDirection:'column', gap: mob ? 2 : 3 }}>
+                <span style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize: mob ? 16 : 17, fontWeight:700 }}>{'8 רכיבים שבונים לך'}</span>
+                <span style={{ fontSize: mob ? 12.5 : 13, color:'#8A97BE' }}>{'לחץ על רכיב כדי לראות מה בדיוק מקבלים'}</span>
+              </span>
+              <button type="button" className="p03-tbtn" onClick={toggleAuto} aria-label={auto ? 'עצירת המעבר האוטומטי' : 'הפעלת המעבר האוטומטי'} style={{ flex:'none', width:44, height:44, boxSizing:'border-box', padding:0, borderRadius:'50%', border:'1px solid #2E3B66', background:'transparent', display:'flex', alignItems:'center', justifyContent:'center', cursor:'pointer' }}>
+                {auto ? <svg aria-hidden="true" width={mob?17:18} height={mob?17:18} viewBox="0 0 24 24" fill="none" stroke="#C9D2EC" strokeWidth="2.2" strokeLinecap="round"><path d="M9 5v14M15 5v14"/></svg>
+                       : <svg aria-hidden="true" width={mob?17:18} height={mob?17:18} viewBox="0 0 24 24" fill="#C9D2EC"><path d="M8 5v14l11-7z"/></svg>}
+              </button>
+            </div>
+
+            {!mob ? (
+              /* ── DESKTOP ROWS ── */
+              <React.Fragment>
+                {P03_ITEMS.slice(0, 8).map((it, i) => {
+                  const c = itemCalc(i);
+                  return <button key={i} type="button" className="p03-row" aria-pressed={c.on ? 'true' : 'false'} onClick={() => go(i)} style={{ position:'relative', overflow:'hidden', width:'100%', minHeight:62, boxSizing:'border-box', display:'flex', alignItems:'center', gap:12, padding:'9px 10px', borderRadius:14, border:'1px solid '+c.bc, background:c.bg, color:'#F4F6FC', fontFamily:"Assistant,'Segoe UI',Arial,sans-serif", textAlign:'start', cursor:'pointer' }}>
+                    <span style={{ flex:'none', width:40, height:40, boxSizing:'border-box', borderRadius:12, border:'1px solid '+c.ibc, background:c.ibg, display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Ico(it.icon, 20, it.icon==='lead'?'#4ADE80':'#7AA6FF')}</span>
+                    <span style={{ display:'flex', flexDirection:'column', gap:2, minWidth:0 }}>
+                      <span style={{ fontSize:16, fontWeight:700, lineHeight:1.3, color:c.tc }}>{it.row}</span>
+                      <span style={{ fontSize:13, lineHeight:1.4, color:'#8A97BE' }}>{it.sub}</span>
+                    </span>
+                    <span style={{ marginInlineStart:'auto', flex:'none', display:'flex', alignItems:'center' }}>
+                      {c.done ? <span className="mono" style={{ padding:'4px 9px', borderRadius:8, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:11, fontWeight:600 }}>{'✓ DONE'}</span>
+                              : <span aria-hidden="true" style={{ display:'block', width:16, height:16, boxSizing:'border-box', borderRadius:'50%', border:'1.5px dashed #3A4566' }}/>}
+                    </span>
+                    {c.on && auto && <span className="p03-rowtimer" aria-hidden="true" style={{ position:'absolute', left:12, right:12, bottom:0, height:2, borderRadius:2, background:'#4282FA', animationDuration:durS }}/>}
+                  </button>;
+                })}
+                <div aria-hidden="true" style={{ height:1, background:'#222B47', margin:'6px 10px' }}/>
+                {(() => {
+                  const c = itemCalc(8);
+                  return <button type="button" className="p03-row" aria-pressed={c.on ? 'true' : 'false'} onClick={() => go(8)} style={{ position:'relative', overflow:'hidden', width:'100%', minHeight:62, boxSizing:'border-box', display:'flex', alignItems:'center', gap:12, padding:'9px 10px', borderRadius:14, border:'1px solid '+c.bc, background:c.bg, color:'#F4F6FC', fontFamily:"Assistant,'Segoe UI',Arial,sans-serif", textAlign:'start', cursor:'pointer' }}>
+                    <span style={{ flex:'none', width:40, height:40, boxSizing:'border-box', borderRadius:12, border:'1px solid '+c.ibc, background:c.ibg, display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Ico('lead', 20, '#4ADE80')}</span>
+                    <span style={{ display:'flex', flexDirection:'column', gap:2, minWidth:0 }}>
+                      <span style={{ fontSize:16, fontWeight:800, lineHeight:1.3, color:c.tc }}>{P03_ITEMS[8].row}</span>
+                      <span style={{ fontSize:13, lineHeight:1.4, color:'#8A97BE' }}>{P03_ITEMS[8].sub}</span>
+                    </span>
+                    <span style={{ marginInlineStart:'auto', flex:'none', display:'flex', alignItems:'center' }}>
+                      {complete ? <span className="mono" style={{ padding:'4px 9px', borderRadius:8, background:'rgba(74,222,128,0.14)', color:'#4ADE80', fontSize:11, fontWeight:600 }}>{'✓ NEW'}</span>
+                                : <span className="mono" style={{ padding:'4px 9px', borderRadius:8, border:'1px solid #26304D', color:'#8A97BE', fontSize:11, fontWeight:600 }}>{countLabel}</span>}
+                    </span>
+                  </button>;
+                })()}
+              </React.Fragment>
+            ) : (
+              /* ── MOBILE GRID ── */
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(3,minmax(0,1fr))', gap:8 }}>
+                {P03_ITEMS.map((it, i) => {
+                  const c = itemCalc(i);
+                  const goal = i === 8;
+                  return <button key={i} type="button" className="p03-tile9" aria-pressed={c.on ? 'true' : 'false'} onClick={() => go(i)} style={{ position:'relative', overflow:'hidden', minHeight:92, boxSizing:'border-box', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:7, padding:'10px 4px 9px', borderRadius:14, border:'1px solid '+c.bc, background:c.bg, color:'#F4F6FC', fontFamily:"Assistant,'Segoe UI',Arial,sans-serif", textAlign:'center', cursor:'pointer' }}>
+                    <span style={{ width:34, height:34, boxSizing:'border-box', borderRadius:10, border:'1px solid '+c.ibc, background:c.ibg, display:'flex', alignItems:'center', justifyContent:'center' }}>{p03Ico(it.icon, 18, it.icon==='lead'?'#4ADE80':'#7AA6FF')}</span>
+                    <span style={{ fontSize:12.5, fontWeight: goal ? 800 : 700, lineHeight:1.25, color:c.tc }}>{it.tile}</span>
+                    <span style={{ position:'absolute', top:6, left:6, display:'flex' }}>
+                      {!!c.done && !goal && <span className="mono" aria-hidden="true" style={{ width:18, height:18, borderRadius:'50%', background:'rgba(46,89,244,0.25)', color:'#9DB8FF', fontSize:10, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{'✓'}</span>}
+                      {goal && complete && <span className="mono" aria-hidden="true" style={{ width:18, height:18, borderRadius:'50%', background:'rgba(74,222,128,0.2)', color:'#4ADE80', fontSize:10, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{'✓'}</span>}
+                      {goal && !complete && <span className="mono" style={{ padding:'1px 4px', fontSize:9.5, fontWeight:600, color:'#8A97BE' }}>{countLabel}</span>}
+                    </span>
+                    {c.on && auto && <span className="p03-rowtimer" aria-hidden="true" style={{ position:'absolute', left:10, right:10, bottom:0, height:2, borderRadius:2, background:'#4282FA', animationDuration:durS }}/>}
+                  </button>;
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* ── STAGE PANEL ── */}
+          <div style={!mob ? { flex:'999 1 560px', minWidth:0, boxSizing:'border-box', borderRadius:28, background:'linear-gradient(180deg,#151C33,#10162A)', border:'1px solid #2A3556', padding:'24px 26px 26px', boxShadow:'0 40px 120px rgba(46,89,244,0.14)', display:'flex', flexDirection:'column', gap:20 }
+                           : { boxSizing:'border-box', borderRadius:24, background:'linear-gradient(180deg,#151C33,#10162A)', border:'1px solid #2A3556', padding:16, boxShadow:'0 30px 80px rgba(46,89,244,0.14)', display:'flex', flexDirection:'column', gap:16 }}>
+            {/* stage header */}
+            <div style={{ display:'flex', flexDirection:'column', gap: mob ? 10 : 12, paddingBottom: mob ? 14 : 18, borderBottom:'1px solid #222B47' }}>
+              <div style={{ display:'flex', alignItems: mob ? 'center' : 'flex-start', justifyContent:'space-between', gap: mob ? 10 : 12 }}>
+                <div style={{ display:'flex', flexDirection:'column', gap: mob ? 3 : 4 }}>
+                  <span style={{ fontSize: mob ? 12.5 : 14, fontWeight:700, color:'#A9B7DE' }}>{'העסק שלך בארה״ב'}</span>
+                  <span className="mono" style={{ fontSize: mob ? 16 : 20, fontWeight:600, color:'#F4F6FC', textAlign:'right' }}>YOUR BUSINESS, LLC</span>
+                </div>
+                <span style={{ flex:'none', display:'flex' }}>
+                  {!complete ? <span style={{ display:'inline-flex', alignItems:'center', gap: mob ? 6 : 8, padding: mob ? '6px 11px' : '7px 14px', borderRadius:999, border:'1px solid #2E3B66', fontSize: mob ? 12 : 13, fontWeight:700, color:'#C9D2EC' }}><span className="mono" style={{ color:'#9DB8FF' }}>{countLabel}</span><span>{'מוכנים'}</span></span>
+                             : <span className="mono" style={{ display:'inline-flex', alignItems:'center', gap: mob ? 7 : 8, padding: mob ? '6px 11px' : '7px 14px', borderRadius:999, border:'1px solid rgba(74,222,128,0.45)', fontSize: mob ? 12 : 13, fontWeight:600, color:'#4ADE80' }}><span className="live" style={{ width: mob ? 7 : 8, height: mob ? 7 : 8, borderRadius:'50%', background:'#4ADE80' }}/><span>LIVE</span></span>}
+                </span>
+              </div>
+              <div style={{ height: mob ? 7 : 8, borderRadius:4, background:'#222B47', overflow:'hidden' }}>
+                <div style={{ width:pct, height:'100%', borderRadius:4, background:'linear-gradient(270deg,#2E59F4,#7AA6FF)', transition:'width .5s ease' }}/>
+              </div>
+            </div>
+            {/* stage content */}
+            {renderMockup()}
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
