@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Dollar Express — צוות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700;800&family=Assistant:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0A0D18; --card: #141A2E; --border: #26304D; --border2: #3A4566;
+  --blue: #2E59F4; --blue2: #4282FA; --green: #4ADE80; --red: #FF8F85;
+  --txt: #F4F6FC; --txt2: #A9B7DE; --txt3: #6B7BA0;
+  --font: 'Assistant', sans-serif; --heading: 'Rubik', sans-serif; --mono: 'IBM Plex Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--txt); font-family: var(--font); font-size: 15px; line-height: 1.6; min-height: 100vh; }
+
+.top-bar { position: sticky; top: 0; z-index: 50; background: rgba(10,13,24,0.95); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 16px; backdrop-filter: blur(12px); }
+.top-bar img { height: 32px; }
+.top-bar h1 { font-family: var(--heading); font-size: 16px; font-weight: 700; flex: 1; }
+.top-bar .count { font-family: var(--mono); font-size: 13px; color: var(--txt3); }
+
+.search-bar { max-width: 900px; margin: 20px auto 0; padding: 0 20px; }
+.search-bar input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; color: var(--txt); font-size: 15px; font-family: var(--font); outline: none; direction: rtl; }
+.search-bar input::placeholder { color: var(--txt3); }
+.search-bar input:focus { border-color: var(--blue2); }
+
+.filters { max-width: 900px; margin: 12px auto; padding: 0 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+.filters button { background: transparent; border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; color: var(--txt2); font-size: 13px; font-family: var(--font); cursor: pointer; transition: all 0.15s; }
+.filters button.active { border-color: var(--blue); background: var(--blue); color: #fff; }
+
+.container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+.empty { text-align: center; padding: 60px 20px; color: var(--txt3); }
+.empty .icon { font-size: 48px; margin-bottom: 16px; }
+
+.lead-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; transition: border-color 0.2s; }
+.lead-card:hover { border-color: var(--blue2); }
+
+.lead-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.lead-name { font-family: var(--heading); font-size: 20px; font-weight: 800; }
+.lead-biz { color: var(--txt2); font-size: 14px; margin-top: 2px; }
+.lead-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+.tag { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-family: var(--mono); font-weight: 600; }
+.tag-fill { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+.tag-funnel { background: rgba(46,89,244,0.12); color: var(--blue2); border: 1px solid rgba(46,89,244,0.3); }
+.tag-paid { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+.tag-date { background: transparent; color: var(--txt3); border: 1px solid var(--border); }
+
+.lead-contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-bottom: 16px; padding: 12px; background: rgba(10,13,24,0.5); border-radius: 10px; }
+.contact-item label { display: block; font-size: 11px; color: var(--txt3); font-family: var(--mono); text-transform: uppercase; margin-bottom: 2px; }
+.contact-item span { font-size: 14px; color: var(--txt); }
+.contact-item a { color: var(--blue2); text-decoration: none; font-size: 14px; }
+.contact-item a:hover { text-decoration: underline; }
+
+.answers-section { margin-top: 12px; }
+.answers-toggle { background: transparent; border: 1px solid var(--border); border-radius: 10px; padding: 10px 16px; color: var(--txt2); font-size: 14px; font-family: var(--font); cursor: pointer; width: 100%; text-align: right; display: flex; align-items: center; justify-content: space-between; transition: all 0.15s; }
+.answers-toggle:hover { border-color: var(--blue2); color: var(--txt); }
+.answers-toggle .arrow { transition: transform 0.2s; }
+.answers-toggle.open .arrow { transform: rotate(180deg); }
+.answers-body { display: none; margin-top: 12px; }
+.answers-body.open { display: block; }
+
+.answer-row { display: flex; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(38,48,77,0.5); }
+.answer-row:last-child { border-bottom: none; }
+.answer-q { color: var(--txt3); font-size: 13px; min-width: 160px; flex-shrink: 0; }
+.answer-a { color: var(--txt); font-size: 14px; word-break: break-word; }
+.answer-a a { color: var(--blue2); text-decoration: none; }
+.answer-a a:hover { text-decoration: underline; }
+
+.actions { display: flex; gap: 8px; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 10px; font-size: 13px; font-family: var(--heading); font-weight: 700; cursor: pointer; border: none; transition: all 0.15s; }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: #4070ff; }
+.btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--txt2); }
+.btn-secondary:hover { border-color: var(--blue2); color: var(--txt); }
+
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--green); color: #000; padding: 10px 20px; border-radius: 10px; font-size: 14px; font-weight: 700; font-family: var(--heading); opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100; }
+.toast.show { opacity: 1; }
+
+.loading { text-align: center; padding: 60px 20px; }
+.spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--blue2); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.setup-box { max-width: 600px; margin: 60px auto; padding: 32px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; text-align: center; }
+.setup-box h2 { font-family: var(--heading); font-size: 22px; margin-bottom: 12px; }
+.setup-box p { color: var(--txt2); font-size: 14px; margin-bottom: 20px; line-height: 1.7; }
+.setup-box input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; color: var(--txt); font-size: 14px; font-family: var(--mono); direction: ltr; text-align: left; outline: none; margin-bottom: 12px; }
+.setup-box input:focus { border-color: var(--blue2); }
+.setup-box .btn { width: 100%; justify-content: center; padding: 12px; font-size: 15px; }
+
+@media (max-width: 600px) {
+  .lead-header { flex-direction: column; }
+  .answer-row { flex-direction: column; gap: 2px; }
+  .answer-q { min-width: unset; }
+  .lead-contact { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <img src="/lp/public/logo-white.png" alt="Dollar Academy" onerror="this.style.display='none'">
+  <h1>שאלונים לקראת פגישה</h1>
+  <span class="count" id="countBadge"></span>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="חיפוש לפי שם, טלפון, עסק או מייל...">
+</div>
+
+<div class="filters" id="filtersBar">
+  <button class="active" data-filter="all">הכל</button>
+  <button data-filter="direct-fill">מילוי ישיר</button>
+  <button data-filter="funnel">עברו פאנל</button>
+  <button data-filter="paid">שילמו</button>
+</div>
+
+<div class="container" id="main"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function() {
+  // ── Config ──
+  var API_KEY = 'TEAM_API_URL';
+  var stored = localStorage.getItem('teamApiUrl');
+  var API_URL = stored || '';
+
+  var main = document.getElementById('main');
+  var searchInput = document.getElementById('searchInput');
+  var countBadge = document.getElementById('countBadge');
+  var toast = document.getElementById('toast');
+  var filtersBar = document.getElementById('filtersBar');
+  var allLeads = [];
+  var currentFilter = 'all';
+
+  // ── Field labels for display ──
+  var FIELD_LABELS = {
+    stage: 'מה מתאר אותך',
+    type: 'מה מוכרים',
+    oneLiner: 'העסק במשפט',
+    yearsActive: 'כמה זמן פעיל',
+    ideaStage: 'מה כבר קיים',
+    links: 'קישורים לעסק',
+    first_offer: 'מה למכור ראשון',
+    business_type: 'סוג העסק',
+    physical_details: 'ייצור ועלות',
+    service_details: 'שירות מרחוק',
+    software_details: 'מודל תמחור',
+    ideal_client: 'לקוח אידיאלי',
+    lead_sources: 'מקורות לקוחות',
+    lead_sources_other: 'ערוץ אחר',
+    annual_revenue: 'מחזור שנתי',
+    avg_deal: 'עסקה ממוצעת',
+    topProducts: 'מוצרים מובילים',
+    soldCount: 'כמות שנמכרה',
+    whyUs: 'למה בוחרים בך',
+    competitors: 'מתחרים',
+    adSpend: 'הוצאה על פרסום',
+    sources: 'ערוצי שיווק',
+    monthlyRevenue: 'הכנסה חודשית',
+    margin: 'מרווח',
+    install: 'התקנה',
+    unitCost: 'עלות יחידה',
+    dims: 'מידות',
+    madeWhere: 'מקום ייצור',
+    returns: 'החזרות',
+    capacity: 'כושר ייצור',
+    success_12m: 'הצלחה ב-12 חודשים',
+    us_assets: 'מה יש בארה״ב',
+    us_assets_details: 'פירוט ארה״ב',
+    regulation: 'רגולציה',
+    regulation_details: 'פירוט רגולציה',
+    ip_status: 'קניין רוחני',
+    budget_y1: 'תקציב שנה ראשונה',
+    meeting_goal: 'מטרת הפגישה',
+    usGoal: 'יעד בארה״ב',
+    timeline: 'לוח זמנים',
+    mode: 'מסלול',
+    _firstName: 'שם פרטי',
+    _lastName: 'שם משפחה',
+    _businessName: 'שם העסק',
+    _phone: 'טלפון',
+    _email: 'אימייל'
+  };
+
+  // ── Setup screen ──
+  function showSetup() {
+    main.innerHTML =
+      '<div class="setup-box">' +
+        '<h2>חיבור ל-API</h2>' +
+        '<p>צריך להדביק את ה-URL של הסקריפט שקורא מהגיליון.<br>ראה הוראות בקובץ <code>apps-script/team-api.gs</code></p>' +
+        '<input type="text" id="apiInput" placeholder="https://script.google.com/macros/s/.../exec" dir="ltr">' +
+        '<button class="btn btn-primary" onclick="saveApi()">שמור והתחבר</button>' +
+      '</div>';
+  }
+
+  window.saveApi = function() {
+    var val = document.getElementById('apiInput').value.trim();
+    if (!val || !val.startsWith('https://script.google.com/')) {
+      alert('URL לא תקין — צריך להתחיל ב-https://script.google.com/');
+      return;
+    }
+    localStorage.setItem('teamApiUrl', val);
+    API_URL = val;
+    loadData();
+  };
+
+  // ── Load data ──
+  function loadData() {
+    main.innerHTML = '<div class="loading"><div class="spinner"></div><div style="color:var(--txt3)">טוען נתונים מהגיליון...</div></div>';
+    fetch(API_URL)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.ok) throw new Error(data.error || 'Unknown error');
+        allLeads = data.leads || [];
+        countBadge.textContent = allLeads.length + ' לידים';
+        renderLeads();
+      })
+      .catch(function(err) {
+        main.innerHTML =
+          '<div class="empty"><div class="icon">!</div>' +
+          '<div>שגיאה בטעינה: ' + err.message + '</div>' +
+          '<button class="btn btn-secondary" style="margin-top:16px" onclick="localStorage.removeItem(\'teamApiUrl\');location.reload()">אפס URL</button></div>';
+      });
+  }
+
+  // ── Determine source type ──
+  function getSource(lead) {
+    var diag = lead._diag || {};
+    if (diag._firstName || diag._businessName) return 'direct-fill';
+    if (lead['שלב אחרון'] === 'paid' || lead['שילם']) return 'paid';
+    return 'funnel';
+  }
+
+  // ── Filter + search ──
+  function getFiltered() {
+    var q = searchInput.value.trim().toLowerCase();
+    return allLeads.filter(function(lead) {
+      var source = getSource(lead);
+      if (currentFilter === 'direct-fill' && source !== 'direct-fill') return false;
+      if (currentFilter === 'funnel' && source === 'direct-fill') return false;
+      if (currentFilter === 'paid' && lead['שלב אחרון'] !== 'paid' && !lead['שילם']) return false;
+      if (!q) return true;
+      var searchable = [lead['שם פרטי'], lead['שם משפחה'], lead['טלפון'], lead['אימייל'], lead['תיאור העסק'], lead['סוג עסק']].join(' ').toLowerCase();
+      var diagFields = lead._diag ? [lead._diag._firstName, lead._diag._lastName, lead._diag._businessName, lead._diag._phone, lead._diag._email].join(' ').toLowerCase() : '';
+      return (searchable + ' ' + diagFields).indexOf(q) >= 0;
+    });
+  }
+
+  // ── Render ──
+  function renderLeads() {
+    var filtered = getFiltered();
+    if (filtered.length === 0) {
+      main.innerHTML = '<div class="empty"><div class="icon">-</div><div>אין תוצאות' + (searchInput.value ? ' לחיפוש "' + searchInput.value + '"' : '') + '</div></div>';
+      return;
+    }
+    main.innerHTML = filtered.map(function(lead, idx) { return renderCard(lead, idx); }).join('');
+  }
+
+  function renderCard(lead, idx) {
+    var diag = lead._diag || {};
+    var source = getSource(lead);
+
+    var name = (diag._firstName || lead['שם פרטי'] || '') + ' ' + (diag._lastName || lead['שם משפחה'] || '');
+    name = name.trim() || 'ללא שם';
+    var biz = diag._businessName || lead['תיאור העסק'] || lead['סוג עסק'] || '';
+    var phone = diag._phone || lead['טלפון'] || '';
+    var email = diag._email || lead['אימייל'] || '';
+    var date = lead['עדכון אחרון'] || lead['תאריך כניסה'] || '';
+
+    var sourceTag = source === 'direct-fill'
+      ? '<span class="tag tag-fill">מילוי ישיר</span>'
+      : '<span class="tag tag-funnel">פאנל</span>';
+    if (lead['שלב אחרון'] === 'paid' || lead['שילם']) {
+      sourceTag += ' <span class="tag tag-paid">שילם</span>';
+    }
+    var dateTag = date ? '<span class="tag tag-date">' + date + '</span>' : '';
+
+    var contactHtml = '<div class="lead-contact">';
+    if (phone) contactHtml += '<div class="contact-item"><label>טלפון</label><a href="tel:' + phone.replace(/\D/g,'') + '">' + phone + '</a></div>';
+    if (email) contactHtml += '<div class="contact-item"><label>אימייל</label><a href="mailto:' + email + '">' + email + '</a></div>';
+    if (lead['ציון פוטנציאל']) contactHtml += '<div class="contact-item"><label>ציון</label><span>' + lead['ציון פוטנציאל'] + '</span></div>';
+    contactHtml += '</div>';
+
+    var answersHtml = renderAnswers(diag);
+
+    return '<div class="lead-card" id="card-' + idx + '">' +
+      '<div class="lead-header">' +
+        '<div><div class="lead-name">' + esc(name) + '</div><div class="lead-biz">' + esc(biz) + '</div></div>' +
+        '<div class="lead-meta">' + sourceTag + dateTag + '</div>' +
+      '</div>' +
+      contactHtml +
+      '<div class="answers-section">' +
+        '<button class="answers-toggle" onclick="toggleAnswers(this)">' +
+          '<span>תשובות השאלון</span><span class="arrow">&#9660;</span>' +
+        '</button>' +
+        '<div class="answers-body">' + answersHtml + '</div>' +
+      '</div>' +
+      '<div class="actions">' +
+        '<button class="btn btn-primary" onclick="exportLead(' + idx + ')">העתק לקלוד</button>' +
+        '<button class="btn btn-secondary" onclick="exportJSON(' + idx + ')">העתק JSON</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderAnswers(diag) {
+    if (!diag || Object.keys(diag).length === 0) return '<div style="color:var(--txt3);padding:8px">אין תשובות דיאגנוסטי</div>';
+    var html = '';
+    var skipKeys = ['name', 'lastName', 'email', 'phone', '_firstName', '_lastName', '_businessName', '_phone', '_email', '_files'];
+    Object.keys(diag).forEach(function(key) {
+      if (skipKeys.indexOf(key) >= 0) return;
+      var val = diag[key];
+      if (val == null || val === '') return;
+      var label = FIELD_LABELS[key] || key;
+      var display = formatValue(key, val);
+      if (!display) return;
+      html += '<div class="answer-row"><div class="answer-q">' + esc(label) + '</div><div class="answer-a">' + display + '</div></div>';
+    });
+    if (diag._files && diag._files.length > 0) {
+      html += '<div class="answer-row"><div class="answer-q">קבצים</div><div class="answer-a">' +
+        diag._files.map(function(f) { return esc(f.name) + ' (' + formatSize(f.size) + ')'; }).join('<br>') +
+        '</div></div>';
+    }
+    return html || '<div style="color:var(--txt3);padding:8px">אין תשובות</div>';
+  }
+
+  function formatValue(key, val) {
+    if (Array.isArray(val)) {
+      if (val.length === 0) return '';
+      if (typeof val[0] === 'object') {
+        return val.map(function(item) {
+          if (item.name && item.price) return esc(item.name) + ' — ' + esc(item.price);
+          return esc(JSON.stringify(item));
+        }).join('<br>');
+      }
+      if (key === 'links' || key === 'competitors') {
+        return val.filter(Boolean).map(function(u) {
+          var url = u.trim();
+          if (!url) return '';
+          if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+          return '<a href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(u) + '</a>';
+        }).filter(Boolean).join('<br>');
+      }
+      return val.map(function(v) { return esc(String(v)); }).join(', ');
+    }
+    if (typeof val === 'object' && val !== null) {
+      if (val.items && Array.isArray(val.items)) {
+        if (val.none) return 'אין';
+        return val.items.map(function(v) { return esc(String(v)); }).join(', ');
+      }
+      if (val.value !== undefined) return val.unsure ? 'לא בטוח' : esc(String(val.value));
+      var parts = [];
+      Object.keys(val).forEach(function(k) { if (val[k]) parts.push(k + ': ' + val[k]); });
+      return parts.length ? parts.map(esc).join(', ') : '';
+    }
+    return esc(String(val));
+  }
+
+  function formatSize(bytes) {
+    if (!bytes) return '';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  // ── Toggle answers ──
+  window.toggleAnswers = function(btn) {
+    btn.classList.toggle('open');
+    var body = btn.nextElementSibling;
+    body.classList.toggle('open');
+  };
+
+  // ── Export for Claude Chat ──
+  window.exportLead = function(idx) {
+    var filtered = getFiltered();
+    var lead = filtered[idx];
+    if (!lead) return;
+    var diag = lead._diag || {};
+
+    var lines = [];
+    lines.push('# שאלון אבחון — ' + (diag._firstName || lead['שם פרטי'] || '') + ' ' + (diag._lastName || lead['שם משפחה'] || ''));
+    lines.push('');
+    lines.push('## פרטי קשר');
+    lines.push('- **שם:** ' + (diag._firstName || diag.name || lead['שם פרטי'] || '') + ' ' + (diag._lastName || diag.lastName || lead['שם משפחה'] || ''));
+    if (diag._businessName) lines.push('- **עסק:** ' + diag._businessName);
+    if (diag._phone || lead['טלפון']) lines.push('- **טלפון:** ' + (diag._phone || lead['טלפון']));
+    if (diag._email || lead['אימייל']) lines.push('- **אימייל:** ' + (diag._email || lead['אימייל']));
+    if (lead['ציון פוטנציאל']) lines.push('- **ציון פוטנציאל:** ' + lead['ציון פוטנציאל']);
+    lines.push('- **מקור:** ' + getSource(lead));
+    if (lead['עדכון אחרון']) lines.push('- **תאריך:** ' + lead['עדכון אחרון']);
+    lines.push('');
+    lines.push('## תשובות השאלון');
+
+    var skipKeys = ['name', 'lastName', 'email', 'phone', '_firstName', '_lastName', '_businessName', '_phone', '_email', '_files'];
+    Object.keys(diag).forEach(function(key) {
+      if (skipKeys.indexOf(key) >= 0) return;
+      var val = diag[key];
+      if (val == null || val === '') return;
+      var label = FIELD_LABELS[key] || key;
+      var display = formatValueText(key, val);
+      if (!display) return;
+      lines.push('- **' + label + ':** ' + display);
+    });
+
+    if (diag._files && diag._files.length > 0) {
+      lines.push('');
+      lines.push('## קבצים שהועלו');
+      diag._files.forEach(function(f) {
+        lines.push('- ' + f.name + ' (' + formatSize(f.size) + ')');
+      });
+    }
+
+    if (lead['תיאור העסק']) {
+      lines.push('');
+      lines.push('## תיאור העסק (מהקוויז)');
+      lines.push(lead['תיאור העסק']);
+    }
+
+    var text = lines.join('\n');
+    navigator.clipboard.writeText(text).then(function() {
+      showToast('הועתק ללוח — הדבק בקלוד צ\'אט');
+    });
+  };
+
+  window.exportJSON = function(idx) {
+    var filtered = getFiltered();
+    var lead = filtered[idx];
+    if (!lead) return;
+    navigator.clipboard.writeText(JSON.stringify(lead, null, 2)).then(function() {
+      showToast('JSON הועתק ללוח');
+    });
+  };
+
+  function formatValueText(key, val) {
+    if (Array.isArray(val)) {
+      if (val.length === 0) return '';
+      if (typeof val[0] === 'object') {
+        return val.map(function(item) {
+          if (item.name && item.price) return item.name + ' — ' + item.price;
+          return JSON.stringify(item);
+        }).join(', ');
+      }
+      return val.filter(Boolean).join(', ');
+    }
+    if (typeof val === 'object' && val !== null) {
+      if (val.items && Array.isArray(val.items)) {
+        if (val.none) return 'אין';
+        return val.items.join(', ');
+      }
+      if (val.value !== undefined) return val.unsure ? 'לא בטוח' : String(val.value);
+      var parts = [];
+      Object.keys(val).forEach(function(k) { if (val[k]) parts.push(k + ': ' + val[k]); });
+      return parts.join(', ');
+    }
+    return String(val);
+  }
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 2500);
+  }
+
+  // ── Search ──
+  searchInput.addEventListener('input', function() { renderLeads(); });
+
+  // ── Filters ──
+  filtersBar.addEventListener('click', function(e) {
+    if (e.target.tagName !== 'BUTTON') return;
+    filtersBar.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
+    e.target.classList.add('active');
+    currentFilter = e.target.dataset.filter;
+    renderLeads();
+  });
+
+  // ── Init ──
+  if (!API_URL) {
+    showSetup();
+  } else {
+    loadData();
+  }
+})();
+</script>
+</body>
+</html>
