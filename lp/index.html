@@ -2962,7 +2962,7 @@
                     id: 'business', num: '01', label: '01 · העסק', title: 'ספר לנו על העסק',
                     sub: 'כל תשובה כאן נכנסת למחקר. ככל שתדייק, חוברת הפריצה שלך תהיה מדויקת יותר. ארבעה שלבים, כחמש דקות.',
                     fields: [
-                        { id:'links', type:'url_list', label:'קישורים לעסק', help:'אתר, אינסטגרם, פייסבוק, לינקדאין, או כל עמוד שמציג את העסק', required:true, min:1, max:8, defaultRows:2 },
+                        { id:'links', type:'url_list', label:'קישורים לעסק', help:'אתר, אינסטגרם, פייסבוק, לינקדאין, או כל עמוד שמציג את העסק', required:false, min:0, max:8, defaultRows:2 },
                         { id:'files', type:'file_upload', label:'קבצים שיעזרו לנו להכיר את העסק', help:'מצגת או קטלוג, מחירון, תמונות מוצר, המלצות או כתבות. אפשר כמה קבצים.', required:false, maxFiles:10, maxSizeMB:25, accept:'.pdf,.jpg,.jpeg,.png,.webp,.heic,.doc,.docx,.xls,.xlsx,.ppt,.pptx' },
                         { id:'first_offer', type:'textarea', label:'מה תרצה למכור ראשון בארה״ב, ובאיזה מחיר הוא נמכר היום?', required:true },
                         { id:'business_type', type:'single_choice', label:'סוג העסק', required:true, options:['מוצר פיזי','שירות','תוכנה'] },
@@ -3067,6 +3067,15 @@
 
             var validateStep = function(step) {
                 var newErrors = {};
+                // Validate contact fields on step 1
+                if (stepIdx === 0) {
+                    if (!answers._firstName || !answers._firstName.trim()) newErrors._firstName = 'שם פרטי חובה';
+                    if (!answers._lastName || !answers._lastName.trim()) newErrors._lastName = 'שם משפחה חובה';
+                    if (!answers._businessName || !answers._businessName.trim()) newErrors._businessName = 'שם העסק חובה';
+                    if (!answers._email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers._email)) newErrors._email = 'כתובת אימייל תקינה';
+                    var ph = (answers._phone || '').replace(/\D/g, '');
+                    if (!ph || ph.length !== 10 || ph.charAt(0) !== '0' || ph.charAt(1) !== '5') newErrors._phone = 'מספר נייד ישראלי (05XXXXXXXX)';
+                }
                 step.fields.forEach(function(field) {
                     if (!isFieldVisible(field)) return;
                     var val = getAnswer(field.id);
@@ -3191,7 +3200,7 @@
                 // Track step completion
                 var stepEvent = 'diagnostic-step-' + (stepIdx + 1);
                 sendToSheets('diagnostic', leadData, { event: stepEvent, source: 'direct-fill', step: stepIdx + 1 });
-                sendWebhook(WEBHOOK_URL, { event: 'diagnosticStep', source: 'direct-fill', step: stepIdx + 1, phone: leadData.phone, lead_id: leadData.lead_id });
+                sendWebhook(WEBHOOK_URL, { event: 'diagnosticStep', source: 'direct-fill', step: stepIdx + 1, phone: answers._phone || leadData.phone, name: answers._firstName || '', lead_id: leadData.lead_id });
 
                 if (stepIdx < 3) {
                     navigate('#/diagnostic/' + (stepIdx + 2));
@@ -3232,9 +3241,14 @@
                     answersClone._files = files.map(function(f) { return { name: f.name, size: f.size, type: f.type }; });
                 }
 
+                var contactLd = Object.assign({}, leadData, {
+                    firstName: answers._firstName || '', lastName: answers._lastName || '',
+                    businessName: answers._businessName || '',
+                    phone: answers._phone || '', email: answers._email || ''
+                });
                 try {
-                    sendWebhook(WEBHOOK_URL, { event:'diagComplete', source:'direct-fill', answers: answersClone, leadData: leadData });
-                    sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', source: 'direct-fill', diagAnswers: answersClone });
+                    sendWebhook(WEBHOOK_URL, { event:'diagComplete', source:'direct-fill', answers: answersClone, leadData: contactLd });
+                    sendToSheets('diagnostic', contactLd, { event: 'diagnostic-complete', source: 'direct-fill', diagAnswers: answersClone });
                     if (window.gtag) gtag('event', 'diagnostic_complete', { source: 'direct-fill' });
                     try { localStorage.removeItem('diagFillState'); } catch(e) {}
                     setSubmitting(false);
@@ -3452,6 +3466,53 @@
                     <div style={FS.stepLabel}>{currentStep.label}</div>
                     <h1 style={FS.title}>{currentStep.title}</h1>
                     <p style={FS.sub}>{currentStep.sub}</p>
+
+                    {/* Contact details — step 1 only */}
+                    {stepIdx === 0 && (
+                        <div style={FS.card}>
+                            <div style={{ marginBottom:16 }}>
+                                <label style={FS.label}>פרטי קשר <span style={FS.req}>*</span></label>
+                                <div style={FS.help}>כדי שנוכל לחזור אליך ולתאם את הפגישה</div>
+                            </div>
+                            <div style={{ display:'flex', gap:10, marginBottom:12 }}>
+                                <div style={{ flex:1 }}>
+                                    <label style={Object.assign({}, FS.label, { fontSize:13, fontWeight:600 })}>שם פרטי</label>
+                                    <input type="text" autoComplete="given-name" value={answers._firstName || ''}
+                                        onChange={function(e) { setAnswer('_firstName', e.target.value); }}
+                                        style={Object.assign({}, FS.input, errors._firstName ? { borderColor:'#FF8F85' } : {})} />
+                                    {errors._firstName && <div style={FS.err}>{errors._firstName}</div>}
+                                </div>
+                                <div style={{ flex:1 }}>
+                                    <label style={Object.assign({}, FS.label, { fontSize:13, fontWeight:600 })}>שם משפחה</label>
+                                    <input type="text" autoComplete="family-name" value={answers._lastName || ''}
+                                        onChange={function(e) { setAnswer('_lastName', e.target.value); }}
+                                        style={Object.assign({}, FS.input, errors._lastName ? { borderColor:'#FF8F85' } : {})} />
+                                    {errors._lastName && <div style={FS.err}>{errors._lastName}</div>}
+                                </div>
+                            </div>
+                            <div style={{ marginBottom:12 }}>
+                                <label style={Object.assign({}, FS.label, { fontSize:13, fontWeight:600 })}>שם העסק</label>
+                                <input type="text" value={answers._businessName || ''}
+                                    onChange={function(e) { setAnswer('_businessName', e.target.value); }}
+                                    style={Object.assign({}, FS.input, errors._businessName ? { borderColor:'#FF8F85' } : {})} />
+                                {errors._businessName && <div style={FS.err}>{errors._businessName}</div>}
+                            </div>
+                            <div style={{ marginBottom:12 }}>
+                                <label style={Object.assign({}, FS.label, { fontSize:13, fontWeight:600 })}>טלפון</label>
+                                <input type="tel" autoComplete="tel" placeholder="05X-XXXXXXX" value={answers._phone || ''}
+                                    onChange={function(e) { setAnswer('_phone', e.target.value); }}
+                                    style={Object.assign({}, FS.input, { direction:'ltr', textAlign:'left' }, errors._phone ? { borderColor:'#FF8F85' } : {})} />
+                                {errors._phone && <div style={FS.err}>{errors._phone}</div>}
+                            </div>
+                            <div>
+                                <label style={Object.assign({}, FS.label, { fontSize:13, fontWeight:600 })}>אימייל</label>
+                                <input type="email" autoComplete="email" placeholder="example@gmail.com" value={answers._email || ''}
+                                    onChange={function(e) { setAnswer('_email', e.target.value); }}
+                                    style={Object.assign({}, FS.input, errors._email ? { borderColor:'#FF8F85' } : {})} />
+                                {errors._email && <div style={FS.err}>{errors._email}</div>}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Fields */}
                     {currentStep.fields.map(function(field) {
