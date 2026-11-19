@@ -4,8 +4,44 @@
     {
       "name": "dollar-academy",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8080"],
+      "runtimeArgs": ["-m", "http.server", "8080", "--directory", "/Users/shmuelmordechay/dollar-academy"],
       "port": 8080
+    },
+    {
+      "name": "dollar-academy-v2",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8082", "--directory", "/Users/shmuelmordechay/DAvslCustomV2"],
+      "port": 8082
+    },
+    {
+      "name": "dollar-academy-v3",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8083", "--directory", "/Users/shmuelmordechay/DAvslCustomV3"],
+      "port": 8083
+    },
+    {
+      "name": "dollar-academy-quiz",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8085", "--directory", "/Users/shmuelmordechay/DAvslCustomVSLQuiz"],
+      "port": 8085
+    },
+    {
+      "name": "dollarexpress",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8086", "--directory", "/Users/shmuelmordechay/dollarexpressfunnel"],
+      "port": 8086
+    },
+    {
+      "name": "first-dollar",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8087", "--directory", "/Users/shmuelmordechay/DAvslCustom/first-dollar"],
+      "port": 8087
+    },
+    {
+      "name": "davsl-root",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8088", "--directory", "/Users/shmuelmordechay/DAvslCustom"],
+      "port": 8088
     }
   ]
 }

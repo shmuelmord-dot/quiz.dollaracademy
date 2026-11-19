@@ -371,7 +371,9 @@
                   { id:'type', short:'מה מוכרים', type:'choice', cards:true, prior:true, required:true, label:'מה אתה מוכר?', options: DIAG_OPT.type },
                   { id:'oneLiner', short:'העסק במשפט', type:'text', prior:true, required:true, label:'ספר במשפט מה אתה מוכר ולמי', placeholder:'למשל: כלי קרמיקה בעבודת יד למטבח ולאירוח' },
                   { id:'yearsActive', short:'כמה זמן פעיל', type:'choice', prior:true, required:true, label:'כמה זמן העסק פעיל?', options: DIAG_OPT.years, show: c => c.isActive },
-                  { id:'ideaStage', short:'מה כבר קיים', type:'choice', prior:true, required:true, label:'מה כבר קיים?', options: DIAG_OPT.ideaStage, show: c => c.isIdea }
+                  { id:'ideaStage', short:'מה כבר קיים', type:'choice', prior:true, required:true, label:'מה כבר קיים?', options: DIAG_OPT.ideaStage, show: c => c.isIdea },
+                  { id:'links', type:'url_list', label:'קישורים לעסק', hint:'אתר, אינסטגרם, פייסבוק, לינקדאין, או כל עמוד שמציג את העסק', maxUrls:8, defaultUrls:2 },
+                  { id:'files', type:'file_upload', label:'קבצים שיעזרו לנו להכיר את העסק', hint:'מצגת או קטלוג, מחירון, תמונות מוצר, המלצות או כתבות.' }
               ] },
             { id:'product', numbered:true, short:'המוצר',
               title: c => c.isIdea ? 'מה אתה הולך למכור?' : 'מה מוביל אצלך את המכירות?',
@@ -389,6 +391,7 @@
               bridge: c => { const p=diagFirstProduct(c); const head = p ? p.name.trim()+(p.price ? ' ב-'+diagFmtN(p.price)+' ₪' : '')+'. ' : '';
                 return head + (c.isIdea ? 'עכשיו נבין מה יגרום ללקוחות לבחור בך, כי על זה נבנה הבידול מול המתחרים שנמפה בארה״ב.' : 'עכשיו נבין למה קונים דווקא ממך, כי על זה נבנה הבידול מול המתחרים שנמפה בארה״ב.'); },
               questions: [
+                  { id:'ideal_client', type:'textarea', required:true, label:'מי הלקוח שהיית רוצה לשכפל פי עשרה?', hint:'מי הוא, מה הוא קונה, ולמה בחר דווקא בך' },
                   { id:'whyUs', type:'multi', max:3, required:true, label:'למה לקוחות בוחרים דווקא בך?', labelIdea:'מה יגרום ללקוחות לבחור דווקא בך?',
                     hint:'בחר עד 3.', options: DIAG_OPT.why, echo: () => 'נבדוק אם המתחרים בארה״ב מציעים את זה, ואיפה היתרון שלך.' },
                   { id:'whyNote', type:'text', label:'רוצה להוסיף במשפט?', placeholder:'למשל: לקוחות חוזרים אליי כי…' },
@@ -405,6 +408,7 @@
                 return (parts.length ? parts.join(', ')+'. ' : '') + 'עכשיו המספרים שיקבעו אם זה משתלם בארה״ב. מספיק טווח, לא צריך לפתוח את הספרים.'; },
               questions: [
                   { id:'monthlyRevenue', short:'מחזור חודשי', type:'choice', prior:true, required:true, show: c => c.isActive, label:'מה המחזור החודשי, בערך?', options: DIAG_OPT.revenue },
+                  { id:'avg_deal', type:'select', required:true, label:'עסקה ממוצעת', selectOptions:['עד 1,000 ₪','1,000 עד 5,000 ₪','5,000 עד 20,000 ₪','20,000 עד 100,000 ₪','מעל 100,000 ₪'] },
                   { id:'margin', type:'choice', required:true, label:'כמה נשאר לך מכל מכירה, אחרי עלות המוצר או הביצוע?', labelIdea:'כמה אתה מצפה שיישאר מכל מכירה?',
                     options: DIAG_OPT.margin, echo: v => v === 'לא בטוחים' ? 'בסדר, נעשה את החישוב יחד.' : 'הצוות יבדוק כמה זה משאיר כשמוכרים בדולרים.' },
                   { id:'sources', type:'multi', required:true, show: c => c.isActive, label:'מאיפה מגיעים אליך לקוחות היום?', hint:'אפשר לבחור כמה.', options: DIAG_OPT.sources },
@@ -444,6 +448,13 @@
                 return g && c.inPrior('usGoal') ? 'המטרה שכתבת קודם: '+g+'. נשאר להבין מתי ואיך, כדי שהתוכנית תהיה כזאת שאפשר לבצע.' : 'השלב האחרון: המטרה, מתי ואיך, כדי שהתוכנית תהיה כזאת שאפשר לבצע.'; },
               questions: [
                   { id:'usGoal', short:'המטרה בארה״ב', type:'text', prior:true, required:true, label:'מה הכי חשוב לך להשיג בארה״ב בשנה הקרובה?', placeholder:'למשל: 100 הזמנות בחודש מלקוחות בארה״ב' },
+                  { id:'us_assets', type:'multi', required:true, label:'מה כבר יש לך בארה״ב?', hint:'אפשר לבחור כמה', options:['לקוחות','שותפים או מפיצים','קשרים אישיים','חברה רשומה','עדיין כלום'], exclusive:['עדיין כלום'] },
+                  { id:'us_assets_details', type:'text', label:'פירוט בקצרה', show: function(c) { var a = c.get('us_assets'); return a && Array.isArray(a) && a.indexOf('עדיין כלום') < 0 && a.length > 0; } },
+                  { id:'regulation', type:'choice', required:true, label:'האם המוצר או השירות דורשים אישור, רישיון או תקן?', hint:'לדוגמה: FDA, תקני בטיחות או רגולציה ביטחונית', options:['כן','לא','לא בטוח'] },
+                  { id:'regulation_details', type:'text', required:true, label:'איזה אישור או תקן?', show: function(c) { return c.get('regulation') === 'כן'; } },
+                  { id:'ip_status', type:'multi', required:true, label:'פטנט, סימן מסחר או מדגם', options:['רשום בישראל','רשום בארה״ב','רשום בינלאומית','בתהליך','אין'], exclusive:['אין'] },
+                  { id:'budget_y1', type:'select', required:true, label:'תקציב לשנה הראשונה בארה״ב, כולל שיווק', selectOptions:['עד 50 אלף ₪','50 עד 150 אלף ₪','150 עד 500 אלף ₪','מעל 500 אלף ₪','עדיין לא הוחלט'] },
+                  { id:'meeting_goal', type:'textarea', required:true, label:'מה הכי חשוב לך לצאת איתו מהפגישה?' },
                   { id:'timeline', type:'choice', required:true, label:'מתי תרצה להתחיל?', options: DIAG_OPT.timeline },
                   { id:'mode', type:'choice', cards:true, stack:true, required:true, label:'איך היית רוצה לעשות את זה?', options: DIAG_OPT.mode,
                     echo: v => v === 'dfy' ? 'בפגישה נראה לך גם איך הצוות שלנו בונה ומפעיל את זה בשבילך.' : '' }
@@ -465,6 +476,10 @@
                 case 'tags': return !!v && (v.none || (v.items && v.items.length > 0));
                 case 'money': return !!v && (v.unsure || !!v.value);
                 case 'dims': return !!v && (v.unsure || !!(v.l && v.w && v.h && v.kg));
+                case 'textarea': return v != null && typeof v === 'string' && v.trim() !== '';
+                case 'select': return v != null && v !== '';
+                case 'url_list': return Array.isArray(v) && v.some(function(u) { return u && u.trim(); });
+                case 'file_upload': return true;
             }
             return false;
         }
@@ -479,6 +494,10 @@
                 case 'tags': return v.none ? 'לא מכיר' : v.items.join(', ');
                 case 'money': return v.unsure ? 'לא בטוח' : diagFmtN(v.value)+' ₪'+(q.suffix||'');
                 case 'dims': return v.unsure ? 'יושלם אחר כך' : DIAG_LRI+v.l+'×'+v.w+'×'+v.h+DIAG_PDI+' ס״מ, '+v.kg+' ק״ג';
+                case 'textarea': return v.trim();
+                case 'select': return v;
+                case 'url_list': return (v||[]).filter(function(u) { return u && u.trim(); }).join(', ');
+                case 'file_upload': return '';
             }
             return '';
         }
@@ -2206,6 +2225,9 @@
             const [isSummary, setIsSummary] = useState(false);
             const [diagZoom, setDiagZoom] = useState(null);
             const [fillDone, setFillDone] = useState(false);
+            const [diagFiles, setDiagFiles] = useState([]);
+            const [diagDragOver, setDiagDragOver] = useState(false);
+            const diagFileRef = useRef(null);
             const detailsPassed = React.useRef(false);
 
             var prior = React.useMemo(function() { return fillMode ? {} : buildDiagPrior(leadData); }, []);
@@ -2224,6 +2246,20 @@
 
             var setA = function(id, v) { setAns(function(p) { var n = Object.assign({}, p); n[id] = v; return n; }); };
             var toggleArr = function(id, v) { setAns(function(p) { var a = p[id] || []; var n = Object.assign({}, p); n[id] = a.indexOf(v) >= 0 ? a.filter(function(x){ return x !== v; }) : a.concat([v]); return n; }); };
+            var addDiagFiles = function(newFiles) {
+                var maxMB = 25, allowed = '.pdf,.jpg,.jpeg,.png,.webp,.heic,.doc,.docx,.xls,.xlsx,.ppt,.pptx'.split(',');
+                var valid = [];
+                for (var i = 0; i < newFiles.length; i++) {
+                    var f = newFiles[i];
+                    if (f.size > maxMB * 1024 * 1024) continue;
+                    var ext = '.' + f.name.split('.').pop().toLowerCase();
+                    if (allowed.indexOf(ext) < 0) continue;
+                    valid.push(f);
+                }
+                setDiagFiles(function(prev) { return prev.concat(valid).slice(0, 10); });
+            };
+            var rmDiagFile = function(idx) { setDiagFiles(function(prev) { return prev.filter(function(_, i) { return i !== idx; }); }); };
+            var fmtSize = function(bytes) { return bytes < 1024*1024 ? (bytes/1024).toFixed(1)+'KB' : (bytes/(1024*1024)).toFixed(1)+'MB'; };
 
             useEffect(function() {
                 try { sessionStorage.setItem('diagState', JSON.stringify({ ans:ans, curId:curId })); } catch(e) {}
@@ -2286,8 +2322,10 @@
             };
             var pay = function() {
                 var report = buildDiagReport(ans, ctx, vs);
-                sendWebhook(WEBHOOK_URL, { event:'diagComplete', answers:diagClone(ans), diagReport: report, leadData:leadData });
-                sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', source: 'funnel', diagAnswers: diagClone(ans), diagReport: JSON.stringify(report) });
+                var submitAns = diagClone(ans);
+                if (diagFiles.length > 0) submitAns._files = diagFiles.map(function(f) { return { name:f.name, size:f.size, type:f.type }; });
+                sendWebhook(WEBHOOK_URL, { event:'diagComplete', answers:submitAns, diagReport: report, leadData:leadData });
+                sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', source: 'funnel', diagAnswers: submitAns, diagReport: JSON.stringify(report) });
                 if (window.gtag) gtag('event', 'diagnostic_complete', { source: 'funnel' });
                 setLeadData(function(p) { return Object.assign({}, p, ans, { diagComplete:true }); });
                 window.location.href = DIAG_UPAY;
@@ -2295,8 +2333,10 @@
             var submitFill = function() {
                 var ld = Object.assign({}, leadData, { firstName: ans.name || '', lastName: '', phone: ans.phone || '', email: ans.email || '' });
                 var report = buildDiagReport(ans, ctx, vs);
-                sendWebhook(WEBHOOK_URL, { event:'diagComplete', source:'direct-fill', answers:diagClone(ans), diagReport: report, leadData:ld });
-                sendToSheets('diagnostic', ld, { event: 'diagnostic-complete', source: 'direct-fill', diagAnswers: diagClone(ans), diagReport: JSON.stringify(report) });
+                var submitAns2 = diagClone(ans);
+                if (diagFiles.length > 0) submitAns2._files = diagFiles.map(function(f) { return { name:f.name, size:f.size, type:f.type }; });
+                sendWebhook(WEBHOOK_URL, { event:'diagComplete', source:'direct-fill', answers:submitAns2, diagReport: report, leadData:ld });
+                sendToSheets('diagnostic', ld, { event: 'diagnostic-complete', source: 'direct-fill', diagAnswers: submitAns2, diagReport: JSON.stringify(report) });
                 if (window.gtag) gtag('event', 'diagnostic_complete', { source: 'direct-fill' });
                 setLeadData(function(p) { return Object.assign({}, p, ld, { diagComplete:true }); });
                 setFillDone(true);
@@ -2345,10 +2385,24 @@
                 }
                 if (q.type === 'multi') {
                     var arr = v || [];
+                    var handleMulti = function(ov) {
+                        if (q.exclusive && q.exclusive.indexOf(ov) >= 0) {
+                            setA(q.id, arr.length === 1 && arr[0] === ov ? [] : [ov]);
+                        } else if (q.exclusive) {
+                            var filtered = arr.filter(function(x) { return q.exclusive.indexOf(x) < 0; });
+                            var idx = filtered.indexOf(ov);
+                            if (idx >= 0) filtered.splice(idx, 1);
+                            else { if (!q.max || filtered.length < q.max) filtered.push(ov); }
+                            setA(q.id, filtered);
+                        } else {
+                            if (q.max && arr.length >= q.max && arr.indexOf(ov) < 0) return;
+                            toggleArr(q.id, ov);
+                        }
+                    };
                     return wrapQ(
                         <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
                             {opts.map(function(o) { var ov = o.v || o.l; var sel = arr.indexOf(ov) >= 0; return (
-                                <button key={ov} type="button" onClick={function(){ if (q.max && arr.length >= q.max && !sel) return; toggleArr(q.id, ov); }}
+                                <button key={ov} type="button" onClick={function(){ handleMulti(ov); }}
                                     style={Object.assign({}, DS.chip, sel ? DS.chipSel : {})}>{o.l}</button>
                             ); })}
                         </div>
@@ -2471,6 +2525,76 @@
                                     style={{ accentColor:'#4282FA' }} />
                                 אשלים אחר כך
                             </label>
+                        </div>
+                    );
+                }
+                if (q.type === 'textarea') {
+                    return wrapQ(
+                        <textarea value={v || ''} onChange={function(e){ setA(q.id, e.target.value); }} placeholder={q.placeholder || ''}
+                            style={Object.assign({}, DS.field, { minHeight:100, resize:'vertical' }, hasErr ? DS.fieldErr : {})} />
+                    );
+                }
+                if (q.type === 'select') {
+                    return wrapQ(
+                        <div style={{ position:'relative' }}>
+                            <select value={v || ''} onChange={function(e){ setA(q.id, e.target.value); }}
+                                style={Object.assign({}, DS.field, { appearance:'none', WebkitAppearance:'none', cursor:'pointer', paddingLeft:32 }, hasErr ? DS.fieldErr : {}, !v ? { color:'#6B7BA0' } : {})}>
+                                <option value="" disabled>בחירה</option>
+                                {q.selectOptions.map(function(opt) { return <option key={opt} value={opt}>{opt}</option>; })}
+                            </select>
+                            <span style={{ position:'absolute', left:14, top:'50%', transform:'translateY(-50%)', pointerEvents:'none', color:'#A9B7DE', fontSize:12 }}>&#9660;</span>
+                        </div>
+                    );
+                }
+                if (q.type === 'url_list') {
+                    var urls = v || Array.from({ length: q.defaultUrls || 2 }, function() { return ''; });
+                    var setUrl = function(idx, val) { var list = urls.slice(); list[idx] = val; setA(q.id, list); };
+                    var addUrl = function() { if (urls.length < (q.maxUrls || 8)) setA(q.id, urls.concat([''])); };
+                    var rmUrl = function(idx) { if (urls.length > 1) setA(q.id, urls.filter(function(_, i) { return i !== idx; })); };
+                    return wrapQ(
+                        <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+                            {urls.map(function(u, i) { return (
+                                <div key={i} style={{ display:'flex', alignItems:'center', gap:8 }}>
+                                    <input type="url" value={u || ''} placeholder="https://" onChange={function(e) { setUrl(i, e.target.value); }}
+                                        style={Object.assign({}, DS.field, { flex:1, direction:'ltr', textAlign:'left', fontFamily:"'IBM Plex Mono',monospace", fontSize:13 }, hasErr ? DS.fieldErr : {})} />
+                                    {urls.length > 1 && <button type="button" onClick={function() { rmUrl(i); }}
+                                        style={{ background:'transparent', border:'none', color:'#6B7BA0', fontSize:18, cursor:'pointer', padding:'4px 8px' }}>&times;</button>}
+                                </div>
+                            ); })}
+                            {urls.length < (q.maxUrls || 8) && <button type="button" onClick={addUrl}
+                                style={{ background:'transparent', border:'none', color:'#4282FA', fontSize:14, fontWeight:700, cursor:'pointer', padding:'4px 0', fontFamily:'Rubik,sans-serif', textAlign:'right' }}>+ הוסף קישור</button>}
+                        </div>
+                    );
+                }
+                if (q.type === 'file_upload') {
+                    return wrapQ(
+                        <div>
+                            <div style={{ border:'2px dashed #3A4566', borderRadius:14, padding:'20px 16px', textAlign:'center', cursor:'pointer', transition:'border-color 0.2s', borderColor: diagDragOver ? '#4282FA' : '#3A4566' }}
+                                onDragOver={function(e) { e.preventDefault(); setDiagDragOver(true); }}
+                                onDragLeave={function() { setDiagDragOver(false); }}
+                                onDrop={function(e) { e.preventDefault(); setDiagDragOver(false); if (e.dataTransfer.files) addDiagFiles(Array.from(e.dataTransfer.files)); }}
+                                onClick={function() { if (diagFileRef.current) diagFileRef.current.click(); }}>
+                                <input ref={diagFileRef} type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+                                    onChange={function(e) { if (e.target.files) { addDiagFiles(Array.from(e.target.files)); e.target.value = ''; } }}
+                                    style={{ display:'none' }} />
+                                <div style={{ marginBottom:6 }}>
+                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                </div>
+                                <div style={{ color:'#F4F6FC', fontSize:14, fontWeight:700, fontFamily:'Rubik,sans-serif' }}>גרירה לכאן או לחיצה להעלאה</div>
+                                <div style={{ color:'#A9B7DE', fontSize:11, fontFamily:"'IBM Plex Mono',monospace", marginTop:4, letterSpacing:1 }}>PDF · JPG · PNG · DOCX · XLSX · PPTX</div>
+                                <div style={{ color:'#A9B7DE', fontSize:12, marginTop:4 }}>עד 10 קבצים, 25MB לכל קובץ</div>
+                            </div>
+                            {diagFiles.length > 0 && <div style={{ marginTop:10 }}>
+                                {diagFiles.map(function(f, i) { return (
+                                    <div key={i} style={{ display:'flex', alignItems:'center', gap:10, padding:'8px 12px', background:'#0A0D18', borderRadius:10, marginBottom:6 }}>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                        <span style={{ color:'#F4F6FC', fontSize:13, flex:1, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{f.name}</span>
+                                        <span style={{ color:'#6B7BA0', fontSize:11, fontFamily:"'IBM Plex Mono',monospace" }}>{fmtSize(f.size)}</span>
+                                        <button type="button" onClick={function() { rmDiagFile(i); }}
+                                            style={{ background:'transparent', border:'none', color:'#6B7BA0', fontSize:16, cursor:'pointer', padding:'2px 6px' }}>&times;</button>
+                                    </div>
+                                ); })}
+                            </div>}
                         </div>
                     );
                 }
@@ -2795,6 +2919,579 @@
         };
 
         // ╔══════════════════════════════════════════════════════╗
+        // ║  DIAGNOSTIC FILL SCREEN (fill=1 paid users)            ║
+        // ╚══════════════════════════════════════════════════════╝
+        const DiagnosticFillScreen = ({ leadData, navigate, route }) => {
+            // ── Styles ──
+            const FS = {
+                wrap: { maxWidth:720, margin:'0 auto', padding:'20px 18px 120px', width:'100%', direction:'rtl' },
+                card: { background:'#141A2E', border:'1px solid #26304D', borderRadius:16, padding:18, marginBottom:16 },
+                label: { display:'block', marginBottom:6, color:'#F4F6FC', fontSize:15, fontWeight:700, fontFamily:'Rubik,sans-serif' },
+                req: { color:'#4282FA', marginRight:4 },
+                help: { color:'#A9B7DE', fontSize:13, lineHeight:1.5, marginBottom:8 },
+                input: { width:'100%', background:'#0A0D18', border:'1px solid #26304D', borderRadius:12, minHeight:48, padding:'13px 14px', color:'#F4F6FC', fontSize:15, fontFamily:'Assistant,sans-serif', outline:'none', boxSizing:'border-box', direction:'rtl' },
+                inputLtr: { width:'100%', background:'#0A0D18', border:'1px solid #26304D', borderRadius:12, minHeight:48, padding:'13px 14px', color:'#F4F6FC', fontSize:15, fontFamily:"'IBM Plex Mono',monospace", outline:'none', boxSizing:'border-box', direction:'ltr', textAlign:'left' },
+                textarea: { width:'100%', background:'#0A0D18', border:'1px solid #26304D', borderRadius:12, minHeight:100, padding:'13px 14px', color:'#F4F6FC', fontSize:15, fontFamily:'Assistant,sans-serif', outline:'none', boxSizing:'border-box', resize:'vertical', direction:'rtl' },
+                select: { width:'100%', background:'#0A0D18', border:'1px solid #26304D', borderRadius:12, minHeight:48, padding:'13px 14px', color:'#F4F6FC', fontSize:15, fontFamily:'Assistant,sans-serif', outline:'none', boxSizing:'border-box', appearance:'none', WebkitAppearance:'none', direction:'rtl', cursor:'pointer' },
+                selectWrap: { position:'relative' },
+                selectArrow: { position:'absolute', left:14, top:'50%', transform:'translateY(-50%)', pointerEvents:'none', color:'#A9B7DE', fontSize:12 },
+                chip: { display:'inline-flex', alignItems:'center', padding:'10px 16px', borderRadius:999, border:'1px solid #26304D', background:'transparent', color:'#F4F6FC', fontSize:14, cursor:'pointer', fontFamily:'Assistant,sans-serif', transition:'all 0.15s', marginLeft:8, marginBottom:8 },
+                chipSel: { borderColor:'#2E59F4', background:'#2E59F4', color:'#FFFFFF' },
+                err: { color:'#FF8F85', fontSize:13, marginTop:4 },
+                btnPrimary: { display:'flex', alignItems:'center', justifyContent:'center', minHeight:52, padding:'0 32px', borderRadius:14, background:'#2E59F4', color:'#FFFFFF', fontFamily:'Rubik,sans-serif', fontSize:16, fontWeight:800, border:'none', cursor:'pointer', boxShadow:'0 12px 32px rgba(46,89,244,0.35)', transition:'background 0.2s', flex:1 },
+                btnBack: { background:'transparent', border:'none', color:'#A9B7DE', fontFamily:'Rubik,sans-serif', fontSize:14, fontWeight:600, cursor:'pointer', padding:'10px 16px' },
+                stickyBar: { position:'fixed', bottom:0, left:0, right:0, background:'rgba(10,13,24,0.96)', borderTop:'1px solid #26304D', padding:'12px 18px', zIndex:100, display:'flex', alignItems:'center', gap:12, justifyContent:'center' },
+                stickyInner: { maxWidth:720, width:'100%', display:'flex', alignItems:'center', gap:12, direction:'rtl' },
+                condWrap: { borderRight:'3px solid #2E59F4', background:'rgba(46,89,244,0.06)', borderRadius:'0 12px 12px 0', padding:'14px 16px', marginBottom:16 },
+                dropZone: { border:'2px dashed #3A4566', borderRadius:14, padding:'24px 16px', textAlign:'center', cursor:'pointer', transition:'border-color 0.2s' },
+                dropZoneActive: { borderColor:'#4282FA' },
+                fileRow: { display:'flex', alignItems:'center', gap:10, padding:'10px 14px', background:'#0A0D18', borderRadius:10, marginBottom:8 },
+                stepLabel: { color:'#4282FA', fontSize:14, fontFamily:"'IBM Plex Mono',monospace", fontWeight:600, marginBottom:4 },
+                title: { margin:0, fontFamily:'Rubik,sans-serif', fontWeight:800, fontSize:'clamp(22px, 4.5vw, 30px)', lineHeight:1.3, color:'#F4F6FC', marginBottom:6 },
+                sub: { margin:'0 0 24px', fontSize:15, lineHeight:1.6, color:'#A9B7DE' },
+                progressRow: { display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:8 },
+                progressText: { fontSize:13, color:'#A9B7DE', fontFamily:'Assistant,sans-serif' },
+                progressMono: { fontSize:13, color:'#A9B7DE', fontFamily:"'IBM Plex Mono',monospace" },
+                progressBarWrap: { display:'flex', gap:6, marginBottom:24 },
+                progressSeg: function(active) { return { flex:1, height:4, borderRadius:2, background: active ? '#4282FA' : '#26304D', transition:'background 0.3s' }; },
+            };
+
+            // ── Schema ──
+            const STEPS = [
+                {
+                    id: 'business', num: '01', label: '01 · העסק', title: 'ספר לנו על העסק',
+                    sub: 'כל תשובה כאן נכנסת למחקר. ככל שתדייק, חוברת הפריצה שלך תהיה מדויקת יותר. ארבעה שלבים, כחמש דקות.',
+                    fields: [
+                        { id:'links', type:'url_list', label:'קישורים לעסק', help:'אתר, אינסטגרם, פייסבוק, לינקדאין, או כל עמוד שמציג את העסק', required:true, min:1, max:8, defaultRows:2 },
+                        { id:'files', type:'file_upload', label:'קבצים שיעזרו לנו להכיר את העסק', help:'מצגת או קטלוג, מחירון, תמונות מוצר, המלצות או כתבות. אפשר כמה קבצים.', required:false, maxFiles:10, maxSizeMB:25, accept:'.pdf,.jpg,.jpeg,.png,.webp,.heic,.doc,.docx,.xls,.xlsx,.ppt,.pptx' },
+                        { id:'first_offer', type:'textarea', label:'מה תרצה למכור ראשון בארה״ב, ובאיזה מחיר הוא נמכר היום?', required:true },
+                        { id:'business_type', type:'single_choice', label:'סוג העסק', required:true, options:['מוצר פיזי','שירות','תוכנה'] },
+                        { id:'physical_details', type:'text', label:'איפה מייצרים, ומה העלות ליחידה בערך?', placeholder:'לדוגמה: מפעל בישראל, כ-80 ₪ ליחידה', required:true, show_if:{ field:'business_type', eq:'מוצר פיזי' } },
+                        { id:'service_details', type:'text', label:'אפשר לספק את השירות מרחוק? וכמה לקוחות אפשר לקחת בחודש?', required:true, show_if:{ field:'business_type', eq:'שירות' } },
+                        { id:'software_details', type:'text', label:'מה מודל התמחור: מנוי, רישיון או אחר?', required:true, show_if:{ field:'business_type', eq:'תוכנה' } },
+                    ]
+                },
+                {
+                    id: 'customers', num: '02', label: '02 · הלקוחות', title: 'מי קונה ממך, ואיך',
+                    sub: 'כך נגדיר את לקוח היעד שלך בארה״ב.',
+                    fields: [
+                        { id:'ideal_client', type:'textarea', label:'מי הלקוח שהיית רוצה לשכפל פי עשרה?', help:'מי הוא, מה הוא קונה, ולמה בחר דווקא בך', required:true },
+                        { id:'lead_sources', type:'multi_choice', label:'מאיפה מגיעים הלקוחות היום?', help:'אפשר לבחור כמה', required:true, minSelect:1, options:['הפניות ומפה לאוזן','גוגל','רשתות חברתיות','משפיענים','חנויות ומפיצים','תערוכות ואירועים','מכירה יזומה','אחר'] },
+                        { id:'lead_sources_other', type:'text', label:'איזה ערוץ?', required:true, show_if:{ field:'lead_sources', includes:'אחר' } },
+                        { id:'annual_revenue', type:'select', label:'מחזור שנתי', required:true, options:['עד 500 אלף ₪','500 אלף עד מיליון ₪','1 עד 3 מיליון ₪','3 עד 10 מיליון ₪','מעל 10 מיליון ₪'] },
+                        { id:'avg_deal', type:'select', label:'עסקה ממוצעת', required:true, options:['עד 1,000 ₪','1,000 עד 5,000 ₪','5,000 עד 20,000 ₪','20,000 עד 100,000 ₪','מעל 100,000 ₪'] },
+                    ]
+                },
+                {
+                    id: 'us_target', num: '03', label: '03 · ארה״ב', title: 'היעד שלך בארה״ב',
+                    sub: 'מכאן נבנה את המסלול עם הכי פחות חיכוך.',
+                    fields: [
+                        { id:'success_12m', type:'textarea', label:'איך נראית הצלחה בארה״ב בעוד 12 חודשים?', help:'במספרים: הכנסות, לקוחות או יחידות בחודש', required:true },
+                        { id:'us_assets', type:'multi_choice', label:'מה כבר יש לך בארה״ב?', help:'אפשר לבחור כמה', required:true, minSelect:1, options:['לקוחות','שותפים או מפיצים','קשרים אישיים','חברה רשומה','עדיין כלום'], exclusive:['עדיין כלום'] },
+                        { id:'us_assets_details', type:'text', label:'פירוט בקצרה', required:false, hide_if:{ field:'us_assets', includes:'עדיין כלום' } },
+                        { id:'regulation', type:'single_choice', label:'האם המוצר או השירות דורשים אישור, רישיון או תקן?', help:'לדוגמה: FDA, תקני בטיחות או רגולציה ביטחונית', required:true, options:['כן','לא','לא בטוח'] },
+                        { id:'regulation_details', type:'text', label:'איזה אישור או תקן?', required:true, show_if:{ field:'regulation', eq:'כן' } },
+                        { id:'ip_status', type:'multi_choice', label:'פטנט, סימן מסחר או מדגם', required:true, minSelect:1, options:['רשום בישראל','רשום בארה״ב','רשום בינלאומית','בתהליך','אין'], exclusive:['אין'] },
+                    ]
+                },
+                {
+                    id: 'meeting', num: '04', label: '04 · הפגישה', title: 'רגע לפני הפגישה',
+                    sub: 'המתחרים, התקציב, ומה שחשוב לך.',
+                    fields: [
+                        { id:'competitors', type:'url_list', label:'קישורים לעד שלושה מתחרים, בישראל או בארה״ב', help:'אתרים או עמודים ברשתות', required:false, min:0, max:3, defaultRows:3 },
+                        { id:'budget_y1', type:'select', label:'תקציב לשנה הראשונה בארה״ב, כולל שיווק', required:true, options:['עד 50 אלף ₪','50 עד 150 אלף ₪','150 עד 500 אלף ₪','מעל 500 אלף ₪','עדיין לא הוחלט'] },
+                        { id:'meeting_goal', type:'textarea', label:'מה הכי חשוב לך לצאת איתו מהפגישה?', required:true },
+                    ]
+                },
+            ];
+
+            // ── State ──
+            const [answers, setAnswers] = useState(function() {
+                try { var d = localStorage.getItem('diagFillState'); return d ? JSON.parse(d) : {}; } catch(e) { return {}; }
+            });
+            const [files, setFiles] = useState([]);
+            const [errors, setErrors] = useState({});
+            const [submitted, setSubmitted] = useState(false);
+            const [submitting, setSubmitting] = useState(false);
+            const [submitError, setSubmitError] = useState(false);
+            const [dragOver, setDragOver] = useState(false);
+            const fileInputRef = useRef(null);
+
+            // ── Current step from route ──
+            var stepMatch = route && route.match(/^#\/diagnostic\/(\d+)$/);
+            var stepIdx = stepMatch ? Math.max(0, Math.min(parseInt(stepMatch[1]) - 1, 3)) : 0;
+            var currentStep = STEPS[stepIdx];
+
+            // ── Persist answers ──
+            useEffect(function() {
+                try { localStorage.setItem('diagFillState', JSON.stringify(answers)); } catch(e) {}
+            }, [answers]);
+
+            // ── Track start ──
+            useEffect(function() {
+                sendToSheets('diagnostic', leadData, { event: 'diagnostic-start', source: 'direct-fill' });
+                sendWebhook(WEBHOOK_URL, { event:'diagnosticStart', source: 'direct-fill', phone: leadData.phone, lead_id: leadData.lead_id });
+                if (window.gtag) gtag('event', 'diagnostic_start', { source: 'direct-fill' });
+                if (!stepMatch) navigate('#/diagnostic/1');
+            }, []);
+
+            // ── Helpers ──
+            var setAnswer = function(id, val) {
+                setAnswers(function(prev) { var n = Object.assign({}, prev); n[id] = val; return n; });
+                setErrors(function(prev) { var n = Object.assign({}, prev); delete n[id]; return n; });
+            };
+
+            var getAnswer = function(id) { return answers[id]; };
+
+            var isFieldVisible = function(field) {
+                if (field.show_if) {
+                    var val = getAnswer(field.show_if.field);
+                    if (field.show_if.eq) return val === field.show_if.eq;
+                    if (field.show_if.includes) return Array.isArray(val) && val.indexOf(field.show_if.includes) >= 0;
+                    return false;
+                }
+                if (field.hide_if) {
+                    var val2 = getAnswer(field.hide_if.field);
+                    if (field.hide_if.includes) return !(Array.isArray(val2) && val2.indexOf(field.hide_if.includes) >= 0);
+                    return true;
+                }
+                return true;
+            };
+
+            var isValidUrl = function(str) {
+                if (!str || !str.trim()) return false;
+                var s = str.trim();
+                if (!/^https?:\/\//i.test(s)) s = 'https://' + s;
+                try { new URL(s); return /\.[a-z]{2,}/i.test(s); } catch(e) { return false; }
+            };
+
+            var validateStep = function(step) {
+                var newErrors = {};
+                step.fields.forEach(function(field) {
+                    if (!isFieldVisible(field)) return;
+                    var val = getAnswer(field.id);
+
+                    if (field.type === 'url_list') {
+                        if (field.required) {
+                            var urls = val || [];
+                            var validUrls = urls.filter(function(u) { return u && u.trim(); });
+                            if (validUrls.length < (field.min || 1)) {
+                                newErrors[field.id] = 'צריך לפחות קישור אחד';
+                                return;
+                            }
+                            for (var i = 0; i < validUrls.length; i++) {
+                                if (!isValidUrl(validUrls[i])) { newErrors[field.id] = 'נראה שהקישור לא תקין'; return; }
+                            }
+                        } else {
+                            var urls2 = val || [];
+                            for (var j = 0; j < urls2.length; j++) {
+                                if (urls2[j] && urls2[j].trim() && !isValidUrl(urls2[j])) { newErrors[field.id] = 'נראה שהקישור לא תקין'; return; }
+                            }
+                        }
+                        return;
+                    }
+                    if (field.type === 'file_upload') return; // files are optional
+                    if (!field.required) return;
+                    if (field.type === 'multi_choice') {
+                        if (!val || !Array.isArray(val) || val.length < (field.minSelect || 1)) { newErrors[field.id] = 'צריך לבחור לפחות אפשרות אחת'; }
+                        return;
+                    }
+                    if (field.type === 'single_choice' || field.type === 'select') {
+                        if (!val) { newErrors[field.id] = 'זה שדה חובה'; }
+                        return;
+                    }
+                    if (!val || (typeof val === 'string' && !val.trim())) { newErrors[field.id] = 'זה שדה חובה'; }
+                });
+                return newErrors;
+            };
+
+            // ── Multi choice with exclusive ──
+            var toggleMulti = function(fieldId, option, exclusiveList) {
+                setAnswers(function(prev) {
+                    var current = prev[fieldId] || [];
+                    var n = Object.assign({}, prev);
+                    if (exclusiveList && exclusiveList.indexOf(option) >= 0) {
+                        // Clicking an exclusive option: set to only that option (or deselect if already sole)
+                        n[fieldId] = current.length === 1 && current[0] === option ? [] : [option];
+                    } else {
+                        // Clicking a non-exclusive option: remove any exclusive options first
+                        var filtered = current.filter(function(v) { return !exclusiveList || exclusiveList.indexOf(v) < 0; });
+                        var idx = filtered.indexOf(option);
+                        if (idx >= 0) { filtered.splice(idx, 1); }
+                        else { filtered.push(option); }
+                        n[fieldId] = filtered;
+                    }
+                    return n;
+                });
+                setErrors(function(prev) { var n = Object.assign({}, prev); delete n[fieldId]; return n; });
+            };
+
+            // ── URL list helpers ──
+            var getUrlList = function(id, defaultRows) {
+                var val = getAnswer(id);
+                if (val && val.length) return val;
+                return Array.from({ length: defaultRows || 2 }, function() { return ''; });
+            };
+
+            var setUrlAt = function(id, index, value) {
+                var list = getUrlList(id, 2).slice();
+                list[index] = value;
+                setAnswer(id, list);
+            };
+
+            var addUrlRow = function(id, max) {
+                var list = getUrlList(id, 2).slice();
+                if (list.length < max) { list.push(''); setAnswer(id, list); }
+            };
+
+            var removeUrlRow = function(id, index) {
+                var list = getUrlList(id, 2).slice();
+                if (list.length > 1) { list.splice(index, 1); setAnswer(id, list); }
+            };
+
+            // ── File upload helpers ──
+            var addFiles = function(newFiles) {
+                var valid = [];
+                var maxSizeMB = 25;
+                for (var i = 0; i < newFiles.length; i++) {
+                    var f = newFiles[i];
+                    if (f.size > maxSizeMB * 1024 * 1024) { setErrors(function(p) { var n = Object.assign({}, p); n.files = 'הקובץ ' + f.name + ' גדול מ-25MB'; return n; }); continue; }
+                    var ext = '.' + f.name.split('.').pop().toLowerCase();
+                    var allowed = '.pdf,.jpg,.jpeg,.png,.webp,.heic,.doc,.docx,.xls,.xlsx,.ppt,.pptx'.split(',');
+                    if (allowed.indexOf(ext) < 0) { setErrors(function(p) { var n = Object.assign({}, p); n.files = 'סוג הקובץ ' + ext + ' לא נתמך'; return n; }); continue; }
+                    valid.push(f);
+                }
+                setFiles(function(prev) {
+                    var combined = prev.concat(valid);
+                    if (combined.length > 10) {
+                        setErrors(function(p) { var n = Object.assign({}, p); n.files = 'אפשר להעלות עד 10 קבצים'; return n; });
+                        return combined.slice(0, 10);
+                    }
+                    return combined;
+                });
+            };
+
+            var removeFile = function(index) {
+                setFiles(function(prev) { var n = prev.slice(); n.splice(index, 1); return n; });
+                setErrors(function(prev) { var n = Object.assign({}, prev); delete n.files; return n; });
+            };
+
+            var formatFileSize = function(bytes) {
+                if (bytes < 1024) return bytes + ' B';
+                if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+                return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+            };
+
+            // ── Navigation ──
+            var goNext = function() {
+                var errs = validateStep(currentStep);
+                if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+                setErrors({});
+
+                // Track step completion
+                var stepEvent = 'diagnostic-step-' + (stepIdx + 1);
+                sendToSheets('diagnostic', leadData, { event: stepEvent, source: 'direct-fill', step: stepIdx + 1 });
+                sendWebhook(WEBHOOK_URL, { event: 'diagnosticStep', source: 'direct-fill', step: stepIdx + 1, phone: leadData.phone, lead_id: leadData.lead_id });
+
+                if (stepIdx < 3) {
+                    navigate('#/diagnostic/' + (stepIdx + 2));
+                    window.scrollTo(0, 0);
+                }
+            };
+
+            var goBack = function() {
+                if (stepIdx > 0) {
+                    navigate('#/diagnostic/' + stepIdx);
+                    window.scrollTo(0, 0);
+                }
+            };
+
+            var handleSubmit = function() {
+                var errs = validateStep(currentStep);
+                if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+                setErrors({});
+                setSubmitting(true);
+                setSubmitError(false);
+
+                // Prepare answers — normalize URL lists (auto-prepend https://)
+                var answersClone = Object.assign({}, answers);
+                STEPS.forEach(function(step) {
+                    step.fields.forEach(function(field) {
+                        if (field.type === 'url_list' && answersClone[field.id]) {
+                            answersClone[field.id] = answersClone[field.id].map(function(u) {
+                                if (u && u.trim() && !/^https?:\/\//i.test(u.trim())) return 'https://' + u.trim();
+                                return u ? u.trim() : '';
+                            }).filter(function(u) { return u; });
+                        }
+                    });
+                });
+
+                // Add file metadata (not actual files)
+                // TODO: Wire file upload to a storage backend (S3/GCS). Currently only metadata is sent.
+                if (files.length > 0) {
+                    answersClone._files = files.map(function(f) { return { name: f.name, size: f.size, type: f.type }; });
+                }
+
+                try {
+                    sendWebhook(WEBHOOK_URL, { event:'diagComplete', source:'direct-fill', answers: answersClone, leadData: leadData });
+                    sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', source: 'direct-fill', diagAnswers: answersClone });
+                    if (window.gtag) gtag('event', 'diagnostic_complete', { source: 'direct-fill' });
+                    try { localStorage.removeItem('diagFillState'); } catch(e) {}
+                    setSubmitting(false);
+                    setSubmitted(true);
+                } catch(e) {
+                    setSubmitting(false);
+                    setSubmitError(true);
+                }
+            };
+
+            // ── Success screen ──
+            if (submitted) {
+                return (
+                    <div style={FS.wrap}>
+                        <div style={{ textAlign:'center', padding:'0 0 16px' }}>
+                            <img src={LOGO} alt="Dollar Academy" style={{ height:48, objectFit:'contain', marginBottom:32 }} />
+                        </div>
+                        <div style={{ textAlign:'center', padding:'40px 16px' }}>
+                            <div style={{ width:72, height:72, borderRadius:'50%', background:'rgba(74,222,128,0.12)', border:'2px solid #4ADE80', display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 20px' }}>
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                            </div>
+                            <div style={{ color:'#4ADE80', fontSize:14, fontFamily:"'IBM Plex Mono',monospace", fontWeight:600, marginBottom:8 }}>השאלון התקבל</div>
+                            <h1 style={Object.assign({}, FS.title, { marginBottom:12 })}>מתחילים במחקר.</h1>
+                            <p style={{ color:'#A9B7DE', fontSize:15, lineHeight:1.7, marginBottom:24, maxWidth:480, margin:'0 auto 24px' }}>
+                                הצוות שלנו עובר על כל תשובה וכל קובץ, ומכין את חוברת הפריצה שלך לפגישה ברעננה.
+                            </p>
+                            <p style={{ color:'#6B7BA0', fontSize:13, lineHeight:1.5 }}>
+                                חסר משהו? אפשר להשלים בשיחת ההיכרות.
+                            </p>
+                        </div>
+                    </div>
+                );
+            }
+
+            // ── Render field ──
+            var renderField = function(field) {
+                if (!isFieldVisible(field)) return null;
+                var isConditional = !!field.show_if;
+                var val = getAnswer(field.id);
+                var hasError = errors[field.id];
+                var errorBorder = hasError ? { borderColor:'#FF8F85' } : {};
+
+                var inner = null;
+
+                switch (field.type) {
+                    case 'text':
+                        inner = (
+                            <input type="text" value={val || ''} placeholder={field.placeholder || ''}
+                                onChange={function(e) { setAnswer(field.id, e.target.value); }}
+                                style={Object.assign({}, FS.input, errorBorder)} />
+                        );
+                        break;
+
+                    case 'textarea':
+                        inner = (
+                            <textarea value={val || ''} placeholder={field.placeholder || ''}
+                                onChange={function(e) { setAnswer(field.id, e.target.value); }}
+                                style={Object.assign({}, FS.textarea, errorBorder)} />
+                        );
+                        break;
+
+                    case 'select':
+                        inner = (
+                            <div style={FS.selectWrap}>
+                                <select value={val || ''} onChange={function(e) { setAnswer(field.id, e.target.value); }}
+                                    style={Object.assign({}, FS.select, errorBorder, !val ? { color:'#6B7BA0' } : {})}>
+                                    <option value="" disabled>בחירה</option>
+                                    {field.options.map(function(opt) { return <option key={opt} value={opt}>{opt}</option>; })}
+                                </select>
+                                <span style={FS.selectArrow}>&#9660;</span>
+                            </div>
+                        );
+                        break;
+
+                    case 'single_choice':
+                        inner = (
+                            <div style={{ display:'flex', flexWrap:'wrap', gap:0 }}>
+                                {field.options.map(function(opt) {
+                                    var isSel = val === opt;
+                                    return (
+                                        <button key={opt} type="button"
+                                            onClick={function() { setAnswer(field.id, isSel ? '' : opt); }}
+                                            style={Object.assign({}, FS.chip, isSel ? FS.chipSel : {})}>
+                                            {opt}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        );
+                        break;
+
+                    case 'multi_choice':
+                        var currentArr = val || [];
+                        inner = (
+                            <div style={{ display:'flex', flexWrap:'wrap', gap:0 }}>
+                                {field.options.map(function(opt) {
+                                    var isSel = currentArr.indexOf(opt) >= 0;
+                                    return (
+                                        <button key={opt} type="button"
+                                            onClick={function() { toggleMulti(field.id, opt, field.exclusive); }}
+                                            style={Object.assign({}, FS.chip, isSel ? FS.chipSel : {})}>
+                                            {opt}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        );
+                        break;
+
+                    case 'url_list':
+                        var urls = getUrlList(field.id, field.defaultRows || 2);
+                        inner = (
+                            <div>
+                                {urls.map(function(u, i) {
+                                    return (
+                                        <div key={i} style={{ display:'flex', alignItems:'center', gap:8, marginBottom:8 }}>
+                                            <input type="url" value={u || ''} placeholder="https://"
+                                                onChange={function(e) { setUrlAt(field.id, i, e.target.value); }}
+                                                style={Object.assign({}, FS.inputLtr, errorBorder, { flex:1 })} />
+                                            {urls.length > 1 && (
+                                                <button type="button" onClick={function() { removeUrlRow(field.id, i); }}
+                                                    style={{ background:'transparent', border:'none', color:'#6B7BA0', fontSize:18, cursor:'pointer', padding:'4px 8px', lineHeight:1 }}>
+                                                    &times;
+                                                </button>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                                {urls.length < (field.max || 8) && (
+                                    <button type="button" onClick={function() { addUrlRow(field.id, field.max || 8); }}
+                                        style={{ background:'transparent', border:'none', color:'#4282FA', fontSize:14, cursor:'pointer', padding:'4px 0', fontFamily:'Rubik,sans-serif', fontWeight:700 }}>
+                                        + הוסף קישור
+                                    </button>
+                                )}
+                            </div>
+                        );
+                        break;
+
+                    case 'file_upload':
+                        inner = (
+                            <div>
+                                <div style={Object.assign({}, FS.dropZone, dragOver ? FS.dropZoneActive : {})}
+                                    onDragOver={function(e) { e.preventDefault(); setDragOver(true); }}
+                                    onDragLeave={function() { setDragOver(false); }}
+                                    onDrop={function(e) { e.preventDefault(); setDragOver(false); if (e.dataTransfer.files) addFiles(Array.from(e.dataTransfer.files)); }}
+                                    onClick={function() { if (fileInputRef.current) fileInputRef.current.click(); }}>
+                                    <input ref={fileInputRef} type="file" multiple accept={field.accept}
+                                        onChange={function(e) { if (e.target.files) { addFiles(Array.from(e.target.files)); e.target.value = ''; } }}
+                                        style={{ display:'none' }} />
+                                    <div style={{ marginBottom:8 }}>
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4282FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                    </div>
+                                    <div style={{ color:'#F4F6FC', fontSize:15, fontFamily:'Rubik,sans-serif', fontWeight:700 }}>גרירה לכאן או לחיצה להעלאה</div>
+                                    <div style={{ color:'#A9B7DE', fontSize:11, fontFamily:"'IBM Plex Mono',monospace", marginTop:6, letterSpacing:1 }}>PDF · JPG · PNG · DOCX · XLSX · PPTX</div>
+                                    <div style={{ color:'#A9B7DE', fontSize:12, marginTop:4 }}>עד 10 קבצים, 25MB לכל קובץ</div>
+                                </div>
+                                {files.length > 0 && (
+                                    <div style={{ marginTop:12 }}>
+                                        {files.map(function(f, i) {
+                                            return (
+                                                <div key={i} style={FS.fileRow}>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4ADE80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                                    <span style={{ color:'#F4F6FC', fontSize:14, flex:1, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{f.name}</span>
+                                                    <span style={{ color:'#6B7BA0', fontSize:12, fontFamily:"'IBM Plex Mono',monospace", flexShrink:0 }}>{formatFileSize(f.size)}</span>
+                                                    <button type="button" onClick={function() { removeFile(i); }}
+                                                        style={{ background:'transparent', border:'none', color:'#6B7BA0', fontSize:16, cursor:'pointer', padding:'2px 6px', lineHeight:1 }}>
+                                                        &times;
+                                                    </button>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                        break;
+                }
+
+                var fieldContent = (
+                    <div key={field.id} style={{ marginBottom:16 }}>
+                        <label style={FS.label}>
+                            {field.label}
+                            {field.required && <span style={FS.req}>*</span>}
+                        </label>
+                        {field.help && <div style={FS.help}>{field.help}</div>}
+                        {inner}
+                        {hasError && <div style={FS.err}>{hasError}</div>}
+                    </div>
+                );
+
+                if (isConditional) {
+                    return <div key={field.id} style={FS.condWrap}>{fieldContent}</div>;
+                }
+                return fieldContent;
+            };
+
+            // ── Render step ──
+            return (
+                <div style={FS.wrap}>
+                    {/* Logo */}
+                    <div style={{ textAlign:'center', padding:'0 0 16px' }}>
+                        <img src={LOGO} alt="Dollar Academy" style={{ height:48, objectFit:'contain' }} />
+                    </div>
+
+                    {/* Progress */}
+                    <div style={FS.progressRow}>
+                        <span style={FS.progressText}>{'שלב ' + (stepIdx + 1) + ' מתוך 4'}</span>
+                        <span style={FS.progressMono}>{currentStep.num + '/04'}</span>
+                    </div>
+                    <div style={FS.progressBarWrap}>
+                        {[0,1,2,3].map(function(i) { return <div key={i} style={FS.progressSeg(i <= stepIdx)} />; })}
+                    </div>
+
+                    {/* Step header */}
+                    <div style={FS.stepLabel}>{currentStep.label}</div>
+                    <h1 style={FS.title}>{currentStep.title}</h1>
+                    <p style={FS.sub}>{currentStep.sub}</p>
+
+                    {/* Fields */}
+                    {currentStep.fields.map(function(field) {
+                        var rendered = renderField(field);
+                        if (!rendered) return null;
+                        // Wrap in a card unless it's already a conditional wrap
+                        if (field.show_if) return rendered;
+                        return <div key={field.id} style={FS.card}>{rendered}</div>;
+                    })}
+
+                    {/* Submit error */}
+                    {submitError && (
+                        <div style={{ color:'#FF8F85', fontSize:14, textAlign:'center', padding:'12px 0' }}>
+                            משהו השתבש בשליחה. התשובות שמורות, אפשר לנסות שוב.
+                        </div>
+                    )}
+
+                    {/* Sticky bottom bar */}
+                    <div style={FS.stickyBar}>
+                        <div style={FS.stickyInner}>
+                            {stepIdx > 0 && (
+                                <button type="button" onClick={goBack} style={FS.btnBack}>חזרה</button>
+                            )}
+                            {stepIdx < 3 ? (
+                                <button type="button" onClick={goNext} style={FS.btnPrimary}>הבא</button>
+                            ) : (
+                                <button type="button" onClick={handleSubmit} disabled={submitting}
+                                    style={Object.assign({}, FS.btnPrimary, submitting ? { opacity:0.6, cursor:'wait' } : {})}>
+                                    {submitting ? 'שולח...' : 'שליחת השאלון'}
+                                </button>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Desktop adjustments — @media(min-width:900px): wider padding (40px 32px 120px), larger title font, 2-col chip layouts */}
+                </div>
+            );
+        };
+
+        // ╔══════════════════════════════════════════════════════╗
         // ║  THANK YOU SCREEN                                      ║
         // ╚══════════════════════════════════════════════════════╝
         const ThankYouScreen = ({ leadData }) => {
@@ -2952,22 +3649,27 @@
                     return React.createElement(PotentialScreen, { leadData: leadData, navigate: navigate });
                 }
                 if (route === '#/vsl') return React.createElement(VSLScreen, { leadData: leadData });
-                if (route === '#/diagnostic' || route.startsWith('#/diagnostic/')) return React.createElement(DiagnosticScreen, { leadData: leadData, setLeadData: setLeadData, navigate: navigate, route: route, fillMode: fillMode });
+                if (route === '#/diagnostic' || route.startsWith('#/diagnostic/')) { if (fillMode) return React.createElement(DiagnosticFillScreen, { leadData: leadData, navigate: navigate, route: route }); return React.createElement(DiagnosticScreen, { leadData: leadData, setLeadData: setLeadData, navigate: navigate, route: route, fillMode: fillMode }); }
                 if (route === '#/thank-you') return React.createElement(ThankYouScreen, { leadData: leadData });
                 if (fillMode) { navigate('#/diagnostic'); return null; }
                 return React.createElement(LandingScreen, { navigate: navigate });
             };
 
+            var isFillDiag = fillMode && (route === '#/diagnostic' || route.startsWith('#/diagnostic/'));
+
             return (
                 <div className="min-h-screen flex flex-col justify-between w-full">
+                    {!isFillDiag && (
                     <header className="w-full p-6 md:p-8 flex justify-center items-center z-10 relative">
                         <img src={LOGO} alt="Dollar Academy"
                             className="h-16 md:h-24 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform duration-300 cursor-pointer"
                             onClick={function() { if (!fillMode) navigate('#/'); }}/>
                     </header>
+                    )}
                     <main className="flex-grow z-20 relative flex flex-col items-center w-full">
                         {renderScreen()}
                     </main>
+                    {!isFillDiag && (
                     <footer className="w-full flex flex-col items-center text-center p-8 text-white/50 text-xs tracking-wide z-10 relative mt-auto border-t border-white/5">
                         <img src={LOGO} alt="Logo" className="h-10 md:h-12 object-contain mb-4 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500"/>
                         <div className="mb-2 w-full text-center" style={{ textAlign:'center' }}>© {new Date().getFullYear()} Dollar Academy. כל הזכויות שמורות.</div>
@@ -2977,6 +3679,7 @@
                             <a href="https://dollaracademy.co.il/%D7%94%D7%A6%D7%94%D7%A8%D7%AA-%D7%A0%D7%92%D7%99%D7%A9%D7%95%D7%AA/" target="_blank" rel="noopener noreferrer" className="hover:text-white/80 hover:underline">הצהרת נגישות</a>
                         </div>
                     </footer>
+                    )}
                 </div>
             );
         }
