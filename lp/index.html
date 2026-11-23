@@ -592,13 +592,18 @@
             return d;
         };
 
-        const sendWebhook = (url, data) => {
-            fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ ...data, submitted_at: new Date().toISOString() }) })
-                .catch(err => console.error('Webhook error:', err));
+        // opts.keepalive: let the request finish even if the page navigates away right after (e.g. redirect to UPAY).
+        // Browsers cap keepalive bodies at 64KB in total, so larger payloads fall back to a normal request.
+        const KEEPALIVE_MAX_BYTES = 30000;
+        const sendWebhook = (url, data, opts) => {
+            var body = JSON.stringify({ ...data, submitted_at: new Date().toISOString() });
+            var init = { method: 'POST', mode: 'no-cors', body: body };
+            if (opts && opts.keepalive && new Blob([body]).size < KEEPALIVE_MAX_BYTES) init.keepalive = true;
+            return fetch(url, init).catch(err => console.error('Webhook error:', err));
         };
 
-        const sendToSheets = (stage, leadData, extra) => {
-            if (!SHEETS_WEBHOOK) return;
+        const sendToSheets = (stage, leadData, extra, opts) => {
+            if (!SHEETS_WEBHOOK) return Promise.resolve();
             var payload = {
                 phone: leadData.phone || '',
                 firstName: leadData.firstName || '',
@@ -625,7 +630,9 @@
             Object.entries(payload).forEach(function(kv) {
                 params.append(kv[0], typeof kv[1] === 'object' ? JSON.stringify(kv[1]) : String(kv[1] != null ? kv[1] : ''));
             });
-            fetch(SHEETS_WEBHOOK, { method: 'POST', mode: 'no-cors', body: params })
+            var init = { method: 'POST', mode: 'no-cors', body: params };
+            if (opts && opts.keepalive && params.toString().length < KEEPALIVE_MAX_BYTES) init.keepalive = true;
+            return fetch(SHEETS_WEBHOOK, init)
                 .catch(err => console.error('Sheets backup error:', err));
         };
 
@@ -2320,15 +2327,27 @@
                 if (isSummary) { setIsSummary(false); navigate('#/diagnostic/' + vs.length); return; }
                 if (si > 0) { setErrs({}); navigate('#/diagnostic/' + si); window.scrollTo(0, 0); }
             };
+            var payingRef = useRef(false);
             var pay = function() {
+                if (payingRef.current) return;
+                payingRef.current = true;
                 var report = buildDiagReport(ans, ctx, vs);
                 var submitAns = diagClone(ans);
                 if (diagFiles.length > 0) submitAns._files = diagFiles.map(function(f) { return { name:f.name, size:f.size, type:f.type }; });
-                sendWebhook(WEBHOOK_URL, { event:'diagComplete', answers:submitAns, diagReport: report, leadData:leadData });
-                sendToSheets('diagnostic', leadData, { event: 'diagnostic-complete', source: 'funnel', diagAnswers: submitAns, diagReport: JSON.stringify(report) });
+                // Contact from the questionnaire's details step wins — without a phone the Apps Script drops the row (and the PDF)
+                var ld = Object.assign({}, leadData, {
+                    firstName: get('name') || leadData.firstName || '', lastName: get('lastName') || leadData.lastName || '',
+                    phone: get('phone') || leadData.phone || '', email: get('email') || leadData.email || ''
+                });
+                // keepalive + short wait: the redirect to UPAY must not cut off the submission that triggers the PDF email
+                var sent = Promise.all([
+                    sendWebhook(WEBHOOK_URL, { event:'diagComplete', answers:submitAns, diagReport: report, leadData:ld }, { keepalive:true }),
+                    sendToSheets('diagnostic', ld, { event: 'diagnostic-complete', source: 'funnel', diagAnswers: submitAns, diagReport: JSON.stringify(report) }, { keepalive:true })
+                ]);
                 if (window.gtag) gtag('event', 'diagnostic_complete', { source: 'funnel' });
                 setLeadData(function(p) { return Object.assign({}, p, ans, { diagComplete:true }); });
-                window.location.href = DIAG_UPAY;
+                Promise.race([sent, new Promise(function(r) { setTimeout(r, 1500); })])
+                    .then(function() { window.location.href = DIAG_UPAY; });
             };
             var submitFill = function() {
                 var ld = Object.assign({}, leadData, { firstName: ans.name || '', lastName: '', phone: ans.phone || '', email: ans.email || '' });
@@ -3215,6 +3234,37 @@
                 }
             };
 
+            // ── PDF report (same [{title, items:[{q,a}]}] shape as buildDiagReport in the funnel) ──
+            var buildFillReport = function(ans) {
+                var clean = function(v) { return v == null ? '' : String(v).trim(); };
+                var report = [];
+                var contact = [
+                    { q:'שם', a: [clean(ans._firstName), clean(ans._lastName)].filter(Boolean).join(' ') },
+                    { q:'שם העסק', a: clean(ans._businessName) },
+                    { q:'טלפון', a: clean(ans._phone) },
+                    { q:'אימייל', a: clean(ans._email) }
+                ].filter(function(it) { return it.a; });
+                if (contact.length) report.push({ title:'פרטי קשר', items: contact });
+                STEPS.forEach(function(step) {
+                    var items = [];
+                    step.fields.forEach(function(field) {
+                        if (!isFieldVisible(field)) return;
+                        var a = '';
+                        if (field.type === 'file_upload') {
+                            a = (ans._files || []).map(function(f) { return f.name; }).join(', ');
+                            if (a) a += ' (הקבצים עצמם לא נשמרים, צריך לבקש אותם מהלקוח)';
+                        } else if (Array.isArray(ans[field.id])) {
+                            a = ans[field.id].map(clean).filter(Boolean).join(', ');
+                        } else {
+                            a = clean(ans[field.id]);
+                        }
+                        if (a) items.push({ q: field.label, a: a });
+                    });
+                    if (items.length) report.push({ title: step.label, items: items });
+                });
+                return report;
+            };
+
             var handleSubmit = function() {
                 var errs = validateStep(currentStep);
                 if (Object.keys(errs).length > 0) { setErrors(errs); return; }
@@ -3246,9 +3296,12 @@
                     businessName: answers._businessName || '',
                     phone: answers._phone || '', email: answers._email || ''
                 });
+                // diagReport is REQUIRED: the Apps Script only builds the PDF + email when it is present.
+                var report = [];
+                try { report = buildFillReport(answersClone); } catch(e) { console.error('diagReport build failed:', e); }
                 try {
-                    sendWebhook(WEBHOOK_URL, { event:'diagComplete', source:'direct-fill', answers: answersClone, leadData: contactLd });
-                    sendToSheets('diagnostic', contactLd, { event: 'diagnostic-complete', source: 'direct-fill', diagAnswers: answersClone });
+                    sendWebhook(WEBHOOK_URL, { event:'diagComplete', source:'direct-fill', answers: answersClone, diagReport: report, leadData: contactLd });
+                    sendToSheets('diagnostic', contactLd, { event: 'diagnostic-complete', source: 'direct-fill', diagAnswers: answersClone, diagReport: JSON.stringify(report) });
                     if (window.gtag) gtag('event', 'diagnostic_complete', { source: 'direct-fill' });
                     try { localStorage.removeItem('diagFillState'); } catch(e) {}
                     setSubmitting(false);

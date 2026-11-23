@@ -78,11 +78,9 @@ function doPost(e) {
       range.setValues([ex]);
     }
 
-    if (data.event === 'diagnostic-complete' && data.diagReport) {
-      try { sendDiagPdf(data, phone, ts); } catch(pdfErr) {
-        Logger.log('PDF error: ' + pdfErr.message);
-      }
-    }
+    // PDF + email for every completed questionnaire — see apps-script/DiagPdf.gs.
+    // (Used to require data.diagReport and skipped silently without it — that broke ?fill=1 on 19.11.)
+    if (data.event === 'diagnostic-complete') diagHandleComplete_(data);
 
     return resp({status:'ok'});
   } catch(err) {
