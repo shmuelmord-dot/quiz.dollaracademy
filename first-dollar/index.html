@@ -75,6 +75,12 @@ section[id]{scroll-margin-top:80px}
 .process-list>li>span:last-child{padding:0!important}
 .step-connector{display:none!important}
 .booklet-grid{grid-template-columns:1fr 1fr!important}
+.office-card{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:36px!important;padding:30px!important}
+.office-card .office-figure{order:2}
+.office-card .office-body{order:1;gap:18px!important}
+.office-card .office-title{font-size:30px!important}
+.office-card .office-sub{font-size:16px!important}
+.office-card .office-steps>li{font-size:17px!important}
 .about-figure{flex-direction:row!important}
 .about-figure>img{aspect-ratio:3/4!important;width:50%!important;min-width:0}
 .about-figure>figcaption{flex:1}
@@ -457,9 +463,51 @@ const ProcessSection = () => (
                     </li>
                 ))}
             </ol>
+            <OfficeCard />
             <BookletCard />
         </div>
     </section>
+);
+
+const OFFICE_TAGS = ['שעה וחצי', 'פנים מול פנים', 'התעשייה 15, רעננה'];
+const OFFICE_STEPS = [
+    'קבלת פנים במשרד שלנו ברעננה',
+    'הממצאים ממחקר השוק שהכנו לעסק שלך',
+    'מפת התשתית על הלוח: מה העסק שלך צריך כדי למכור בארה״ב',
+    'תוכנית הפריצה, והצעד הבא שלך'
+];
+
+const OfficeCard = () => (
+    <div className="office-card" style={{ boxSizing:'border-box', borderRadius:22, background:'linear-gradient(180deg,#16224A,#121A36)', border:'1px solid #2E59F4', padding:'18px 16px 22px', display:'grid', gridTemplateColumns:'1fr', gap:20, alignItems:'center' }}>
+        <figure className="office-figure" style={{ margin:0, display:'flex', flexDirection:'column', gap:10 }}>
+            <img src="assets/office/office-meeting-room.jpg" alt="חדר הישיבות במשרד שלנו ברעננה" width="1440" height="960" loading="lazy"
+                style={{ display:'block', width:'100%', height:'auto', aspectRatio:'3 / 2', objectFit:'cover', borderRadius:16 }} />
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(2, minmax(0, 1fr))', gap:10 }}>
+                <img src="assets/office/office-reception.jpg" alt="שולחן קבלת הפנים לפגישה" width="960" height="720" loading="lazy"
+                    style={{ display:'block', width:'100%', height:'auto', aspectRatio:'4 / 3', objectFit:'cover', borderRadius:14 }} />
+                <img src="assets/office/office-lounge.jpg" alt="אזור ההמתנה במשרד" width="960" height="720" loading="lazy"
+                    style={{ display:'block', width:'100%', height:'auto', aspectRatio:'4 / 3', objectFit:'cover', borderRadius:14 }} />
+            </div>
+            <figcaption style={{ fontSize:13, color:'#8A97BE' }}>המשרד שלנו ברעננה</figcaption>
+        </figure>
+        <div className="office-body" style={{ display:'flex', flexDirection:'column', gap:14 }}>
+            <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+                {OFFICE_TAGS.map((t,i) => (
+                    <span key={i} style={{ display:'inline-flex', alignItems:'center', padding:'5px 12px', borderRadius:999, background:'rgba(46,89,244,0.14)', color:'#9DB8FF', fontSize:13, fontWeight:700 }}>{t}</span>
+                ))}
+            </div>
+            <span className="office-title" style={{ fontFamily:'Rubik,Assistant,sans-serif', fontSize:23, fontWeight:800, lineHeight:1.2 }}>הפגישה ברעננה, מקרוב</span>
+            <span className="office-sub" style={{ fontSize:14, lineHeight:1.6, color:'#A9B7DE' }}>בפגישה: שחר פלץ ושמואל מרדכי, המייסדים של אקדמיית הדולר.</span>
+            <ol className="office-steps" style={{ margin:'4px 0 0', padding:0, listStyle:'none', display:'flex', flexDirection:'column', gap:14 }}>
+                {OFFICE_STEPS.map((t,i) => (
+                    <li key={i} style={{ display:'flex', alignItems:'flex-start', gap:12, fontSize:15, lineHeight:1.5, color:'#DCE3F5' }}>
+                        <span className="mono" style={{ flex:'none', width:30, height:30, borderRadius:'50%', background:'rgba(46,89,244,0.16)', color:'#9DB8FF', fontSize:13, fontWeight:600, display:'flex', alignItems:'center', justifyContent:'center' }}>{i+1}</span>
+                        <span style={{ paddingTop:3 }}>{t}</span>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    </div>
 );
 
 const BookletCard = () => (
